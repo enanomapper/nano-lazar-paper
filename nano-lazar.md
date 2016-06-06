@@ -72,6 +72,10 @@ weighted average | `! cat results/weighted-average.r_squared` | `! cat results/w
 
 ` ruby results/weighted-average.rb`
 
+feature selection: none, correlation
+similarity: cosine, weighted cosine
+prediction: local_weighted_average, local_pls_regression
+
 ![weighted average](results/loo-cv.png "weighted average")
 
 referenzdaten!
@@ -94,6 +98,12 @@ Predictions from proteomics
 
 Discussion
 ==========
+
+Liu paper:
+
+descriptor selection not included in cv!!
+prediction accuracy != r^2
+uses bootstrap and strange r^2 which includes training set performance
 
 Conclusion
 ==========
