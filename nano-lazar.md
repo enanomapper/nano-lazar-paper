@@ -58,43 +58,54 @@ Results
 Data requirements
 -----------------
 
-Predictions from core and coating properties
---------------------------------------------
+Physchem properties
+-------------------
 
-Predictions from physchem properties
-------------------------------------
+Algorithm        | $r^2$                                      | RMSE                        
+-----------------|--------------------------------------------|---------------------------------------
+Weighted average | `! scripts/values.rb weighted_average P-CHEM r_squared` | `! scripts/values.rb weighted_average P-CHEM rmse` 
+Partial least squares | `! scripts/values.rb pls P-CHEM r_squared` | `! scripts/values.rb pls P-CHEM rmse` 
+Random forest | `! scripts/values.rb random_forests P-CHEM r_squared` | `! scripts/values.rb random_forests P-CHEM rmse` 
 
-Algorithm                 | $r^2$                                      | RMSE                                  | MAE
------------------|--------------------------------------------|---------------------------------------|----------------
-weighted average | `! cat results/weighted-average.r_squared` | `! cat results/weighted-average.rmse` | `! cat results/weighted-average.mae` 
+![Correlation of log2 transformed net cell association measurements with weighted average predictions using physchem properties.](figures/weighted_average-pchem-crossvalidations.pdf){#fig:wa-pchem}
 
-`! cat results/training-dataset.id`
+![Correlation of log2 transformed net cell association measurements with partial least squares predictions using physchem properties.](figures/pls-pchem-crossvalidations.pdf){#fig:pls-pchem}
 
-` ruby results/weighted-average.rb`
+![Correlation of log2 transformed net cell association measurements with random forest predictions using physchem properties.](figures/random_forests-pchem-crossvalidations.pdf){#fig:rf-pchem}
 
-feature selection: none, correlation
-similarity: cosine, weighted cosine
-prediction: local_weighted_average, local_pls_regression
 
-![weighted average](results/loo-cv.png "weighted average")
+Protein corona
+--------------
 
-referenzdaten!
+Algorithm        | $r^2$                                      | RMSE                        
+-----------------|--------------------------------------------|---------------------------------------
+Weighted average | `! scripts/values.rb weighted_average Proteomics r_squared` | `! scripts/values.rb weighted_average Proteomics rmse` 
+Partial least squares | `! scripts/values.rb pls Proteomics r_squared` | `! scripts/values.rb pls Proteomics rmse` 
+Random forest | `! scripts/values.rb random_forests Proteomics r_squared` | `! scripts/values.rb random_forests Proteomics rmse` 
 
-pls mit original properties: katastrophal, egal ob -log10 oder nicht
+![Correlation of log2 transformed net cell association measurements with weighted average predictions using protein corona data.](figures/weighted_average-proteomics-crossvalidations.pdf){#fig:wa-prot}
 
-local weighted average, -log10 transformed, no feature selection
-rmse: 0.8585810024686744, mae: 0.6785597520657844, r_squared: 0.508897016476696
+![Correlation of log2 transformed net cell association measurements with partial least squares predictions using protein corona data.](figures/pls-proteomics-crossvalidations.pdf){#fig:pls-prot}
 
-local pls, -log10 transformed, no feature selection (calls weighted average)
-rmse: 0.8992939561572298, mae: 0.7204175044919703, r_squared: 0.6563666334054629
+![Correlation of log2 transformed net cell association measurements with random forest predictions using protein corona data.](figures/random_forests-proteomics-crossvalidations.pdf){#fig:rf-prot}
 
-local weighted avarage, -log10 transformed, feature selection
 
-pls with scaled properties
+Physchem properties and protein corona
+--------------------------------------
 
-Predictions from proteomics
----------------------------
+Algorithm        | $r^2$                                      | RMSE                        
+-----------------|--------------------------------------------|---------------------------------------
+Weighted average | `! scripts/values.rb weighted_average all r_squared` | `! scripts/values.rb weighted_average all rmse` 
+Partial least squares | `! scripts/values.rb pls all r_squared` | `! scripts/values.rb pls all rmse` 
+Random forest | `! scripts/values.rb random_forests all r_squared` | `! scripts/values.rb random_forests all rmse` 
 
+![Correlation of log2 transformed net cell association measurements with weighted average predictions using physchem properties and protein corona data.](figures/weighted_average-all-crossvalidations.pdf){#fig:wa-all}
+
+![Correlation of log2 transformed net cell association measurements with partial least squares predictions using physchem properties and protein corona data.](figures/pls-all-crossvalidations.pdf){#fig:pls-all}
+
+![Correlation of log2 transformed net cell association measurements with random forest predictions using physchem properties and protein corona data.](figures/random_forests-all-crossvalidations.pdf){#fig:rf-all}
+
+TODO: statistics
 
 Discussion
 ==========
@@ -104,6 +115,8 @@ Liu paper:
 descriptor selection not included in cv!!
 prediction accuracy != r^2
 uses bootstrap and strange r^2 which includes training set performance
+
+all papers: no silver particles
 
 Conclusion
 ==========

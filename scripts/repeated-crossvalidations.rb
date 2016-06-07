@@ -46,4 +46,4 @@ prediction_algorithms.each do |algorithm|
   end
 end
 
-File.open(File.join(RESULTS_DIR,"repeated-crossvalidation-ids.json"),"w+"){|f| f.puts JSON.pretty_generate(results)}
+File.open(File.join(RESULTS_DIR,"repeated-crossvalidatios.json"),"w+"){|f| f.puts JSON.pretty_generate(results)}

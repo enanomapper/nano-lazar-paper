@@ -1,4 +1,5 @@
-require_relative "setup.rb"
-
-repeated_cvs = JSON.parse(File.join(RESULTS_DIR,"repeated-crossvalidations.json"))
-puts repeated_cvs[ARGV[0]][ARGV[1]].collect{|cv| cv[ARGV[3]]}.join(", ")
+#!/usr/bin/env ruby
+require 'json'
+repeated_cvs = JSON.parse(File.read(File.join("results","repeated-crossvalidations.json")))
+cvs = repeated_cvs[ARGV[0]][ARGV[1]]["cvs"]
+puts cvs.collect{|cv| cv[ARGV[2]].round(2)}.join(", ")
