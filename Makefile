@@ -2,14 +2,11 @@
 figures = figures/weighted_average-pchem-crossvalidations.pdf figures/weighted_average-proteomics-crossvalidations.pdf figures/weighted_average-all-crossvalidations.pdf figures/pls-pchem-crossvalidations.pdf figures/pls-proteomics-crossvalidations.pdf figures/pls-all-crossvalidations.pdf figures/random_forests-pchem-crossvalidations.pdf figures/random_forests-proteomics-crossvalidations.pdf figures/random_forests-all-crossvalidations.pdf
 
 # Paper
-
-#nano-lazar.pdf: nano-lazar.md references.bibtex results/weighted-average.rb
 nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json
-	pandoc nano-lazar.md --latex-engine=pdflatex --filter ./inline.rb -o nano-lazar.pdf 
-	#pandoc --bibliography=references.bibtex --latex-engine=pdflatex --filter ./inline.rb --filter pandoc-crossref --filter pandoc-citeproc -o nano-lazar.pdf 
+	pandoc nano-lazar.md --bibliography=references.bibtex --latex-engine=pdflatex --filter ./inline.rb --filter pandoc-crossref --filter pandoc-citeproc -o nano-lazar.pdf 
 
 
-# figures
+# Figures
 figures/weighted_average-pchem-crossvalidations.pdf: results/repeated-crossvalidations.json
 	ruby scripts/plot.rb weighted_average P-CHEM
 

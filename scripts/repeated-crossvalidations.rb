@@ -1,6 +1,6 @@
 require_relative "setup.rb"
 
-prediction_feature = Feature.find_or_create_by(name: "Log2 transformed", category: "TOX")
+prediction_feature = Feature.find_or_create_by(name: "log2(Net cell association)", category: "TOX")
 training_dataset = Dataset.find(File.read(File.join(RESULTS_DIR,"training-dataset.id")).chomp)
 feature_categories = ["P-CHEM","Proteomics",nil]
 prediction_algorithms = [
