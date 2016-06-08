@@ -4,7 +4,7 @@ figures = figures/weighted_average-pchem-crossvalidations.pdf figures/weighted_a
 # Paper
 
 #nano-lazar.pdf: nano-lazar.md references.bibtex results/weighted-average.rb
-nano-lazar.pdf: nano-lazar.md $(figures)
+nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json
 	pandoc nano-lazar.md --latex-engine=pdflatex --filter ./inline.rb -o nano-lazar.pdf 
 	#pandoc --bibliography=references.bibtex --latex-engine=pdflatex --filter ./inline.rb --filter pandoc-crossref --filter pandoc-citeproc -o nano-lazar.pdf 
 
@@ -36,6 +36,10 @@ figures/random_forests-proteomics-crossvalidations.pdf: results/repeated-crossva
 
 figures/random_forests-all-crossvalidations.pdf: results/repeated-crossvalidations.json
 	ruby scripts/plot.rb random_forests all
+
+# statistical comparison of crossvalidation results
+results/cv-comparison.json: results/repeated-crossvalidations.json
+	ruby scripts/cv-comparison.rb
 
 # repeated crossvalidations
 results/repeated-crossvalidations.json: results/training-dataset.id

@@ -67,6 +67,8 @@ Weighted average | `! scripts/values.rb weighted_average P-CHEM r_squared` | `! 
 Partial least squares | `! scripts/values.rb pls P-CHEM r_squared` | `! scripts/values.rb pls P-CHEM rmse` 
 Random forest | `! scripts/values.rb random_forests P-CHEM r_squared` | `! scripts/values.rb random_forests P-CHEM rmse` 
 
+: Repeated crossvalidation results for models with physchem properties, $**$ best results of all experiments, $*$ no statistically significant difference to best results ($p > 0.05$)
+
 ![Correlation of log2 transformed net cell association measurements with weighted average predictions using physchem properties.](figures/weighted_average-pchem-crossvalidations.pdf){#fig:wa-pchem}
 
 ![Correlation of log2 transformed net cell association measurements with partial least squares predictions using physchem properties.](figures/pls-pchem-crossvalidations.pdf){#fig:pls-pchem}
@@ -83,6 +85,8 @@ Weighted average | `! scripts/values.rb weighted_average Proteomics r_squared` |
 Partial least squares | `! scripts/values.rb pls Proteomics r_squared` | `! scripts/values.rb pls Proteomics rmse` 
 Random forest | `! scripts/values.rb random_forests Proteomics r_squared` | `! scripts/values.rb random_forests Proteomics rmse` 
 
+: Repeated crossvalidation results for models with protein corona data, $**$ best results of all experiments, $*$ no statistically significant difference to best results ($p > 0.05$)
+
 ![Correlation of log2 transformed net cell association measurements with weighted average predictions using protein corona data.](figures/weighted_average-proteomics-crossvalidations.pdf){#fig:wa-prot}
 
 ![Correlation of log2 transformed net cell association measurements with partial least squares predictions using protein corona data.](figures/pls-proteomics-crossvalidations.pdf){#fig:pls-prot}
@@ -97,15 +101,15 @@ Algorithm        | $r^2$                                      | RMSE
 -----------------|--------------------------------------------|---------------------------------------
 Weighted average | `! scripts/values.rb weighted_average all r_squared` | `! scripts/values.rb weighted_average all rmse` 
 Partial least squares | `! scripts/values.rb pls all r_squared` | `! scripts/values.rb pls all rmse` 
-Random forest | `! scripts/values.rb random_forests all r_squared` | `! scripts/values.rb random_forests all rmse` 
+Random forest | **`! scripts/values.rb random_forests all r_squared`** | `! scripts/values.rb random_forests all rmse` 
+
+: Repeated crossvalidation results for models with physchem properties and protein corona data, $**$ best results of all experiments, $*$ no statistically significant difference to best results ($p > 0.05$)
 
 ![Correlation of log2 transformed net cell association measurements with weighted average predictions using physchem properties and protein corona data.](figures/weighted_average-all-crossvalidations.pdf){#fig:wa-all}
 
 ![Correlation of log2 transformed net cell association measurements with partial least squares predictions using physchem properties and protein corona data.](figures/pls-all-crossvalidations.pdf){#fig:pls-all}
 
 ![Correlation of log2 transformed net cell association measurements with random forest predictions using physchem properties and protein corona data.](figures/random_forests-all-crossvalidations.pdf){#fig:rf-all}
-
-TODO: statistics
 
 Discussion
 ==========

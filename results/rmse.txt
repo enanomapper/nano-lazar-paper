@@ -1,0 +1,81 @@
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = rmse ~ experiments)
+
+$experiments
+                                                             diff          lwr
+pls.Proteomics-pls.P-CHEM                             -0.19241544 -0.362034814
+pls.all-pls.P-CHEM                                    -0.28870350 -0.458322874
+random_forests.P-CHEM-pls.P-CHEM                      -0.02895562 -0.198574998
+random_forests.Proteomics-pls.P-CHEM                  -0.24436927 -0.413988645
+random_forests.all-pls.P-CHEM                         -0.35559050 -0.525209876
+weighted_average.P-CHEM-pls.P-CHEM                     0.11889692 -0.050722454
+weighted_average.Proteomics-pls.P-CHEM                -0.22367814 -0.393297514
+weighted_average.all-pls.P-CHEM                       -0.32245871 -0.492078087
+pls.all-pls.Proteomics                                -0.09628806 -0.265907439
+random_forests.P-CHEM-pls.Proteomics                   0.16345982 -0.006159562
+random_forests.Proteomics-pls.Proteomics              -0.05195383 -0.221573210
+random_forests.all-pls.Proteomics                     -0.16317506 -0.332794440
+weighted_average.P-CHEM-pls.Proteomics                 0.31131236  0.141692982
+weighted_average.Proteomics-pls.Proteomics            -0.03126270 -0.200882079
+weighted_average.all-pls.Proteomics                   -0.13004327 -0.299662651
+random_forests.P-CHEM-pls.all                          0.25974788  0.090128499
+random_forests.Proteomics-pls.all                      0.04433423 -0.125285149
+random_forests.all-pls.all                            -0.06688700 -0.236506380
+weighted_average.P-CHEM-pls.all                        0.40760042  0.237981043
+weighted_average.Proteomics-pls.all                    0.06502536 -0.104594018
+weighted_average.all-pls.all                          -0.03375521 -0.203374591
+random_forests.Proteomics-random_forests.P-CHEM       -0.21541365 -0.385033026
+random_forests.all-random_forests.P-CHEM              -0.32663488 -0.496254256
+weighted_average.P-CHEM-random_forests.P-CHEM          0.14785254 -0.021766834
+weighted_average.Proteomics-random_forests.P-CHEM     -0.19472252 -0.364341895
+weighted_average.all-random_forests.P-CHEM            -0.29350309 -0.463122467
+random_forests.all-random_forests.Proteomics          -0.11122123 -0.280840609
+weighted_average.P-CHEM-random_forests.Proteomics      0.36326619  0.193646813
+weighted_average.Proteomics-random_forests.Proteomics  0.02069113 -0.148928247
+weighted_average.all-random_forests.Proteomics        -0.07808944 -0.247708820
+weighted_average.P-CHEM-random_forests.all             0.47448742  0.304868044
+weighted_average.Proteomics-random_forests.all         0.13191236 -0.037707016
+weighted_average.all-random_forests.all                0.03313179 -0.136487589
+weighted_average.Proteomics-weighted_average.P-CHEM   -0.34257506 -0.512194439
+weighted_average.all-weighted_average.P-CHEM          -0.44135563 -0.610975011
+weighted_average.all-weighted_average.Proteomics      -0.09878057 -0.268399951
+                                                               upr     p adj
+pls.Proteomics-pls.P-CHEM                             -0.022796057 0.0194879
+pls.all-pls.P-CHEM                                    -0.119084118 0.0003295
+random_forests.P-CHEM-pls.P-CHEM                       0.140663759 0.9993920
+random_forests.Proteomics-pls.P-CHEM                  -0.074749889 0.0021234
+random_forests.all-pls.P-CHEM                         -0.185971120 0.0000232
+weighted_average.P-CHEM-pls.P-CHEM                     0.288516303 0.3135992
+weighted_average.Proteomics-pls.P-CHEM                -0.054058758 0.0051459
+weighted_average.all-pls.P-CHEM                       -0.152839330 0.0000841
+pls.all-pls.Proteomics                                 0.073331317 0.5683335
+random_forests.P-CHEM-pls.Proteomics                   0.333079194 0.0639768
+random_forests.Proteomics-pls.Proteomics               0.117665547 0.9711657
+random_forests.all-pls.Proteomics                      0.006444316 0.0647030
+weighted_average.P-CHEM-pls.Proteomics                 0.480931738 0.0001312
+weighted_average.Proteomics-pls.Proteomics             0.138356678 0.9989479
+weighted_average.all-pls.Proteomics                    0.039576105 0.2197269
+random_forests.P-CHEM-pls.all                          0.429367255 0.0011048
+random_forests.Proteomics-pls.all                      0.213953607 0.9889519
+random_forests.all-pls.all                             0.102732377 0.8907677
+weighted_average.P-CHEM-pls.all                        0.577219799 0.0000035
+weighted_average.Proteomics-pls.all                    0.234644738 0.9045618
+weighted_average.all-pls.all                           0.135864166 0.9981968
+random_forests.Proteomics-random_forests.P-CHEM       -0.045794270 0.0073307
+random_forests.all-random_forests.P-CHEM              -0.157015500 0.0000713
+weighted_average.P-CHEM-random_forests.P-CHEM          0.317471922 0.1167752
+weighted_average.Proteomics-random_forests.P-CHEM     -0.025103138 0.0176820
+weighted_average.all-random_forests.P-CHEM            -0.123883711 0.0002705
+random_forests.all-random_forests.Proteomics           0.058398148 0.3918574
+weighted_average.P-CHEM-random_forests.Proteomics      0.532885570 0.0000174
+weighted_average.Proteomics-random_forests.Proteomics  0.190310509 0.9999497
+weighted_average.all-random_forests.Proteomics         0.091529937 0.7863997
+weighted_average.P-CHEM-random_forests.all             0.644106800 0.0000004
+weighted_average.Proteomics-random_forests.all         0.301531740 0.2063188
+weighted_average.all-random_forests.all                0.202751167 0.9984165
+weighted_average.Proteomics-weighted_average.P-CHEM   -0.172955682 0.0000382
+weighted_average.all-weighted_average.P-CHEM          -0.271736255 0.0000011
+weighted_average.all-weighted_average.Proteomics       0.070838805 0.5374453
+

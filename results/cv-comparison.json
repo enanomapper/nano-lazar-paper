@@ -1,0 +1,34 @@
+{
+  "best_rmse": {
+    "random_forests.all": 1.4876251315647815
+  },
+  "best_r_squared": {
+    "random_forests.all": 0.6930520215621235
+  },
+  "anova_rmse": 6.69458252198834e-08,
+  "anova_r_squared": 5.132271881701197e-09,
+  "significant_differences": {
+    "r_squared": [
+      {
+        "pls.P-CHEM": 5.3e-06
+      },
+      {
+        "random_forests.P-CHEM": 1.53e-05
+      },
+      {
+        "weighted_average.P-CHEM": 0.0
+      }
+    ],
+    "rmse": [
+      {
+        "pls.P-CHEM": 2.32e-05
+      },
+      {
+        "random_forests.P-CHEM": 7.13e-05
+      },
+      {
+        "weighted_average.P-CHEM": 4.0e-07
+      }
+    ]
+  }
+}
