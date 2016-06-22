@@ -7,7 +7,6 @@ nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json
 
 # Presentations
 enm-presentation.html: enm-presentation.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
-	#pandoc --filter ./inline.rb  -t s5 -s -o enm-presentation.html enm-presentation.md 
 	pandoc --filter ./inline.rb  -t slidy -s --self-contained -o enm-presentation.html enm-presentation.md 
 
 # Figures
