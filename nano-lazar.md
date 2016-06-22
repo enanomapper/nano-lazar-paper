@@ -280,3 +280,6 @@ environment for nanomaterials and systems by design" (Theme NMP.2013.1.3-2 NMP.2
 
 References
 ==========
+
+McDermott et al., 2013; Walkey et al., 2014
+Yang et al., 2012; Balbin et al., 2013

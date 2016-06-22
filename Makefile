@@ -5,8 +5,15 @@ figures = figures/weighted_average-pchem-crossvalidations.pdf figures/weighted_a
 nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json
 	pandoc nano-lazar.md --bibliography=references.bibtex --latex-engine=pdflatex --filter ./inline.rb --filter pandoc-crossref --filter pandoc-citeproc -o nano-lazar.pdf 
 
+# Presentations
+enm-presentation.html: enm-presentation.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
+	#pandoc --filter ./inline.rb  -t s5 -s -o enm-presentation.html enm-presentation.md 
+	pandoc --filter ./inline.rb  -t slidy -s --self-contained -o enm-presentation.html enm-presentation.md 
 
 # Figures
+figures/random_forests-all-crossvalidations.png: results/repeated-crossvalidations.json
+	ruby scripts/plot.rb random_forests all png
+
 figures/weighted_average-pchem-crossvalidations.pdf: results/repeated-crossvalidations.json
 	ruby scripts/plot.rb weighted_average P-CHEM
 
