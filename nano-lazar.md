@@ -267,6 +267,20 @@ uses bootstrap and strange r^2 which includes training set performance
 
 all papers: no silver particles
 
+georgia:
+
+why only 84 gold particles (neutrals excluded)
+text could be clearer
+unterschied 10cv, 10cv-test
+is this clustering supervised or unsupervised
+
+mixture of regulatory, (nano)tox and machine learning/stat aspects
+conceptional overview of BIO descriptors before formal definition
+statistically significant differences of results (?)
+liu study overfitted!! (discussion)
+references, figures sometimes incorrect
+VIP comes from lui? => choosing preselected proteins == overfitting
+
 Conclusion
 ==========
 
