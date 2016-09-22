@@ -9,6 +9,9 @@ nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json
 enm-presentation.html: enm-presentation.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
 	pandoc --filter ./inline.rb  -t slidy -s --self-contained -o enm-presentation.html enm-presentation.md 
 
+athens-workshop.html: athens-workshop.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
+	pandoc --filter ./inline.rb  -t slidy -s --self-contained -o athens-workshop.html athens-workshop.md 
+
 # Figures
 figures/random_forests-all-crossvalidations.png: results/repeated-crossvalidations.json
 	ruby scripts/plot.rb random_forests all png
