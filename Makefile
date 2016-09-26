@@ -7,10 +7,13 @@ nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json
 
 # Presentations
 enm-presentation.html: enm-presentation.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
-	pandoc --filter ./inline.rb  -t slidy -s --self-contained -o enm-presentation.html enm-presentation.md 
+	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o enm-presentation.html enm-presentation.md 
 
 athens-workshop.html: athens-workshop.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
-	pandoc --filter ./inline.rb  -t slidy -s --self-contained -o athens-workshop.html athens-workshop.md 
+	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o athens-workshop.html athens-workshop.md 
+
+opentox-workshop.html: opentox-workshop.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
+	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o opentox-workshop.html opentox-workshop.md 
 
 # Figures
 figures/random_forests-all-crossvalidations.png: results/repeated-crossvalidations.json

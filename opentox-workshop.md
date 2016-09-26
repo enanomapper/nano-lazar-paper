@@ -1,6 +1,10 @@
 % Nanomaterial read across predictions with nano-lazar
 % Christoph Helma, Micha Rautenberg, Denis Gebele
 % in silico toxicology gmbh,  Basel, Switzerland
+  \
+  \
+  \
+  ![](images/logo-enm.png "eNanoMapper")
 
 Contents
 ========

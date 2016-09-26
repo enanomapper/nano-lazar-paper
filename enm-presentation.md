@@ -1,6 +1,10 @@
 % Validation of read across predictions for nanoparticle toxicities
 % Christoph Helma, Micha Rautenberg, Denis Gebele
 % in silico toxicology gmbh,  Basel, Switzerland
+  \
+  \
+  \
+  ![](images/logo-enm.png "eNanoMapper")
 
 Objectives
 ==========
