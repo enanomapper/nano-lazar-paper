@@ -112,6 +112,9 @@ Presentation (source code)
 Docker image
   : <https://hub.docker.com/r/insilicotox/nano-lazar-paper/>
 
+Nano-lazar development version
+  : <https://nano-lazar-dev.in-silico.ch/predict>
+
 Exercises
 =========
 
@@ -121,7 +124,7 @@ Old (stable) version (physchem only)
   : <https://nano-lazar.in-silico.ch>
 
 Next release
-  : TODO URI 
+  : <https://nano-lazar-dev.in-silico.ch/predict>
 
 Questions
 =========
