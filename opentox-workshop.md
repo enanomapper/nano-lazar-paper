@@ -34,7 +34,7 @@ Requirements
   : Descriptors (features) for the query substance and the neighbor candidate
 
 Observation
-  : A large number of irrelevant features can lead do meaningless similarity estimates
+  : A large number of irrelevant features can lead to meaningless similarity estimates
 
 Relevant features
   : Features that correlate significantly with toxicity (Pearson correlation p-value < 0.05) 
