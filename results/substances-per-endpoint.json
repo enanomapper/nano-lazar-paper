@@ -1,0 +1,45 @@
+[
+  {
+    "dataset": "NanoWiki",
+    "uri": "https://data.enanomapper.net/bundle/1",
+    "nr_substances": 43,
+    "substances_per_endpoint": {
+      "Percentage_Viable_Cells": 1,
+      "Concentration_in_cell": 1,
+      "DNA_in_Tail": 1,
+      "LDH_Release": 5,
+      "Metabolic_Activity": 5,
+      "Toxicity Classifier": 2,
+      "Log_Reciprocal_EC50": 17,
+      "Concentration_in_culture_medium": 1
+    }
+  },
+  {
+    "dataset": "Protein Corona Fingerprinting Predicts the Cellular Interaction of Gold and Silver Nanoparticles",
+    "uri": "https://data.enanomapper.net/bundle/3",
+    "nr_substances": 121,
+    "substances_per_endpoint": {
+      "Net cell association": 121,
+      "log2(Net cell association)": 121
+    }
+  },
+  {
+    "dataset": "In Vitro data from FP7 MARINA project (KI)",
+    "uri": "https://data.enanomapper.net/bundle/4",
+    "nr_substances": 6,
+    "substances_per_endpoint": {
+      "% cell viability": 6,
+      "TNF-α (ng/ml)": 6
+    }
+  },
+  {
+    "dataset": "MODENA ",
+    "uri": "https://data.enanomapper.net/bundle/12",
+    "nr_substances": 59,
+    "substances_per_endpoint": {
+      "SLOPE EC50": 8,
+      "EC25": 8,
+      "EC50": 8
+    }
+  }
+]

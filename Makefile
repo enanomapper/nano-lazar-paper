@@ -2,7 +2,7 @@
 figures = figures/weighted_average-pchem-crossvalidations.pdf figures/weighted_average-proteomics-crossvalidations.pdf figures/weighted_average-all-crossvalidations.pdf figures/pls-pchem-crossvalidations.pdf figures/pls-proteomics-crossvalidations.pdf figures/pls-all-crossvalidations.pdf figures/random_forests-pchem-crossvalidations.pdf figures/random_forests-proteomics-crossvalidations.pdf figures/random_forests-all-crossvalidations.pdf
 
 # Paper
-nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json
+nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json results/substances-per-endpoint.json
 	pandoc nano-lazar.md --bibliography=references.bibtex --latex-engine=pdflatex --filter ./inline.rb --filter pandoc-crossref --filter pandoc-citeproc -o nano-lazar.pdf 
 
 # Presentations
@@ -54,13 +54,16 @@ results/cv-comparison.json: results/repeated-crossvalidations.json
 results/repeated-crossvalidations.json: results/training-dataset.id
 	ruby scripts/repeated-crossvalidations.rb
 
-# import enm
-results/training-dataset.id: data
-	ruby scripts/import.rb 
+# substances per endpoint
+results/substances-per-endpoint.json: results/training-dataset.id
+	ruby scripts/substances-per-endpoint.rb 
 
-# mirror enm
-data:
-	ruby scripts/mirror.rb
+results/prediction-model.ids: results/training-dataset.id
+	ruby scripts/repeated-crossvalidations.rb
+
+# import enm
+results/training-dataset.id: 
+	ruby scripts/import.rb 
 
 clean: 
 	rm results/*
