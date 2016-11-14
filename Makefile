@@ -51,15 +51,15 @@ results/cv-comparison.json: results/repeated-crossvalidations.json
 	ruby scripts/cv-comparison.rb
 
 # repeated crossvalidations
-results/repeated-crossvalidations.json: results/training-dataset.id
-	ruby scripts/repeated-crossvalidations.rb
+results/validation-summaries.json: results/model-validation.ids
+	ruby scripts/validation-summaries.rb
 
 # substances per endpoint
 results/substances-per-endpoint.json: results/training-dataset.id
 	ruby scripts/substances-per-endpoint.rb 
 
-results/prediction-model.ids: results/training-dataset.id
-	ruby scripts/repeated-crossvalidations.rb
+results/model-validation.ids: results/training-dataset.id
+	ruby scripts/model-validations.rb
 
 # import enm
 results/training-dataset.id: 

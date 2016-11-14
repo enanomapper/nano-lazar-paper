@@ -1,22 +1,20 @@
 require_relative "setup.rb"
 
-repeated_cvs = JSON.parse(File.read(File.join("results","repeated-crossvalidations.json")))
+model_validations = JSON.parse(File.read(File.join("results","validation-summaries.json")))
 rmse = []
 r_squared = []
 experiments = []
 rmse_means = {}
 r_squared_means = {}
-repeated_cvs.each do |alg,r|
-  r.each do |desc,d|
-    name = "#{alg}.#{desc}"
-    rmse_means[name] = d["cvs"].collect{|cv| cv["rmse"]}.mean
-    r_squared_means[name] = d["cvs"].collect{|cv| cv["r_squared"]}.mean
-    d["cvs"].each do |cv|
-      rmse << cv["rmse"]
-      r_squared << cv["r_squared"]
-      experiments << "#{alg}.#{desc}"
-    end
-  end
+model_validations.each do |mv|
+  name = "#{mv["descriptors"]["method"]}."
+  name += "#{mv["descriptors"]["categories"].collect{|c| c.gsub("-","")}.join "."}." if mv["descriptors"]["categories"]
+  name += mv["prediction"]["method"].split('.').last
+  rmse_means[name] = mv["rmse"].mean
+  r_squared_means[name] = mv["r_squared"].mean
+  rmse += mv["rmse"]
+  r_squared += mv["r_squared"]
+  mv["rmse"].size.times{ experiments << name }
 end
 
 min_rmse = rmse_means.values.min
@@ -46,12 +44,16 @@ R.eval "print(TukeyHSD(anova.r))"
 R.eval "sink()"
 significant_differences[:r_squared] = []
 # read results
-`sed '0,/p adj/d' #{file} | grep random_forests.all`.each_line do |line|
-  comparison, upr, p = line.chomp.split
-  if p.to_f < 0.05
-    comp = comparison.split("-")
-    comp.delete(best_r_squared.keys.first)
-    significant_differences[:r_squared] << { comp.join("-") => p.to_f }
+`sed '0,/p adj/d' #{file} `.each_line do |line|
+  line.chomp!
+  unless line.empty?
+    comparison, p = line.split
+    if p.to_f < 0.05
+      comp = comparison.split("-")
+      comp.delete(best_r_squared.keys.first)
+      comp = ["BEST.#{best_r_squared.keys.first}"] + comp if comp.size ==1
+      significant_differences[:r_squared] << { comp.join("-") => p.to_f }
+    end
   end
 end
 
@@ -62,12 +64,16 @@ R.eval "print(TukeyHSD(anova.rmse))"
 R.eval "sink()"
 significant_differences[:rmse] = []
 # read results
-`sed '0,/p adj/d' #{file} | grep random_forests.all`.each_line do |line|
-  comparison, upr, p = line.chomp.split
-  if p.to_f < 0.05
-    comp = comparison.split("-")
-    comp.delete(best_r_squared.keys.first)
-    significant_differences[:rmse] << { comp.join("-") => p.to_f }
+`sed '0,/p adj/d' #{file} `.each_line do |line|
+  line.chomp!
+  unless line.empty?
+    comparison, p = line.split
+    if p.to_f < 0.05
+      comp = comparison.split("-")
+      comp.delete(best_rmse.keys.first)
+      comp = ["BEST.#{best_rmse.keys.first}"] + comp if comp.size ==1
+      significant_differences[:rmse] << { comp.join("-") => p.to_f }
+    end
   end
 end
 

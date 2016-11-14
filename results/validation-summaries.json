@@ -1,0 +1,412 @@
+[
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "P-CHEM"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Regression.weighted_average"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.46150178065464065,
+      0.40731867229527124,
+      0.44145576292918803
+    ],
+    "rmse": [
+      1.9476489968399813,
+      2.043278614734986,
+      1.9829233272887812
+    ],
+    "percent_within_prediction_interval": [
+
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "P-CHEM"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Regression.weighted_average"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.43417697336316313,
+      0.4402658185048948,
+      0.4788669135759326
+    ],
+    "rmse": [
+      1.9969618810062204,
+      1.9851350885734829,
+      1.9186951272739912
+    ],
+    "percent_within_prediction_interval": [
+
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "P-CHEM"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.pls"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.3938288640574812,
+      0.4076248953105985,
+      0.3469139081456455
+    ],
+    "rmse": [
+      2.079370635650759,
+      2.048020060979547,
+      2.1743286670631434
+    ],
+    "percent_within_prediction_interval": [
+      96.55172413793103,
+      97.41379310344827,
+      95.76271186440678
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "P-CHEM"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.rf"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.4851897086094327,
+      0.5678869346979808,
+      0.4918495853084368
+    ],
+    "rmse": [
+      1.9064291070094483,
+      1.7445248844380956,
+      1.8915636904241244
+    ],
+    "percent_within_prediction_interval": [
+      94.11764705882354,
+      94.21487603305785,
+      92.56198347107438
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "fingerprint",
+      "type": "MP2D"
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.tanimoto",
+      "min": 0.1
+    },
+    "prediction": {
+      "method": "Algorithm::Regression.weighted_average"
+    },
+    "feature_selection": null,
+    "r_squared": [
+      0.20521415825860082,
+      0.24480516426650104,
+      0.20418579685641053
+    ],
+    "rmse": [
+      2.082859674809857,
+      2.029595953201166,
+      2.083778453688038
+    ],
+    "percent_within_prediction_interval": [
+
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "fingerprint",
+      "type": "MP2D"
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.tanimoto",
+      "min": 0.1
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.pls"
+    },
+    "feature_selection": null,
+    "r_squared": [
+      0.34129849021310044,
+      0.3598717482436769,
+      0.34490619916554444
+    ],
+    "rmse": [
+      1.9946014261135157,
+      1.9449631250482404,
+      1.9344872090294585
+    ],
+    "percent_within_prediction_interval": [
+      92.85714285714286,
+      97.14285714285714,
+      92.85714285714286
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "fingerprint",
+      "type": "MP2D"
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.tanimoto",
+      "min": 0.1
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.rf"
+    },
+    "feature_selection": null,
+    "r_squared": [
+      0.46868151484207904,
+      0.4811420842587937,
+      0.482187502368205
+    ],
+    "rmse": [
+      1.7183662369324033,
+      1.7046096013158438,
+      1.6921656886417051
+    ],
+    "percent_within_prediction_interval": [
+      97.1830985915493,
+      95.77464788732394,
+      95.77464788732394
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "Proteomics"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Regression.weighted_average"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.6272880992921904,
+      0.5051423855371353,
+      0.608756703729319
+    ],
+    "rmse": [
+      1.6367500442997025,
+      1.918374935992492,
+      1.6753285463996763
+    ],
+    "percent_within_prediction_interval": [
+
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "Proteomics"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.pls"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.5452643640787781,
+      0.6305729460853637,
+      0.6214732045083643
+    ],
+    "rmse": [
+      1.8623729114002001,
+      1.6470146117284703,
+      1.6669783071355715
+    ],
+    "percent_within_prediction_interval": [
+      88.88888888888889,
+      89.41176470588235,
+      83.9080459770115
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "Proteomics"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.rf"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.6722474905762148,
+      0.550304779299165,
+      0.5100200840600847
+    ],
+    "rmse": [
+      1.5490588563181755,
+      1.8252872578226658,
+      1.925160689060121
+    ],
+    "percent_within_prediction_interval": [
+      88.88888888888889,
+      90.625,
+      90.9090909090909
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "P-CHEM",
+        "Proteomics"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Regression.weighted_average"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.6333227096250998,
+      0.2920461621025368,
+      0.6596899694648771
+    ],
+    "rmse": [
+      1.6499616878445833,
+      2.6278885092941655,
+      1.5850302491639874
+    ],
+    "percent_within_prediction_interval": [
+
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "P-CHEM",
+        "Proteomics"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.pls"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.5273942231240979,
+      0.6511608775457394,
+      0.5531604813319206
+    ],
+    "rmse": [
+      1.864141233426993,
+      1.585688246359552,
+      1.8375668973359771
+    ],
+    "percent_within_prediction_interval": [
+      89.33333333333333,
+      86.25,
+      93.33333333333333
+    ]
+  },
+  {
+    "descriptors": {
+      "method": "properties",
+      "categories": [
+        "P-CHEM",
+        "Proteomics"
+      ]
+    },
+    "similarity": {
+      "method": "Algorithm::Similarity.weighted_cosine",
+      "min": 0.5
+    },
+    "prediction": {
+      "method": "Algorithm::Caret.rf"
+    },
+    "feature_selection": {
+      "method": "Algorithm::FeatureSelection.correlation_filter"
+    },
+    "r_squared": [
+      0.699090134942325,
+      0.6411237782588554,
+      0.6472874076102829
+    ],
+    "rmse": [
+      1.4890140668197587,
+      1.6347109487897336,
+      1.5943150863276185
+    ],
+    "percent_within_prediction_interval": [
+      89.47368421052632,
+      91.48936170212765,
+      87.09677419354838
+    ]
+  }
+]

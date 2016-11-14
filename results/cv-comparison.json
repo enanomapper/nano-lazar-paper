@@ -1,34 +1,68 @@
 {
   "best_rmse": {
-    "random_forests.all": 1.4876251315647815
+    "properties.PCHEM.Proteomics.rf": 1.5726800339790368
   },
   "best_r_squared": {
-    "random_forests.all": 0.6930520215621235
+    "properties.PCHEM.Proteomics.rf": 0.6625004402704877
   },
-  "anova_rmse": 6.69458252198834e-08,
-  "anova_r_squared": 5.132271881701197e-09,
+  "anova_rmse": 0.031147444406483184,
+  "anova_r_squared": 7.611029279116117e-07,
   "significant_differences": {
     "r_squared": [
       {
-        "pls.P-CHEM": 5.3e-06
+        "properties.PCHEM.Proteomics.pls-fingerprint.pls": 0.0185492
       },
       {
-        "random_forests.P-CHEM": 1.53e-05
+        "BEST.properties.PCHEM.Proteomics.rf-fingerprint.pls": 0.0004316
       },
       {
-        "weighted_average.P-CHEM": 0.0
+        "properties.Proteomics.pls-fingerprint.pls": 0.00729
+      },
+      {
+        "properties.Proteomics.rf-fingerprint.pls": 0.0183288
+      },
+      {
+        "properties.Proteomics.weighted_average-fingerprint.pls": 0.0162463
+      },
+      {
+        "fingerprint.weighted_average-fingerprint.rf": 0.0049501
+      },
+      {
+        "properties.PCHEM.Proteomics.pls-fingerprint.weighted_average": 5.62e-05
+      },
+      {
+        "BEST.properties.PCHEM.Proteomics.rf-fingerprint.weighted_average": 1.4e-06
+      },
+      {
+        "properties.PCHEM.Proteomics.weighted_average-fingerprint.weighted_average": 0.000506
+      },
+      {
+        "properties.PCHEM.rf-fingerprint.weighted_average": 0.0009246
+      },
+      {
+        "properties.PCHEM.weighted_average-fingerprint.weighted_average": 0.004627
+      },
+      {
+        "properties.Proteomics.pls-fingerprint.weighted_average": 2.13e-05
+      },
+      {
+        "properties.Proteomics.rf-fingerprint.weighted_average": 5.55e-05
+      },
+      {
+        "properties.Proteomics.weighted_average-fingerprint.weighted_average": 4.88e-05
+      },
+      {
+        "BEST.properties.PCHEM.Proteomics.rf-properties.PCHEM.pls": 0.0019997
+      },
+      {
+        "BEST.properties.PCHEM.Proteomics.rf-properties.PCHEM.weighted_average": 0.0066908
+      },
+      {
+        "properties.Proteomics.pls-properties.PCHEM.pls": 0.0307217
       }
     ],
     "rmse": [
-      {
-        "pls.P-CHEM": 2.32e-05
-      },
-      {
-        "random_forests.P-CHEM": 7.13e-05
-      },
-      {
-        "weighted_average.P-CHEM": 4.0e-07
-      }
+
     ]
   }
 }
