@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 ENV["LAZAR_ENV"] = "development"
 require_relative '../../lazar/lib/lazar.rb'
 include OpenTox

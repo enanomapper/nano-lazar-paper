@@ -1,69 +1,33 @@
-# Variables
-figures = figures/weighted_average-pchem-crossvalidations.pdf figures/weighted_average-proteomics-crossvalidations.pdf figures/weighted_average-all-crossvalidations.pdf figures/pls-pchem-crossvalidations.pdf figures/pls-proteomics-crossvalidations.pdf figures/pls-all-crossvalidations.pdf figures/random_forests-pchem-crossvalidations.pdf figures/random_forests-proteomics-crossvalidations.pdf figures/random_forests-all-crossvalidations.pdf
-
 # Paper
-nano-lazar.pdf: nano-lazar.md $(figures) results/cv-comparison.json results/substances-per-endpoint.json
-	pandoc nano-lazar.md --bibliography=references.bibtex --latex-engine=pdflatex --filter ./inline.rb --filter pandoc-crossref --filter pandoc-citeproc -o nano-lazar.pdf 
+nano-lazar.pdf: nano-lazar.md figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/substances-per-endpoint.csv
+	pandoc nano-lazar.md --bibliography=references.bibtex --latex-engine=pdflatex -F pandoc-csv2table -F pandoc-crossref -F pandoc-citeproc -o nano-lazar.pdf 
 
-# Presentations
-enm-presentation.html: enm-presentation.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
-	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o enm-presentation.html enm-presentation.md 
+# Tables
+results/cv-summary-table.csv: results/validation-summaries.json
+	scripts/cv-summary-table.rb
 
-athens-workshop.html: athens-workshop.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
-	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o athens-workshop.html athens-workshop.md 
-
-opentox-workshop.html: opentox-workshop.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
-	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o opentox-workshop.html opentox-workshop.md 
+# substances per endpoint
+results/substances-per-endpoint.csv: results/training-dataset.id
+	scripts/substances-per-endpoint.rb 
 
 # Figures
-figures/random_forests-all-crossvalidations.png: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb random_forests all png
-
-figures/weighted_average-pchem-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb weighted_average P-CHEM
-
-figures/weighted_average-proteomics-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb weighted_average Proteomics
-
-figures/weighted_average-all-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb weighted_average all
-
-figures/pls-pchem-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb pls P-CHEM
-
-figures/pls-proteomics-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb pls Proteomics
-
-figures/pls-all-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb pls all
-
-figures/random_forests-pchem-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb random_forests P-CHEM
-
-figures/random_forests-proteomics-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb random_forests Proteomics
-
-figures/random_forests-all-crossvalidations.pdf: results/repeated-crossvalidations.json
-	ruby scripts/plot.rb random_forests all
+figures/DONE: results/model-validation.ids
+	scripts/plots.rb && touch figures/DONE
 
 # statistical comparison of crossvalidation results
-results/cv-comparison.json: results/repeated-crossvalidations.json
-	ruby scripts/cv-comparison.rb
+results/cv-statistics.json: results/validation-summaries.json
+	scripts/cv-statistics.rb
 
 # repeated crossvalidations
 results/validation-summaries.json: results/model-validation.ids
-	ruby scripts/validation-summaries.rb
-
-# substances per endpoint
-results/substances-per-endpoint.json: results/training-dataset.id
-	ruby scripts/substances-per-endpoint.rb 
+	scripts/validation-summaries.rb
 
 results/model-validation.ids: results/training-dataset.id
-	ruby scripts/model-validations.rb
+	scripts/model-validations.rb
 
 # import enm
 results/training-dataset.id: 
-	ruby scripts/import.rb 
+	scripts/import.rb 
 
 clean: 
-	rm results/*
+	rm results/*; rm figures/*; mongo development --eval "db.dropDatabase()"

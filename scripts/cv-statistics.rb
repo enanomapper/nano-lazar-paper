@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require_relative "setup.rb"
 
 model_validations = JSON.parse(File.read(File.join("results","validation-summaries.json")))
@@ -77,7 +78,7 @@ significant_differences[:rmse] = []
   end
 end
 
-File.open(File.join(RESULTS_DIR,"cv-comparison.json"),"w+") do |f|
+File.open(File.join(RESULTS_DIR,"cv-statistics.json"),"w+") do |f|
   f.puts JSON.pretty_generate({
     :best_rmse => best_rmse,
     :best_r_squared => best_r_squared,

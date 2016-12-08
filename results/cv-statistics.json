@@ -1,0 +1,53 @@
+{
+  "best_rmse": {
+    "properties.PCHEM.Proteomics.rf": 1.5924553416239655
+  },
+  "best_r_squared": {
+    "properties.PCHEM.Proteomics.rf": 0.6599737597619163
+  },
+  "anova_rmse": 0.22975172305372166,
+  "anova_r_squared": 4.1066618260934774e-05,
+  "significant_differences": {
+    "r_squared": [
+      {
+        "BEST.properties.PCHEM.Proteomics.rf-fingerprint.pls": 0.0019842
+      },
+      {
+        "properties.PCHEM.Proteomics.weighted_average-fingerprint.pls": 0.046892
+      },
+      {
+        "properties.Proteomics.pls-fingerprint.pls": 0.0392232
+      },
+      {
+        "properties.Proteomics.rf-fingerprint.pls": 0.0188882
+      },
+      {
+        "properties.Proteomics.weighted_average-fingerprint.pls": 0.0266836
+      },
+      {
+        "fingerprint.weighted_average-fingerprint.rf": 0.0334598
+      },
+      {
+        "properties.PCHEM.Proteomics.pls-fingerprint.weighted_average": 0.0073846
+      },
+      {
+        "BEST.properties.PCHEM.Proteomics.rf-fingerprint.weighted_average": 5.3e-05
+      },
+      {
+        "properties.PCHEM.Proteomics.weighted_average-fingerprint.weighted_average": 0.0011197
+      },
+      {
+        "properties.Proteomics.pls-fingerprint.weighted_average": 0.0009305
+      },
+      {
+        "properties.Proteomics.rf-fingerprint.weighted_average": 0.000446
+      },
+      {
+        "properties.Proteomics.weighted_average-fingerprint.weighted_average": 0.000629
+      }
+    ],
+    "rmse": [
+
+    ]
+  }
+}

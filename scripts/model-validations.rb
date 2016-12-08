@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require_relative "setup.rb"
 
 prediction_feature = Feature.find_or_create_by(name: "log2(Net cell association)", category: "TOX")

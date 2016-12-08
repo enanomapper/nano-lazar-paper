@@ -84,15 +84,15 @@ Algorithms
 For this study we have adapted the modular lazar (*la*zy *s*tructure *a*ctivity *r*elationships)
 read across framework [@Maunz2013] for nanoparticle model development and validation.
 
-lazar was originally developed for small molecules with a defined chemical structure and uses chemical fingerprints for the identification of similar compounds (*neighbors*). Nanoparticles in contrast do not have clearly defined chemical structures, but they can be characterised in terms of measured size, shape, physicochemical properties or the interaction with biological macromolecules. Within nano-lazar we use these properties for the identification of similar nanoparticles (*neighbors*) and as descriptors for local QSAR models.
+lazar was originally developed for small molecules with a defined chemical structure and uses chemical fingerprints for the identification of similar compounds (*neighbors*). Nanoparticles in contrast do not have clearly defined chemical structures, but they can be characterised by their composition (core and coatings), measured properties (e.g. size, shape, physicochemical properties) or the interaction with biological macromolecules. Within nano-lazar we use these properties for the identification of similar nanoparticles (*neighbors*) and as descriptors for local QSAR models.
 
-nano-lazar follows the following basic workflow: For a given nanoparticle
+nano-lazar makes read-across predictions with the following basic workflow: For a given nanoparticle
 lazar 
 
 - searches in a database for similar nanoparticles (*neighbors*) with experimental
-  data, 
+  toxicity data, 
 - builds a local QSAR model with these neighbors and 
-- uses this model to predict the unknown activity of the query compound.
+- uses this model to predict the activity of the query compound.
 
 This procedure resembles an automated version of *read across* predictions in
 toxicology, in machine learning terms it would be classified as a
@@ -102,67 +102,76 @@ Apart from this basic workflow nano-lazar is completely modular and allows the
 researcher to use arbitrary algorithms for similarity searches and local QSAR
 modelling. Within this study we are using and comparing the following algorithms:
 
+### Nanoparticle descriptors
+
+  In order to find similar nanoparticles and to create local QSAR models it is necessary to characterize nanoparticles by descriptors. In this study we are using three types of descriptors:
+
+  - Calculated molecular fingerprints for core and coating compounds (MOLPRINT 2D fingerprints [@Bender04], *MP2D*)
+  - Measured nanoparticle properties from the eNanoMapper database (*P-CHEM*)
+  - Protein interaction data from the eNanoMapper database (*Proteomics*)
+
 ### Feature selection
 
-  Nanoparticle properties in the eNanoMapper database have not been measured with read across and QSAR modelling in mind. For this reason the database contains a lot of features that are irrelevant for toxicity. Using all available features for similarity calculations leads neighbor sets that are unsuitable for local QSAR models, because large numbers of irrelevant features override the impact of relevant features.
+  Calculated MP2D fingerprints are used without feature selection, as preliminary experiments have shown, that feature selection deteriorates the overall performance of read-across models (which is in agreement with our observations on small molecules).
 
-  TODO: example, results section?
+  Nanoparticle properties in the eNanoMapper database have not been measured for the purpose of read across and QSAR modelling. For this reason the database contains a lot of features that are irrelevant for toxicity. In preliminary experiments we have observed that using all available features for similarity calculations leads to neighbor sets that are unsuitable for local QSAR models, because large numbers of irrelevant features override the impact of features that are indeed relevant for toxicity.
 
-  For this reason we return to the lazar concept of *activity specific similarities* [@Maunz2013], by selecting features that correlate with a particular toxicity endpoint (Pearson correlation p-value < 0.05), which leads to a set of *relevant features*.
-  This procedure is repeated separately for each crossvalidation fold, to avoid overfitted models [@????].
+  For this reason we use the lazar concept of *activity specific similarities* [@Maunz2013], by selecting only those features that correlate with a particular toxicity endpoint (Pearson correlation p-value < 0.05), which leads to a set of *relevant features*. This reduced feature set is used for similarity calculations and local QSAR models. 
+  For crossvalidation experiments feature selection is repeated separately for each crossvalidation fold, to avoid overfitted models [@????].
 
 ### Neighbor identification
 
-Similarity calculations are based on the reduced set of relevant features that correlate well with the toxic effect. 
+  For binary features (MP2D fingerprints) we are using the union of core and coating fingerprints to calculate the Tanimoto/Jaccard index and a similarity threshold of $sim > 0.1$.
 
-The chemical similarity between two nanoparticles 
-is defined as the *weighted cosine similarity* of their scaled and centered relevant feature vectors, where the contribution of each feature is weighted by its Pearson correlation coefficient.
+  For quantitative features (P-CHEM, Proteomics) we use the reduced set of relevant features to calculate the *weighted cosine similarity* of their scaled and centered relevant feature vectors, where the contribution of each feature is weighted by its Pearson correlation coefficient with the toxicity endpoint. A similarity threshold of $sim > 0.5$ is used for the identification of neighbors for local QSAR models.
 
-A similarity threshold of $sim > 0.5$ is used for the identification of neighbors for
-local QSAR models. Nanoparticles that are identical to the query particle
-are eliminated from the neighbors to obtain unbiased predictions in the presence of duplicates.
+  In both cases nanoparticles that are identical to the query particle are eliminated from neighbors to obtain unbiased predictions in the presence of duplicates.
 
 ### Local QSAR models and predictions
 
-Only similar nanoparticles (*neighbors*) above the threshold are used for local
-QSAR models.  In this investigation we are comparing three local regression algorithms:
+  For read-across predictions local QSAR models for a query nanoparticle are build with similar nanoparticles (*neighbors*).
 
-- weighted local average (WA)
-- weighted partial least squares regression (PLS)
-- weighted random forests (RF)
 
-In all cases neighbor contributions are weighted by their similarity.
-The weighted local average algorithm serves as a simple and fast benchmark algorithm, whereas 
-partial least squares and random forests are known to work well for a variety of QSAR problems. 
-Partial least squares and random forest models use the `caret` R package
-[@Kuhn08].  Models are trained with the default
-`caret` settings, optimizing the number of PLS components or number of variables available for splitting at each RF tree node
- by bootstrap resampling.
+  In this investigation we are comparing three local regression algorithms:
 
-Finally the local model is applied to predict the activity of the query
-nanoparticle. The RMSE of bootstrapped model predictions is used to construct 95\%
-prediction intervals at 1.96*RMSE.
+  - weighted local average (WA)
+  - weighted partial least squares regression (PLS)
+  - weighted random forests (RF)
 
-If PLS/RF modelling or prediction fails, the program resorts to using the weighted
-average method.
+  In all cases neighbor contributions are weighted by their similarity.
+  The weighted local average algorithm serves as a simple and fast benchmark algorithm, whereas 
+  partial least squares and random forests are known to work well for a variety of QSAR problems. 
+  Partial least squares and random forest models use the `caret` R package
+  [@Kuhn08].  Models are trained with the default
+  `caret` settings, optimizing the number of PLS components or number of variables available for splitting at each RF tree node
+   by bootstrap resampling.
+
+  Finally the local model is applied to predict the activity of the query
+  nanoparticle. The RMSE of bootstrapped model predictions is used to construct 95\%
+  prediction intervals at 1.96*RMSE.
+  Prediction intervals are not available for the 
+  weighted average algorithm, as it does not use internal validation,
+
+  If PLS/RF modelling or prediction fails, the program resorts to using the weighted
+  average method.
 
 ### Applicability domain
 
-The applicability domain of lazar models is determined by the diversity of the
-training data. If no similar compounds are found in the training data (either
-because there are no similar nanoparticles or because similarities cannot be
-determined du to the lack of mesured properties) no predictions will be
-generated. Warnings are also issued, if local QSAR model building or model
-predictions fail. 
+  The applicability domain of lazar models is determined by the diversity of the
+  training data. If no similar compounds are found in the training data (either
+  because there are no similar nanoparticles or because similarities cannot be
+  determined du to the lack of mesured properties) no predictions will be
+  generated. Warnings are also issued, if local QSAR model building or model
+  predictions fail and the program has to resort to the weighted average algorithm. 
 
-The variability of local model predictions is reflected in the prediction
-interval.
+  The accuracy of local model predictions is indicated by the 95\% prediction
+  interval. 
 
 ### Validation
 
-  For validation purposes we use the 
-results from 3 repeated 10-fold crossvalidations with independent training/test
-set splits. Feature selection is performed separately for each training dataset to avoid overfitting. For the same reason we do not use a fixed random seed for training/test set splits. This leads to slightly different results for each repeated crossvalidation run, but it allows to estimate the variability of validation results due to random training/test splits.
+  For validation purposes we use results from 3 repeated 10-fold crossvalidations with independent training/test set splits. Feature selection is performed separately for each training dataset to avoid overfitting. For the same reason we do not use a fixed random seed for training/test set splits. This leads to slightly different results for each repeated crossvalidation run, but it allows to estimate the variability of validation results due to random training/test splits.
+
+  In order to identify significant differences between validation results, outcomes (RMSE, $r^2$, correct 95\% prediction interval) are compared by ANOVA analysis, followed by Tukey multiple comparisons of means.
 
 Results
 =======
@@ -172,12 +181,8 @@ Data requirements
 
 The first in our experiments step was to determine the toxicity endpoints currently available in the eNanoMapper database that have sufficient data for the creation and validation of read across models. [@tbl:endpoints] summarizes the endpoints and data points that are currently available in eNanoMapper.
 
+![Substances per endpoint. s](results/substances-per-endpoint.csv){#tbl:endpoints-summary}
 
-Endpoint | Nr. nanoparticles
----------|------------------
-TODO | TODO
-
-: Summary of toxicity endpoints currently available in eNanoMapper {#tbl:endpoints}
 
 In order to 
 a threshold of at least 100 examples 
@@ -206,55 +211,9 @@ and the local regression algorithms
 - local weighted partial least squares regression
 - local weighted random forests
 
-### Physchem properties
-
-Algorithm        | $r^2$                                      | RMSE                        
------------------|--------------------------------------------|---------------------------------------
-Weighted average | `! scripts/values.rb weighted_average P-CHEM r_squared` | `! scripts/values.rb weighted_average P-CHEM rmse` 
-Partial least squares | `! scripts/values.rb pls P-CHEM r_squared` | `! scripts/values.rb pls P-CHEM rmse` 
-Random forest | `! scripts/values.rb random_forests P-CHEM r_squared` | `! scripts/values.rb random_forests P-CHEM rmse` 
-
-: Repeated crossvalidation results for models with physchem properties, $**$ best results of all experiments, $*$ no statistically significant difference to best results ($p > 0.05$) {#tbl:pchem}
-
-![Correlation of log2 transformed net cell association measurements with weighted average predictions using physchem properties.](figures/weighted_average-pchem-crossvalidations.pdf){#fig:wa-pchem}
-
-![Correlation of log2 transformed net cell association measurements with partial least squares predictions using physchem properties.](figures/pls-pchem-crossvalidations.pdf){#fig:pls-pchem}
-
-![Correlation of log2 transformed net cell association measurements with random forest predictions using physchem properties.](figures/random_forests-pchem-crossvalidations.pdf){#fig:rf-pchem}
+![Repeated crossvalidation results. s](results/cv-summary-table.csv){#tbl:cv-summary}
 
 
-### Protein corona
-
-Algorithm        | $r^2$                                      | RMSE                        
------------------|--------------------------------------------|---------------------------------------
-Weighted average | `! scripts/values.rb weighted_average Proteomics r_squared` | `! scripts/values.rb weighted_average Proteomics rmse` 
-Partial least squares | `! scripts/values.rb pls Proteomics r_squared` | `! scripts/values.rb pls Proteomics rmse` 
-Random forest | `! scripts/values.rb random_forests Proteomics r_squared` | `! scripts/values.rb random_forests Proteomics rmse` 
-
-: Repeated crossvalidation results for models with protein corona data, $**$ best results of all experiments, $*$ no statistically significant difference to best results ($p > 0.05$)
-
-![Correlation of log2 transformed net cell association measurements with weighted average predictions using protein corona data.](figures/weighted_average-proteomics-crossvalidations.pdf){#fig:wa-prot}
-
-![Correlation of log2 transformed net cell association measurements with partial least squares predictions using protein corona data.](figures/pls-proteomics-crossvalidations.pdf){#fig:pls-prot}
-
-![Correlation of log2 transformed net cell association measurements with random forest predictions using protein corona data.](figures/random_forests-proteomics-crossvalidations.pdf){#fig:rf-prot}
-
-
-### Physchem properties and protein corona
-
-Algorithm        | $r^2$                                      | RMSE                        
------------------|--------------------------------------------|---------------------------------------
-Weighted average | `! scripts/values.rb weighted_average all r_squared` | `! scripts/values.rb weighted_average all rmse` 
-Partial least squares | `! scripts/values.rb pls all r_squared` | `! scripts/values.rb pls all rmse` 
-Random forest | **`! scripts/values.rb random_forests all r_squared`** | `! scripts/values.rb random_forests all rmse` 
-
-: Repeated crossvalidation results for models with physchem properties and protein corona data, $**$ best results of all experiments, $*$ no statistically significant difference to best results ($p > 0.05$)
-
-![Correlation of log2 transformed net cell association measurements with weighted average predictions using physchem properties and protein corona data.](figures/weighted_average-all-crossvalidations.pdf){#fig:wa-all}
-
-![Correlation of log2 transformed net cell association measurements with partial least squares predictions using physchem properties and protein corona data.](figures/pls-all-crossvalidations.pdf){#fig:pls-all}
-
-![Correlation of log2 transformed net cell association measurements with random forest predictions using physchem properties and protein corona data.](figures/random_forests-all-crossvalidations.pdf){#fig:rf-all}
 
 Discussion
 ==========
