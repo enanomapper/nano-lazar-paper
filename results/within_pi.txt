@@ -1,0 +1,65 @@
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = within_pi ~ within_pi_names)
+
+$within_pi_names
+                                               diff        lwr          upr
+MP2D.rf-MP2D.pls                         -0.8786050  -6.172109  4.414898941
+PCHEM.pls-MP2D.pls                       -1.2450823  -6.538586  4.048421641
+PCHEM.rf-MP2D.pls                        -0.1311819  -5.424686  5.162321955
+PCHEM_Proteomics.pls-MP2D.pls            -9.2744267 -14.567931 -3.980922843
+PCHEM_Proteomics.rf-MP2D.pls             -6.1673414 -11.460845 -0.873837527
+Proteomics.pls-MP2D.pls                  -8.8328243 -14.126328 -3.539320403
+Proteomics.rf-MP2D.pls                   -5.3920410 -10.685545 -0.098537082
+PCHEM.pls-MP2D.rf                        -0.3664773  -5.659981  4.927026604
+PCHEM.rf-MP2D.rf                          0.7474230  -4.546081  6.040926918
+PCHEM_Proteomics.pls-MP2D.rf             -8.3958218 -13.689326 -3.102317880
+PCHEM_Proteomics.rf-MP2D.rf              -5.2887365 -10.582240  0.004767437
+Proteomics.pls-MP2D.rf                   -7.9542193 -13.247723 -2.660715440
+Proteomics.rf-MP2D.rf                    -4.5134360  -9.806940  0.780067881
+PCHEM.rf-PCHEM.pls                        1.1139003  -4.179604  6.407404217
+PCHEM_Proteomics.pls-PCHEM.pls           -8.0293445 -13.322848 -2.735840580
+PCHEM_Proteomics.rf-PCHEM.pls            -4.9222592 -10.215763  0.371244736
+Proteomics.pls-PCHEM.pls                 -7.5877420 -12.881246 -2.294238140
+Proteomics.rf-PCHEM.pls                  -4.1469587  -9.440463  1.146545181
+PCHEM_Proteomics.pls-PCHEM.rf            -9.1432448 -14.436749 -3.849740893
+PCHEM_Proteomics.rf-PCHEM.rf             -6.0361595 -11.329663 -0.742655577
+Proteomics.pls-PCHEM.rf                  -8.7016424 -13.995146 -3.408138454
+Proteomics.rf-PCHEM.rf                   -5.2608590 -10.554363  0.032644868
+PCHEM_Proteomics.rf-PCHEM_Proteomics.pls  3.1070853  -2.186419  8.400589220
+Proteomics.pls-PCHEM_Proteomics.pls       0.4416024  -4.851901  5.735106343
+Proteomics.rf-PCHEM_Proteomics.pls        3.8823858  -1.411118  9.175889665
+Proteomics.pls-PCHEM_Proteomics.rf       -2.6654829  -7.958987  2.628021027
+Proteomics.rf-PCHEM_Proteomics.rf         0.7753004  -4.518203  6.068804349
+Proteomics.rf-Proteomics.pls              3.4407833  -1.852721  8.734287225
+                                             p adj
+MP2D.rf-MP2D.pls                         0.9987587
+PCHEM.pls-MP2D.pls                       0.9896379
+PCHEM.rf-MP2D.pls                        1.0000000
+PCHEM_Proteomics.pls-MP2D.pls            0.0003426
+PCHEM_Proteomics.rf-MP2D.pls             0.0167534
+Proteomics.pls-MP2D.pls                  0.0005843
+Proteomics.rf-MP2D.pls                   0.0442997
+PCHEM.pls-MP2D.rf                        0.9999964
+PCHEM.rf-MP2D.rf                         0.9995618
+PCHEM_Proteomics.pls-MP2D.rf             0.0009994
+PCHEM_Proteomics.rf-MP2D.rf              0.0502927
+Proteomics.pls-MP2D.rf                   0.0017323
+Proteomics.rf-MP2D.rf                    0.1257804
+PCHEM.rf-PCHEM.pls                       0.9946175
+PCHEM_Proteomics.pls-PCHEM.pls           0.0015768
+PCHEM_Proteomics.rf-PCHEM.pls            0.0782658
+Proteomics.pls-PCHEM.pls                 0.0027478
+Proteomics.rf-PCHEM.pls                  0.1880763
+PCHEM_Proteomics.pls-PCHEM.rf            0.0004011
+PCHEM_Proteomics.rf-PCHEM.rf             0.0197849
+Proteomics.pls-PCHEM.rf                  0.0006859
+Proteomics.rf-PCHEM.rf                   0.0520368
+PCHEM_Proteomics.rf-PCHEM_Proteomics.pls 0.4922140
+Proteomics.pls-PCHEM_Proteomics.pls      0.9999871
+Proteomics.rf-PCHEM_Proteomics.pls       0.2471630
+Proteomics.pls-PCHEM_Proteomics.rf       0.6622397
+Proteomics.rf-PCHEM_Proteomics.rf        0.9994440
+Proteomics.rf-Proteomics.pls             0.3745090
+

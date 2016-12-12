@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
 require_relative "setup.rb"
 
-enm_datasets = Dataset.all.select{|d| !d.name.match('Fold') and d.source.match('data.enanomapper.net')}
+#puts JSON.pretty_generate(Feature.all.select{|f| f.category == "TOX"}.inspect)
+#puts (Feature.all.select{|f| f.category == "TOX"}.collect{|f| f.source}.uniq)
+enm_datasets = Dataset.all.select{|d| d.source and !d.name.match('Fold') and d.source.match('data.enanomapper.net')}
 
 csv = "Dataset, Endpoint, Nanoparticles\n"
+features = {}
 enm_datasets.each do |d|
   case d.name
   when /Protein Corona/
@@ -14,21 +17,25 @@ enm_datasets.each do |d|
   if d.substances.size > 1
     nr = {}
     d.features.each do |f|
-      #p f.source, f.name
-      if d.name.match "MODENA"
+      features[f] ||= 0
+      if d.name.match "MODENA" # fix feature names
+        #p d.substances.collect{|s| [s.core.name, s.coating.collect{|c| c.smiles}]}
+=begin
         case f.source
         when /BAO_0003009/
-          f.name = "Cell Viability Assay"
+          f.name = "Cell Viability Assay " + f.name
         when /BAO_0010001/
-          f.name = "ATP Assay"
+          f.name = "ATP Assay " + f.name
         when /NPO_1709/
-          f.name = "LDH Release Assay"
+          f.name = "LDH Release Assay " + f.name
         when /NPO_1911/
-          f.name = "MTT Assay"
+          f.name = "MTT Assay " + f.name
         end
+=end
       end
      count = 0
      d.substances.each{|s| count += 1 if d.values(s,f)}
+     d.substances.each{|s| features[f] += 1 if d.values(s,f)}
      nr[f.name] ||= []
      nr[f.name] << count
     end
@@ -39,4 +46,5 @@ enm_datasets.each do |d|
   end
 end
 
-File.open(File.join(RESULTS_DIR,"substances-per-endpoint.csv"),"w+"){ |f| f.puts csv }
+#p features.collect{|f,n| [f.name,n]}.compact.to_h
+#File.open(File.join(RESULTS_DIR,"substances-per-endpoint.csv"),"w+"){ |f| f.puts csv }

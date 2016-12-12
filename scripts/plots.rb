@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require_relative "setup.rb"
 
-File.open(File.join(RESULTS_DIR,"model-validation.ids")).each_line do |id|
+File.open(File.join(RESULTS_DIR,"protein-corona-validation.ids")).each_line do |id|
   id.chomp!
   model = Model::Validation.find(id)
   file = "#{model.algorithms["descriptors"]["method"]}-"

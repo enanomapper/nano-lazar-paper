@@ -176,47 +176,53 @@ modelling. Within this study we are using and comparing the following algorithms
 Results
 =======
 
-Data requirements
------------------
-
-The first in our experiments step was to determine the toxicity endpoints currently available in the eNanoMapper database that have sufficient data for the creation and validation of read across models. [@tbl:endpoints] summarizes the endpoints and data points that are currently available in eNanoMapper.
+The first step step was to determine the toxicity endpoints currently available in the eNanoMapper database that have sufficient data for the creation and validation of read across models. [@tbl:endpoints] summarizes the endpoints and data points that are currently available in eNanoMapper.
 
 ![Substances per endpoint. s](results/substances-per-endpoint.csv){#tbl:endpoints-summary}
 
+In order to obtain meaningful and statistically relevant results from crossvalidation experiments we need at least 100 examples per endpoint. In our experience feature selection and local model building frequently fails for smaller datasets (especially within crossvalidation folds) because too few examples are available and crossvalidation results depend more on training/test set splits than on the performance of individual algorithms. This general observation was confirmed by attempts to validate models for the *Cell Viability* endpoint of the MODENA dataset with 41 examples and 4 independent features. In these cases global models may be preferable over local read-across models, but these models will have a narrow applicability domain.
 
-In order to 
-a threshold of at least 100 examples 
-This criterea is currently fulfilled only by the *Net cell association* endpoint of the *Protein corona* dataset, which contains TODO Gold and Silver particles that are characterized by physchem properties and their interaction with proteins in human serum. For this dataset we have found TODO (NTUA abstract?) reference studies [@Walkey14, @Liu15].
+At present only the *Net cell association* endpoint of the *Protein corona* dataset, has a sufficient number of examples to create and validate read-across models. 
+It contains 121 Gold and Silver particles that are characterized by physchem properties (*P-CHEM*) and their interaction with proteins in human serum (*Proteomics*). In addition *MP2D* fingerprints were calculated for core and coating compounds with defined chemical structures.
 
-TODO: literature search
+Abbreviation | Description
+-------------|------------
+TODO         | Example
 
-https://scholar.google.com/scholar?q=protein+corona+nanoparticles+qsar&btnG=&hl=en&as_sdt=0%2C5&as_vis=1
+: *P-CHEM* properties of the *Protein corona* dataset
 
-TODO: description of parameters
+Three repeated crossvalidations with independent training/test set splits were performed for the descriptor classes
 
-Repeated crossvalidations
--------------------------
-
-This section presents the results of repeated crossvalidation experiments with nanoparticle read across models for the *Net cell association* endpoint (log2 transformed).
-
-We have investigated the following descriptor classes 
-
-- Physchem properties TODO size, shape??
-- Proteomics data (TODO erklaeren)
-- Physchem properties and proteomics data
+- *MP2D* fingerprints (calculated, binary)
+- *P-CHEM* properties (measured, quantitative)
+- *Proteomics* data (measured, quantitative)
+- *P-CHEM* and *Proteomics* data combined (measured, quantitative)
 
 and the local regression algorithms
 
-- local weighted average
-- local weighted partial least squares regression
-- local weighted random forests
+- local weighted average (*WA*)
+- local weighted partial least squares regression (*PLS*)
+- local weighted random forests (*RF*)
+
+Results of these experiments are summarized in [@tbl:cv-summary]. Figures [@fig:pchem-prot-rf] and [@fig:mp2d-rf] show the correlation of predictions with measurements for the *P-CHEM*/*Proteomics* and *MP2D* random forests models. Correlation plots for all descriptors and algorithms are available in the supplementary material.
 
 ![Repeated crossvalidation results. s](results/cv-summary-table.csv){#tbl:cv-summary}
 
-
-
 Discussion
 ==========
+
+p-chem/proteomics rf best performing
+mp2d/rf most practical
+
+relevant features
+features used in local models
+
+calculated vs measured
+practical applicability
+prediction interval accuracy
+
+variability of results
+
 
 Liu paper:
 
@@ -239,6 +245,14 @@ statistically significant differences of results (?)
 liu study overfitted!! (discussion)
 references, figures sometimes incorrect
 VIP comes from lui? => choosing preselected proteins == overfitting
+
+which contains TODO Gold and Silver particles that are characterized by physchem properties and their interaction with proteins in human serum. For this dataset we have found TODO (NTUA abstract?) reference studies [@Walkey14, @Liu15].
+
+TODO: literature search
+
+https://scholar.google.com/scholar?q=protein+corona+nanoparticles+qsar&btnG=&hl=en&as_sdt=0%2C5&as_vis=1
+
+TODO: description of parameters
 
 Conclusion
 ==========
