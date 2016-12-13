@@ -1,10 +1,13 @@
 # Paper
-nano-lazar.pdf: nano-lazar.md figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/substances-per-endpoint.csv
+nano-lazar.pdf: nano-lazar.md figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/substances-per-endpoint.csv results/p-chem-properties.csv
 	pandoc nano-lazar.md --bibliography=references.bibtex --latex-engine=pdflatex -F pandoc-csv2table -F pandoc-crossref -F pandoc-citeproc -o nano-lazar.pdf 
 
 # Tables
 results/cv-summary-table.csv: results/validation-summaries.json
 	scripts/cv-summary-table.rb
+
+results/p-chem-properties.csv: results/training-datasets.json
+	scripts/p-chem-properties.rb
 
 # substances per endpoint
 results/substances-per-endpoint.csv: results/training-datasets.json
