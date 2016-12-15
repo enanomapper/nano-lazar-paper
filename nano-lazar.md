@@ -6,7 +6,8 @@ title: |
 include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland
 keywords: (Q)SAR, read-across, nanoparticle
 date: \today
-abstract: " "
+abstract: "The lazar framework for read across predictions was expanded for the prediction of naoparticles, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than models with simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 valus that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, they have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle moels." 
+
 #documentclass: achemso
 bibliography: references.bibtex
 bibliographystyle: achemso
@@ -88,6 +89,7 @@ Datasets
 --------
 
 Nanoparticle characterisations and toxicities were mirrored from the eNanoMapper database [@Jeliazkova15] via its REST API.
+At present only the *Net cell association* endpoint of the *Protein corona* dataset, has a sufficient number of examples (121) to create and validate read-across models, all other public nanoparticle endpoints have less than 20 examples, which makes them unsuitable for local (Q)SAR modelling and crossvalidation experiments.
 
 Algorithms
 ----------
@@ -204,16 +206,9 @@ modelling. Within this study we are using and comparing the following algorithms
 Results
 =======
 
-The first step step was to determine the toxicity endpoints currently available in the eNanoMapper database that have sufficient data for the creation and validation of read across models. [@tbl:endpoints] summarizes the endpoints and data points that are currently available in eNanoMapper.
+The *Protein corona dataset* contains 121 Gold and Silver particles that are characterized by physchem properties (*P-CHEM*) and their interaction with proteins in human serum (*Proteomics*). In addition *MP2D* fingerprints were calculated for core and coating compounds with defined chemical structures.
 
-![Substances per endpoint. s](results/substances-per-endpoint.csv){#tbl:endpoints-summary}
-
-In order to obtain meaningful and statistically relevant results from crossvalidation experiments we need at least 100 examples per endpoint. In our experience feature selection and local model building frequently fails for smaller datasets (especially within crossvalidation folds) because too few examples are available and crossvalidation results depend more on training/test set splits than on the performance of individual algorithms. This general observation was confirmed by attempts to validate models for the *Cell Viability* endpoint of the MODENA dataset with 41 examples and 4 independent features. In these cases global models may be preferable over local read-across models, but these models will have a narrow applicability domain.
-
-At present only the *Net cell association* endpoint of the *Protein corona* dataset, has a sufficient number of examples to create and validate read-across models. 
-It contains 121 Gold and Silver particles that are characterized by physchem properties (*P-CHEM*) and their interaction with proteins in human serum (*Proteomics*). In addition *MP2D* fingerprints were calculated for core and coating compounds with defined chemical structures.
-
-![*P-CHEM* properties of the *Protein corona* dataset. s](results/p-chem-properties.csv){#tbl:p-chem-properties}
+![*P-CHEM* properties of the *Protein corona* dataset. m](results/p-chem-properties.csv){#tbl:p-chem-properties}
 
 Three repeated crossvalidations with independent training/test set splits were performed for the descriptor classes
 
@@ -230,7 +225,7 @@ and the local regression algorithms
 
 Results of these experiments are summarized in [@tbl:cv_summary]. [@fig:fingerprint], [@fig:pchem] and [@fig:prot] show the correlation of predictions with measurements for *MP2D*, *P-CHEM* and *Proteomics* random forests models. Correlation plots for all descriptors and algorithms are available in the supplementary material, which can be obtained from Github (https://com/enanomapper/nano-lazar-paper) or DockerHub (https://hub.docker.com/r/insilicotox/nano-lazar-paper/).
 
-![Results from five independend crossvalidations for various descriptor/algorithm combinations. Best results are indicated by bold letters, statistically significant ($p<0.05$) poorer results by italics. Results in normal fonts show no significant difference to the best results. s](results/cv-summary-table.csv){#tbl:cv_summary}
+![Results from five independend crossvalidations for various descriptor/algorithm combinations. Best results are indicated by bold letters, statistically significant ($p<0.05$) poorer results by italics. Results in normal fonts show no significant difference to the best results. m](results/cv-summary-table.csv){#tbl:cv_summary}
 
 <div id="fig:fingerprint">
 ![](figures/fingerprint-rf-0.pdf){#fig:fingerprint0 width=20%}
@@ -327,6 +322,10 @@ TODO: description of parameters
 
 Conclusion
 ==========
+
+We have performed 60 independent crossvalidation experiments for the Protein Corona dataset obtained from the eNanoMapper database in order to identify the best combination of descriptors for nanoparticle read across predictions. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than models with simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 valus that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, they have significantly lower r^2 values than the best results, but RMSE and prediction intervals are comparable to the best results. 
+
+For practical purposes we suggest to use nanoparticle properties when measurements are available and the newly developed nanoparticle fingerprints for screening purposes without physicochemical measurements. Both models have been implemented with a graphical user interface which is publicly available at https://nano-lazar.in-silico.ch.
 
 Acknowledgements
 ================
