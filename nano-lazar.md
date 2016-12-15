@@ -2,7 +2,7 @@
 author: |
   Christoph Helma^1^, Micha Rautenberg^1^, Denis Gebele^1^
 title: |
-  nano-lazar: Validation of read across predictions for nanoparticle toxicities
+  nano-lazar: Read across predictions for nanoparticle toxicities with calculated and measured properties
 include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland
 keywords: (Q)SAR, read-across, nanoparticle
 date: \today
@@ -13,6 +13,7 @@ bibliographystyle: achemso
 figPrefix: Figure
 eqnPrefix: Equation
 tblPrefix: Table
+#subfigGrid: true
 output:
   pdf_document:
     fig_caption: yes
@@ -227,25 +228,72 @@ and the local regression algorithms
 - local weighted partial least squares regression (*PLS*)
 - local weighted random forests (*RF*)
 
-Results of these experiments are summarized in [@tbl:cv-summary]. Figures [@fig:pchem-prot-rf] and [@fig:mp2d-rf] show the correlation of predictions with measurements for the *P-CHEM*/*Proteomics* and *MP2D* random forests models. Correlation plots for all descriptors and algorithms are available in the supplementary material.
+Results of these experiments are summarized in [@tbl:cv_summary]. [@fig:fingerprint], [@fig:pchem] and [@fig:prot] show the correlation of predictions with measurements for *MP2D*, *P-CHEM* and *Proteomics* random forests models. Correlation plots for all descriptors and algorithms are available in the supplementary material, which can be obtained from Github (https://com/enanomapper/nano-lazar-paper) or DockerHub (https://hub.docker.com/r/insilicotox/nano-lazar-paper/).
 
-![Repeated crossvalidation results. s](results/cv-summary-table.csv){#tbl:cv-summary}
+![Results from five independend crossvalidations for various descriptor/algorithm combinations. Best results are indicated by bold letters, statistically significant ($p<0.05$) poorer results by italics. Results in normal fonts show no significant difference to the best results. s](results/cv-summary-table.csv){#tbl:cv_summary}
+
+<div id="fig:fingerprint">
+![](figures/fingerprint-rf-0.pdf){#fig:fingerprint0 width=20%}
+![](figures/fingerprint-rf-1.pdf){#fig:fingerprint1 width=20%}
+![](figures/fingerprint-rf-2.pdf){#fig:fingerprint2 width=20%}
+![](figures/fingerprint-rf-3.pdf){#fig:fingerprint3 width=20%}
+![](figures/fingerprint-rf-4.pdf){#fig:fingerprint4 width=20%}
+
+Correlation of predicted vs. measured values for five independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
+</div>
+
+<div id="fig:pchem">
+![](figures/properties-PCHEM-rf-0.pdf){#fig:pchem0 width=20%}
+![](figures/properties-PCHEM-rf-1.pdf){#fig:pchem1 width=20%}
+![](figures/properties-PCHEM-rf-2.pdf){#fig:pchem2 width=20%}
+![](figures/properties-PCHEM-rf-3.pdf){#fig:pchem3 width=20%}
+![](figures/properties-PCHEM-rf-4.pdf){#fig:pchem4 width=20%}
+
+Correlation of predicted vs. measured values for five independent crossvalidations with *P-CHEM* descriptors and local *random forest* models
+</div>
+
+<div id="fig:prot">
+![](figures/properties-Proteomics-rf-0.pdf){#fig:prot0 width=20%}
+![](figures/properties-Proteomics-rf-1.pdf){#fig:prot1 width=20%}
+![](figures/properties-Proteomics-rf-2.pdf){#fig:prot2 width=20%}
+![](figures/properties-Proteomics-rf-3.pdf){#fig:prot3 width=20%}
+![](figures/properties-Proteomics-rf-4.pdf){#fig:prot4 width=20%}
+
+Correlation of predicted vs. measured values for five independent crossvalidations with *Proteomics* descriptors and local *random forest* models
+</div>
 
 Discussion
 ==========
 
-p-chem/proteomics rf best performing
-mp2d/rf most practical
+[@tbl:cv_summary] summarizes the results from five independent crossvalidations for all descriptor/algorithm combinations. The best results in terms of $RMSE$ and $R^2$ were obtained with *Proteomics* descriptors and local weighted *random forest* models. There are however six models without statistically significant differences in terms of $RMSE$ and five models in terms of $r^2$. The most accurate 95\% prediction intervals were obtained with *P-CHEM* descriptors and *random forest* models, this models does not differ significantly from the best $RMSE$ and $r^2$ results.
+
+
+### Descriptors
+
+  In terms of descriptors the best overall results were obtained with *Proteomics* descriptors. This is in agreement with previous findings from other groups [@Walkey14, @Liu15, @georgia]. It is however interesting to note that the prediction intervals are significantly more inaccurate than those from other descriptors and the percentage of measurements within the prediction interval is usually lower than 90\% instead of the expected 95\%.
+
+  Using *P-CHEM* descriptors in addition to *Proteomics* does not lead to improved models, *random forest* results are even significantly worse than with *Proteomics* descriptors alone. 
+
+  *P-CHEM* descriptors alone perform surprisingly well, especially in combination with local *random forest* models, which does not show statistically significant differences to the best *Proteomics* model. On average more than 95\% of the measurements fall within the 95\% prediction interval, with significantly better results than for *Proteomics* descriptors.
+
+  All *MP2D* models have poorer performance in terms of $r^2$, but the *random forest* model does not differ significantly in terms of $RMSE$ and measurements within the prediction interval. 
+
+### Algorithms
+
+  With the exception of *P-CHEM*/*Proteomics* descriptors *random forests* models perform better than *partial least squares* and *weighted average* models with significant differences for *MP2D* and *P-CHEM* descriptors (detailed pairwise comparisons are available in the supplementary material). Interestingly the simple *weighted average* algorithm shows no significant difference to the best performing model for the *Proteomics* and *P-CHEM*/*Proteomics* descriptors.
+
+### Interpretation and practical applicability
+
+Although *random forest* models with *Proteomics* descriptors have the best performance in terms of $RMSE$ and $r^2$, the accuracy of the 95% prediction interval is significantly lower than for *MP2D* and *P-CHEM* models (detailed pairwise comparisons in the supplementary material). It is likely that this instability is caused by a unfavourable ratio between descriptors (TODO) and training examples (121), although feature selection reduces the number of independent descriptors from TODO to TODO and $random forest$ and $partial least squares$ algorithms are robust against a large number of descriptors. The observation that the *weighted average* algorithm, which uses descriptors only for similarity calculations and not for local model building, performs comparatively well for *Proteomics* descriptors, may support this interpretation.
+
+*P-CHEM* *random forest* models have the most accurate prediction interval and the $RMSE$ and $r^2$ performance is comparable to the $Proteomics$ model, although it utilizes a much lower number of descriptors (TODO before feature selection, TODO after feature selection) which have not been measured for the purpose of (Q)SAR modelling. The main advantage from a practical point of view is that predictions of novel nanoparticles require a much lower amount of measurements than with $Proteomics$ data (although this argument may become obsolete with new high throughput techniques).
+
+*MP2D* fingerprint descriptors are interesting from a practical point of view, because they do not require any measurements of nanoparticle properties. They need however defined chemical structures for core and coating compounds, which makes makes this approach infeasible for nanoparticle classes like carbon nanotubes. The resulting models do not differ significantly from the best results in terms of prediction accuracy ($RMSE$, measurements within prediction interval), but are significantly lower in terms of explained model variance ($r^2$). For practical purposes one may argue that the primary objective of read across models is to make accurate predictions and not to explain the model variance. For this reason we consider $r^2$ performance as secondary compared to $RMSE$ and prediction interval accuracies.
+
+Unfortunately our results are not directly comparable to results from other studies , because they use different validation schemes (e.g. bootstrap instead of crossvalidation), exclude part of the training data (silver particles, sometimes also some gold particles) and some of them have serious methodological flaws (e.g. global feature selection before validation splits). Unfortunately none of these publications provides sufficient information to repeat their validation experiments with our models.
 
 relevant features
 features used in local models
-
-calculated vs measured
-practical applicability
-prediction interval accuracy
-
-variability of results
-
 
 Liu paper:
 
