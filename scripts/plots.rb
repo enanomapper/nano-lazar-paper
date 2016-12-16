@@ -4,8 +4,11 @@ require_relative "setup.rb"
 File.open(File.join(RESULTS_DIR,"protein-corona-validation.ids")).each_line do |id|
   id.chomp!
   model = Model::Validation.find(id)
-  file = "#{model.algorithms["descriptors"]["method"]}-"
-  file += "#{model.algorithms["descriptors"]["categories"].collect{|c| c.gsub("-","")}.join "."}-" if model.algorithms["descriptors"]["categories"]
+  if model.algorithms["descriptors"]["categories"]
+    file = "#{model.algorithms["descriptors"]["categories"].collect{|c| c.gsub("-","")}.join "."}-"
+  else
+    file = "MP2D-"
+  end
   file += model.algorithms["prediction"]["method"].split('.').last
   model.crossvalidations.each_with_index do |cv,j|
     pdf = File.join(FIG_DIR,"#{file}-#{j}.pdf")

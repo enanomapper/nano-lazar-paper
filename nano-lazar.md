@@ -6,7 +6,7 @@ title: |
 include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland
 keywords: (Q)SAR, read-across, nanoparticle
 date: \today
-abstract: "The lazar framework for read across predictions was expanded for the prediction of naoparticles, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than models with simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 valus that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, they have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle moels." 
+abstract: "The lazar framework for read across predictions was expanded for the prediction of naoparticles, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than models with simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 valus that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, random forest models have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle random forest models." 
 
 #documentclass: achemso
 bibliography: references.bibtex
@@ -23,110 +23,138 @@ header-includes:
 #  - \linenumbers
 ...
 
-Introduction
-============
+# Introduction
 
-Read across is a commonly used approach for the risk assessment of chemicals.
-Read across procedures are based on the assumption that similar compounds cause
-similar biological effects. In order to estimate the activity of a novel
-compound a researcher will search for similar compounds with known biological
-activities and deduce the activity of the new compound from this data. In order
-to make the procedure reproducible, traceable and objective the authors of this
-paper have developed a computer program (`lazar`, [@Maunz2013]) that automates
-the risk assessment process. The objective of the current study was to extend
-`lazar` for the risk assessment of nanomaterials.
+  Read across is a commonly used approach for the risk assessment of chemicals.
+  Read across procedures are based on the assumption that similar compounds cause
+  similar biological effects. In order to estimate the activity of a novel
+  compound a researcher will search for similar compounds with known biological
+  activities and deduce the activity of the new compound from this data. In order
+  to make the procedure reproducible, traceable and objective the authors of this
+  paper have developed a computer program (`lazar`, [@Maunz2013]) that automates
+  the risk assessment process. The objective of the current study was to extend
+  `lazar` for the risk assessment of nanomaterials.
 
-The concept of chemical *similarity* is the key idea behind all read across
-procedures. But similarity is not an intrinsic property of substances, it can
-be defined in different ways and the utility and performance of similarity
-measures depends on each specific use case.
+  The concept of chemical *similarity* is the key idea behind all read across
+  procedures. But similarity is not an intrinsic property of substances, it can
+  be defined in different ways and the utility and performance of similarity
+  measures depends on each specific use case.
 
-*Structural similarity* is most frequently used in the risk assessment of
-compounds with a well defined chemical structure. These similarity definitions
-are obviously not directly applicable to nanomaterials, because they lack
-a well defined structure. It is however relatively straightforward to adapt
-other concepts, e.g. similarity in terms of chemical properties or in terms of
-biological effects. Compared to structural similarity, which can be calculated
-directly from chemical structures, these similarity definitions depend on
-actual *measurements*, which makes their estimation more expensive and time
-consuming. For this reason we have developed a novel concept of structural
-similarity for nanomaterials, which is based on the chemical fingerprints of
-core and coating materials.
+  *Structural similarity* is most frequently used in the risk assessment of
+  compounds with a well defined chemical structure. These similarity definitions
+  are obviously not directly applicable to nanomaterials, because they lack
+  a well defined structure. It is however relatively straightforward to adapt
+  other concepts, e.g. similarity in terms of chemical properties or in terms of
+  biological effects. Compared to structural similarity, which can be calculated
+  directly from chemical structures, these similarity definitions depend on
+  actual *measurements*, which makes their estimation more expensive and time
+  consuming. For this reason we have developed a novel concept of structural
+  similarity for nanomaterials, which is based on the chemical fingerprints of
+  core and coating materials. According to our knowledge, this is the first
+  time that nanoparticle toxicities have been predicted from calculated
+  properties alone.
 
-In order to estimate the utility of these similarity concepts for nanomaterials, we have performed model building and validation experiments for models based on
+  In order to estimate the utility of these similarity concepts for
+  nanomaterials, we have performed model building and validation experiments for
+  models based on
 
-- structural similarity (based on core and coating fingerprints)
-- property similarity (based on measured nanoparticle properties)
-- biological similarity (based on the interaction with serum proteins)
+  - structural similarity (based on core and coating fingerprints)
+  - property similarity (based on measured nanoparticle properties)
+  - biological similarity (based on the interaction with serum proteins)
 
-and compared the local regression algorithms
+  and compared the local regression algorithms
 
-- weighted average
-- partial least squares
-- random forests
+  - weighted average
+  - partial least squares
+  - random forests
 
-In addition we intend to address the important topic of *reproducible research*
-with this publication. It is in our experience frequently impossible to
-reproduce computational experiments for a variety of reasons, e.g.
+  In addition we intend to address the important topic of *reproducible research*
+  with this publication. It is in our experience frequently impossible to
+  reproduce computational experiments for a variety of reasons, e.g.
 
-- publications lack important details about algorithms and data
-- authors use proprietary software that does not disclose its algorithms
-- original software, libraries and operating systems are not available anymore
+  - publications lack important details about algorithms and data
+  - authors use proprietary software that does not disclose its algorithms
+  - original software, libraries and operating systems are not available anymore
 
-Our attempt to address these problems is to provide a self contained
-environment that contains all software and data for the experiments presented
-in this manuscript. It contains also a build system for the manuscript, that
-pulls results and figures directly from validation experiments (similar to the
-`R knitr` package [@Xie2015]).
+  Our attempt to address these problems is to provide a self contained
+  environment that contains all software and data for the experiments presented
+  in this manuscript. It contains also a build system for the manuscript, that
+  pulls results and figures directly from validation experiments (similar to the
+  `R knitr` package [@Xie2015]).
 
-The complete self-contained system with the compiled manuscript is publicly
-available as a `docker` image from DockerHub
-(<https://hub.docker.com/r/insilicotox/nano-lazar-paper>).
+  A self-contained system with the compiled manuscript and all libraries and
+  external programs required for repeating the validation experiments is
+  publicly available as a `docker` image from DockerHub
+  (<https://hub.docker.com/r/insilicotox/nano-lazar-paper>). Apart from
+  repeating the experiments for this paper this image can also be used for
+  extending the system, testing other descriptor and modelling algorithms and
+  comparing validation results with the current benchmark.
 
-Source code for the manuscript and validation experiments has been published
-under a GPL3 license at Github (<https://github.com/opentox/nano-lazar-paper>).
-The `lazar` framework library has been published under the same terms
-(<https://github.com/opentox/lazar>).
+  Source code for the manuscript and validation experiments has been published
+  under a GPL3 license at Github (<https://github.com/opentox/nano-lazar-paper>).
+  The `lazar` framework library has been published under the same license
+  (<https://github.com/opentox/lazar>).
 
-`nano-lazar` model predictions and validation results are also publicly
-accessible from a straightforward and free webinterface at
-<https://nano-lazar.in-silico.ch>.
+  A graphical webinterface for `nano-lazar` model predictions and validation
+  results is publicly accessible at <https://nano-lazar.in-silico.ch>, source
+  code for the GUI can be obtained from
+  <https://github.com/enanomapper/nano-lazar>.
 
-Methods
-=======
+  Github and DockerHub repositories are tagged with `nano-lazar-paper` to
+  identify the software version that corresponds to the published paper. As
+  this project is under continuous development, it is likely that some of the
+  algorithms will change in the future. In this case it is relatively
+  straightforward to identify differences with the versioning system or to use
+  the submitted version as benchmark for further developments.
 
-  The following sections give a high level overview about `nano-lazar` algorithms. Readers interested in unambiguous algorithm definitions should refer to the source code links in the text.
+# Methods
 
-Datasets
---------
+  The following sections give a high level overview about `nano-lazar`
+  algorithms. Readers interested in unambiguous algorithm definitions can
+  refer to the source code links in the text.
 
-Nanoparticle characterisations and toxicities were mirrored from the eNanoMapper database [@Jeliazkova15] via its REST API (<https://github.com/opentox/lazar/blob/development/lib/import.rb#L9-L118>).
-At present only the *Net cell association* endpoint of the *Protein corona* dataset, has a sufficient number of examples (121) to create and validate read-across models, all other public nanoparticle endpoints have less than 20 examples, which makes them unsuitable for local (Q)SAR modelling and crossvalidation experiments.
+## Datasets
 
-Algorithms
-----------
+  Nanoparticle characterisations and toxicities were mirrored from the
+  eNanoMapper database [@Jeliazkova15] via its REST API
+  (<https://github.com/opentox/lazar/blob/development/lib/import.rb#L9-L118>). At
+  present only the *Net cell association* endpoint of the *Protein corona*
+  dataset, has a sufficient number of examples (121) to create and validate
+  read-across models, all other public nanoparticle endpoints have less than 20
+  examples, which makes them unsuitable for local (Q)SAR modelling and
+  crossvalidation experiments.
 
-For this study we have adapted the modular `lazar` (*la*zy *s*tructure *a*ctivity *r*elationships)
-read across framework [@Maunz2013] for nanoparticle model development and validation.
+## Algorithms
 
-lazar was originally developed for small molecules with a defined chemical structure and uses chemical fingerprints for the identification of similar compounds (*neighbors*). Nanoparticles in contrast do not have clearly defined chemical structures, but they can be characterised by their composition (core and coatings), measured properties (e.g. size, shape, physicochemical properties) or the interaction with biological macromolecules. Within `nano-lazar` we use these properties for the identification of similar nanoparticles (*neighbors*) and as descriptors for local QSAR models.
+  For this study we have adapted the modular `lazar` (*la*zy *s*tructure
+  *a*ctivity *r*elationships) read across framework [@Maunz2013] for nanoparticle
+  model development and validation.
 
-nano-lazar makes read-across predictions with the following basic workflow: For a given nanoparticle
-lazar 
+  lazar was originally developed for small molecules with a defined chemical
+  structure and uses chemical fingerprints for the identification of similar
+  compounds (*neighbors*). Nanoparticles in contrast do not have clearly defined
+  chemical structures, but they can be characterised by their composition (core
+  and coatings), measured properties (e.g. size, shape, physicochemical
+  properties) or the interaction with biological macromolecules. Within
+  `nano-lazar` we use these properties for the identification of similar
+  nanoparticles (*neighbors*) and as descriptors for local QSAR models.
 
-- searches in a database for similar nanoparticles (*neighbors*) with experimental
-  toxicity data, 
-- builds a local QSAR model with these neighbors and 
-- uses this model to predict the activity of the query compound.
+  nano-lazar makes read-across predictions with the following basic workflow: For
+  a given nanoparticle lazar 
 
-This procedure resembles an automated version of *read across* predictions in
-toxicology, in machine learning terms it would be classified as a
-*k-nearest-neighbor* algorithm 
-(<https://github.com/opentox/lazar/blob/development/lib/model.rb#L180-L257>).
+  - searches in a database for similar nanoparticles (*neighbors*) with experimental
+    toxicity data, 
+  - builds a local QSAR model with these neighbors and 
+  - uses this model to predict the activity of the query compound.
 
-Apart from this basic workflow nano-lazar is completely modular and allows the
-researcher to use arbitrary algorithms for similarity searches and local QSAR
-modelling. Within this study we are using and comparing the following algorithms:
+  This procedure resembles an automated version of *read across* predictions in
+  toxicology, in machine learning terms it would be classified as a
+  *k-nearest-neighbor* algorithm 
+  (<https://github.com/opentox/lazar/blob/development/lib/model.rb#L180-L257>).
+
+  Apart from this basic workflow nano-lazar is completely modular and allows the
+  researcher to use arbitrary algorithms for similarity searches and local QSAR
+  modelling. Within this study we are using and comparing the following algorithms:
 
 ### Nanoparticle descriptors
 
@@ -134,9 +162,25 @@ modelling. Within this study we are using and comparing the following algorithms
   necessary to characterize nanoparticles by descriptors. In this study we are
   using three types of descriptors:
 
-  - Calculated molecular fingerprints for core and coating compounds (MOLPRINT 2D fingerprints [@Bender04], *MP2D*, <https://github.com/opentox/lazar/blob/development/lib/nanoparticle.rb#L17-L21>) 
-  - Measured nanoparticle properties from the eNanoMapper database (*P-CHEM*)
-  - Protein interaction data from the eNanoMapper database (*Proteomics*)
+Structural descriptors
+  ~ Calculated molecular fingerprints for core and coating compounds (MOLPRINT 2D fingerprints [@Bender04], *MP2D*, <https://github.com/opentox/lazar/blob/development/lib/nanoparticle.rb#L17-L21>) 
+
+Physico-chemical nanoparticle properties
+  ~ Measured nanoparticle properties from the eNanoMapper database (*P-CHEM*)
+
+Biological nanoparticle properties
+  ~ Protein interaction data from the eNanoMapper database (*Proteomics*)
+
+Nanoparticle fingerprints are a novel development for the characterisation of
+nanoparticles with well defined core and coating compounds. In this case it is
+possible to create molecular fingerprints for all of these compounds and use
+the union of these fingerprints as nanoparticle fingerprint. Based on our
+experience with small molecules we have selected MOLPRINT 2D fingerprints
+[@Bender04], which typically outperform predefined fingerprints (e.g. $MACCS$,
+$FP4$) for (Q)SAR purposes. Despite its simplicity the concept works
+surprisingly well (see validation results) and enables toxicity predictions
+without measured properties. This can be useful e.g. for fast and cheap
+nanoparticle toxicity screening programs.
 
 ### Feature selection
 
@@ -232,8 +276,7 @@ modelling. Within this study we are using and comparing the following algorithms
   For validation purposes we use results from 5 repeated 10-fold
   crossvalidations with independent training/test set splits
   (<https://github.com/opentox/lazar/blob/development/lib/crossvalidation.rb#L85-L93>).
-  Feature
-  selection is performed separately for each training dataset to avoid
+  Feature selection is performed for each training dataset separately to avoid
   overfitting. For the same reason we do not use a fixed random seed for
   training/test set splits. This leads to slightly different results for each
   repeated crossvalidation run, but it allows to estimate the variability of
@@ -248,7 +291,11 @@ modelling. Within this study we are using and comparing the following algorithms
   lead to exactly the same results, because crossvalidation folds are created
   randomly to avoid overfitting for fixed training/test set splits.
 
-### Availability
+  These five 10-fold crossvalidations are assigned to the final model, which is
+  build from the complete training data. This validated model is used for
+  further predictions, e.g. from the graphical webinterface.
+
+## Availability
 
   Public webinterface: <https://nano-lazar.in-silico.ch>
 
@@ -262,129 +309,230 @@ modelling. Within this study we are using and comparing the following algorithms
 
   Docker image with manuscript, validation experiments, `lazar` libraries and third party dependencies: <https://hub.docker.com/r/insilicotox/nano-lazar-paper/>
 
-Results
-=======
 
-The *Protein corona dataset* contains 121 Gold and Silver particles that are characterized by physchem properties (*P-CHEM*) and their interaction with proteins in human serum (*Proteomics*). In addition *MP2D* fingerprints were calculated for core and coating compounds with defined chemical structures.
+# Results
 
-Three repeated crossvalidations with independent training/test set splits were performed for the descriptor classes
+  The *Protein corona dataset* contains 121 Gold and Silver particles that are
+  characterized by physchem properties (*P-CHEM*) and their interaction with
+  proteins in human serum (*Proteomics*). In addition *MP2D* fingerprints were
+  calculated for core and coating compounds with defined chemical structures.
 
-- *MP2D* fingerprints (calculated, binary)
-- *P-CHEM* properties (measured, quantitative)
-- *Proteomics* data (measured, quantitative)
-- *P-CHEM* and *Proteomics* data combined (measured, quantitative)
+  Five repeated crossvalidations with independent training/test set splits were
+  performed for the descriptor classes
 
-and the local regression algorithms
+  - *MP2D* fingerprints (calculated, binary)
+  - *P-CHEM* properties (measured, quantitative)
+  - *Proteomics* data (measured, quantitative)
+  - *P-CHEM* and *Proteomics* data combined (measured, quantitative)
 
-- local weighted average (*WA*)
-- local weighted partial least squares regression (*PLS*)
-- local weighted random forests (*RF*)
+  and the local regression algorithms
 
-Results of these experiments are summarized in Table 1. [@fig:fingerprint], [@fig:pchem] and [@fig:prot] show the correlation of predictions with measurements for *MP2D*, *P-CHEM* and *Proteomics* random forests models. Correlation plots for all descriptors and algorithms are available as supplementary material (<https://github.com/enanomapper/nano-lazar-paper/tree/master/figures>).
-Table 2 lists *P-CHEM* properties of the Protein Corona dataset and their correlation with the *Net Cell Association* endpoint.
+  - local weighted average (*WA*)
+  - local weighted partial least squares regression (*PLS*)
+  - local weighted random forests (*RF*)
 
-<!-- Table references are broken in pandoc-csv2table -->
+  Results of these experiments are summarized in Table 1. [@fig:fingerprint],
+  [@fig:pchem] and [@fig:prot] show the correlation of predictions with
+  measurements for *MP2D*, *P-CHEM* and *Proteomics* random forests models.
+  Correlation plots for all descriptors and algorithms are available as
+  supplementary material
+  (<https://github.com/enanomapper/nano-lazar-paper/tree/master/figures>). Table
+  2 lists *P-CHEM* properties of the Protein Corona dataset and their correlation
+  with the *Net Cell Association* endpoint.
+
+  <!-- Table references are broken in pandoc-csv2table -->
 
 ![Results from five independend crossvalidations for various descriptor/algorithm combinations. Best results (mean of 5 crossvalidations) are indicated by bold letters, statistically significant ($p<0.05$) different results by italics. Results in normal fonts do not differ significantly from best results. m](results/cv-summary-table.csv){#tbl:cv_summary}
 
 <div id="fig:fingerprint">
-![](figures/fingerprint-rf-0.pdf){#fig:fingerprint0 width=20%}
-![](figures/fingerprint-rf-1.pdf){#fig:fingerprint1 width=20%}
-![](figures/fingerprint-rf-2.pdf){#fig:fingerprint2 width=20%}
-![](figures/fingerprint-rf-3.pdf){#fig:fingerprint3 width=20%}
-![](figures/fingerprint-rf-4.pdf){#fig:fingerprint4 width=20%}
+![](figures/MP2D-rf-0.pdf){#fig:fingerprint0 width=20%}
+![](figures/MP2D-rf-1.pdf){#fig:fingerprint1 width=20%}
+![](figures/MP2D-rf-2.pdf){#fig:fingerprint2 width=20%}
+![](figures/MP2D-rf-3.pdf){#fig:fingerprint3 width=20%}
+![](figures/MP2D-rf-4.pdf){#fig:fingerprint4 width=20%}
 
 Correlation of predicted vs. measured values for five independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
 </div>
 
 <div id="fig:pchem">
-![](figures/properties-PCHEM-rf-0.pdf){#fig:pchem0 width=20%}
-![](figures/properties-PCHEM-rf-1.pdf){#fig:pchem1 width=20%}
-![](figures/properties-PCHEM-rf-2.pdf){#fig:pchem2 width=20%}
-![](figures/properties-PCHEM-rf-3.pdf){#fig:pchem3 width=20%}
-![](figures/properties-PCHEM-rf-4.pdf){#fig:pchem4 width=20%}
+![](figures/PCHEM-rf-0.pdf){#fig:pchem0 width=20%}
+![](figures/PCHEM-rf-1.pdf){#fig:pchem1 width=20%}
+![](figures/PCHEM-rf-2.pdf){#fig:pchem2 width=20%}
+![](figures/PCHEM-rf-3.pdf){#fig:pchem3 width=20%}
+![](figures/PCHEM-rf-4.pdf){#fig:pchem4 width=20%}
 
 Correlation of predicted vs. measured values for five independent crossvalidations with *P-CHEM* descriptors and local *random forest* models
 </div>
 
 <div id="fig:prot">
-![](figures/properties-Proteomics-rf-0.pdf){#fig:prot0 width=20%}
-![](figures/properties-Proteomics-rf-1.pdf){#fig:prot1 width=20%}
-![](figures/properties-Proteomics-rf-2.pdf){#fig:prot2 width=20%}
-![](figures/properties-Proteomics-rf-3.pdf){#fig:prot3 width=20%}
-![](figures/properties-Proteomics-rf-4.pdf){#fig:prot4 width=20%}
+![](figures/Proteomics-rf-0.pdf){#fig:prot0 width=20%}
+![](figures/Proteomics-rf-1.pdf){#fig:prot1 width=20%}
+![](figures/Proteomics-rf-2.pdf){#fig:prot2 width=20%}
+![](figures/Proteomics-rf-3.pdf){#fig:prot3 width=20%}
+![](figures/Proteomics-rf-4.pdf){#fig:prot4 width=20%}
 
 Correlation of predicted vs. measured values for five independent crossvalidations with *Proteomics* descriptors and local *random forest* models
 </div>
 
 ![*P-CHEM* properties of the *Protein corona* dataset. Features correlating with the *Net cell association* endpoint (*relevant features*) are indicated by bold letters. m](results/p-chem-properties.csv){#tbl:p-chem-properties}
 
-Discussion
-==========
+# Discussion
 
-Table 1 summarizes the results from five independent crossvalidations for all descriptor/algorithm combinations. The best results in terms of $RMSE$ and $R^2$ were obtained with *Proteomics* descriptors and local weighted *random forest* models. There are however six models without statistically significant differences in terms of $RMSE$ and five models in terms of $r^2$. The most accurate 95\% prediction intervals were obtained with *P-CHEM* descriptors and *random forest* models, this models does not differ significantly from the best $RMSE$ and $r^2$ results.
+  Table 1 summarizes the results from five independent crossvalidations for all
+  descriptor/algorithm combinations. The best results in terms of $RMSE$ and
+  $R^2$ were obtained with *Proteomics* descriptors and local weighted *random
+  forest* models. There are however six models without statistically significant
+  differences in terms of $RMSE$ and five models in terms of $r^2$. The most
+  accurate 95\% prediction intervals were obtained with *P-CHEM* descriptors and
+  *random forest* models, this models does not differ significantly from the best
+  $RMSE$ and $r^2$ results.
 
 
-### Descriptors
+## Descriptors
 
-  In terms of descriptors the best overall results were obtained with *Proteomics* descriptors. This is in agreement with previous findings from other groups [@Walkey14, @Liu15, @georgia]. It is however interesting to note that the prediction intervals are significantly more inaccurate than those from other descriptors and the percentage of measurements within the prediction interval is usually lower than 90\% instead of the expected 95\%.
+  In terms of descriptors the best overall results were obtained with
+  *Proteomics* descriptors. This is in agreement with previous findings from
+  other groups [@Walkey14, @Liu15, @Papa16, @Tsiliki]. It is however interesting to note
+  that the prediction intervals are significantly more inaccurate than those
+  from other descriptors and the percentage of measurements within the
+  prediction interval is usually lower than 90\% instead of the expected 95\%.
 
-  Using *P-CHEM* descriptors in addition to *Proteomics* does not lead to improved models, *random forest* results are even significantly worse than with *Proteomics* descriptors alone. 
+  Using *P-CHEM* descriptors in addition to *Proteomics* does not lead to
+  improved models, instead we observe an increased sensitivity towards
+  training/test set splits (crossvalidation variability) and *random forest*
+  results perform even significantly poorer than *Proteomics* descriptors
+  alone. 
 
-  *P-CHEM* descriptors alone perform surprisingly well, especially in combination with local *random forest* models, which does not show statistically significant differences to the best *Proteomics* model. On average more than 95\% of the measurements fall within the 95\% prediction interval, with significantly better results than for *Proteomics* descriptors. A summary of *P-CHEM* descriptors can be found in Table 2.
+  *P-CHEM* descriptors alone perform surprisingly well, especially in
+  combination with local *random forest* models, which does not show
+  statistically significant differences to the best *Proteomics* model. On
+  average more than 95\% of the measurements fall within the 95\% prediction
+  interval, with significantly better results than for *Proteomics*
+  descriptors. A summary of *P-CHEM* descriptors can be found in Table 2.
 
-  All *MP2D* models have poorer performance in terms of $r^2$, but the *random forest* model does not differ significantly in terms of $RMSE$ and measurements within the prediction interval. 
+  All *MP2D* models have poorer performance in terms of $r^2$, but the *random
+  forest* model does not differ significantly in terms of $RMSE$ and
+  measurements within the prediction interval. 
 
-### Algorithms
+## Algorithms
 
-  With the exception of *P-CHEM*/*Proteomics* descriptors *random forests* models perform better than *partial least squares* and *weighted average* models with significant differences for *MP2D* and *P-CHEM* descriptors (detailed pairwise comparisons are available in the supplementary material). Interestingly the simple *weighted average* algorithm shows no significant difference to the best performing model for the *Proteomics* and *P-CHEM*/*Proteomics* descriptors.
+  With the exception of *P-CHEM*/*Proteomics* descriptors *random forests*
+  models perform better than *partial least squares* and *weighted average*
+  models with significant differences for *MP2D* and *P-CHEM* descriptors
+  (detailed pairwise comparisons are available in the supplementary material).
+  Interestingly the simple *weighted average* algorithm shows no significant
+  difference to the best performing model for the *Proteomics* and
+  *P-CHEM*/*Proteomics* descriptors.
 
-### Interpretation and practical applicability
+## Interpretation and practical applicability
 
-Although *random forest* models with *Proteomics* descriptors havve the best
-performance in terms of $RMSE$ and $r^2$, the accuracy of the 95% prediction
-interval is significantly lower than for *MP2D* and *P-CHEM* models (detailed
-pairwise comparisons in the supplementary material). It is likely that this
-instability is caused by a unfavourable ratio between descriptors (129) and
-training examples (121), although feature selection reduces the number of
-independent descriptors from 785 to 129 and $random forest$ and $partial least
-squares$ algorithms are robust against a large number of descriptors. The
-observation that the *weighted average* algorithm, which uses descriptors only
-for similarity calculations and not for local model building, performs
-comparatively well for *Proteomics* descriptors, may support this
-interpretation.
+  Although *random forest* models with *Proteomics* descriptors havve the best
+  performance in terms of $RMSE$ and $r^2$, the accuracy of the 95% prediction
+  interval is significantly lower than for *MP2D* and *P-CHEM* models (detailed
+  pairwise comparisons in the supplementary material).
 
-*P-CHEM* *random forest* models have the most accurate prediction interval and
-the $RMSE$ and $r^2$ performance is comparable to the $Proteomics$ model,
-although it utilizes a much lower number of descriptors (TODO before feature
-selection, TODO after feature selection) which have not been measured for the
-purpose of (Q)SAR modelling. The main advantage from a practical point of view
-is that predictions of novel nanoparticles require a much lower amount of
-measurements than with $Proteomics$ data (although this argument may become
-obsolete with new high throughput techniques).
+  These problems seem to originate from the internal `caret` optimisation and
+  validation algorithms which underestimate $RMSE$ values, that are used to
+  calculate the prediction interval (see Algorithm section). And the
+  observation that the *weighted average* algorithm, which does not use
+  `caret`, performs comparatively well for *Proteomics* descriptors, supports
+  this interpretation.
 
-*MP2D* fingerprint descriptors are interesting from a practical point of view,
-because they do not require any measurements of nanoparticle properties. They
-need however defined chemical structures for core and coating compounds, which
-makes makes this approach infeasible for nanoparticle classes like carbon
-nanotubes. The resulting models do not differ significantly from the best
-results in terms of prediction accuracy ($RMSE$, measurements within prediction
-interval), but are significantly lower in terms of explained model variance
-($r^2$). For practical purposes one may argue that the primary objective of
-read across models is to make accurate predictions and not to explain the model
-variance. For this reason we consider $r^2$ performance as secondary compared
-to $RMSE$ and prediction interval accuracies.
+  Our initial suspicion was that an unfavourable ratio between descriptors (785
+  before feature selection, 129 after feature selection) and training examples
+  (121) causes this problem. $Random forest$ and $partial least squares$
+  algorithms are on the other hand robust against a large number of descriptors
+  and `caret` returns very realistic $RMSE$ values for *MP2D* fingerprints with
+  a similar number of independent variables (100). For this reason it is at
+  present still unclear, why the prediction intervals for *Proteomics*
+  descriptors is significantly more inaccurate than for other descriptor types.
 
-Unfortunately our results are not directly comparable to results from other
-studies , because they use different validation schemes (e.g. bootstrap instead
-of crossvalidation), exclude part of the training data (silver particles,
-sometimes also some gold particles) and some of them have serious
-methodological flaws (e.g. global feature selection before validation splits).
-Unfortunately none of these publications provides sufficient information to
-repeat their validation experiments with our models.
+  *P-CHEM* *random forest* models have the most accurate prediction interval and
+  the $RMSE$ and $r^2$ performance is comparable to the $Proteomics$ model,
+  although it utilizes a much lower number of descriptors (20 before feature
+  selection, 10 after feature selection) which have not been measured for the
+  purpose of (Q)SAR modelling. The main advantage from a practical point of view
+  is that predictions of novel nanoparticles require a much lower amount of
+  measurements than with $Proteomics$ data (although this argument may become
+  obsolete with new high throughput techniques).
 
-relevant features
-features used in local models
+  *MP2D* fingerprint descriptors are interesting from a practical point of view,
+  because they do not require any measurements of nanoparticle properties. They
+  need however defined chemical structures for core and coating compounds, which
+  makes makes this approach infeasible for nanoparticle classes like carbon
+  nanotubes. The resulting models do not differ significantly from the best
+  results in terms of prediction accuracy ($RMSE$, measurements within prediction
+  interval), but are significantly lower in terms of explained model variance
+  ($r^2$). For practical purposes one may argue that the primary objective of
+  read across models is to make accurate predictions and not to explain the model
+  variance. For this reason we consider $r^2$ performance as secondary compared
+  to $RMSE$ and prediction interval accuracies.
+
+  Currently a couple of (Q)SAR studies with global models have been published
+  for the same dataset @Walkey14, @Liu15, @Kamath15, @Papa16, @Tsiliki], but
+  unfortunately their results are not directly comparable, because we report
+  results for the complete dataset with 121 gold and silver particles, while
+  other authors report results for a subset of gold particles.
+
+  [@Walkey14] report leave-one-out ($LOO$) and 4-fold crossvalidation ($4CV$)
+  results for 105 gold particles. They obtained the best results (LOO $r^2$
+  0.86, 4CV $r^2$ 0.63) with partial least squares models, protein corona data
+  with four additional physicochemical parameters and jackknife parameter
+  selection. Parameter selection was performed by crossvalidation, but it is
+  unclear if parameters were selected on the complete dataset prior to LOO/4CV
+  or separately for each LOO/4CV model. Performance wise the findings are
+  roughly in agreement with our results. Assuming that feature selection was
+  performed within crossvalidation folds we would expect 10-fold
+  crossvalidation results between $LOO$ and $4CV$ results. According to the
+  authors the model developed for Gold compounds have little predictivity for
+  Silver compounds, but a separate Silver model gave LOO $r^2$ of 0.79. $RMSE$
+  values are not available, although they are in our opinion more relevant for
+  the predictive toxicology use case than $r^2$ values (prediction error vs
+  explained model variance).
+
+  [@Liu15] report a 4CV $r^2$ of 0.843 for 84 Gold compounds using
+  $\epsilon$-support vector machines ($\epsilon$-SVM) with 6 serum proteins and
+  zeta potential as descriptors. Descriptors were selected with sequential
+  forward floating selection. The methodological descriptions do not indicate
+  explicitly, if feature selection was performed on the complete dataset or
+  within 4CV folds. Judging from Figure 2 and the Methods section we have the
+  strong impression that feature selection was performed prior to
+  crossvalidation, which increases the likelihood of overfitted models,
+  especially for aggressive feature selection schemes like *SFFS*. The 4CV $r2$
+  of 0.843 is clearly higher than our results, but it remains unclear, if the
+  superior performance is due to better algorithms, a smaller more " regression
+  friendly" dataset or overfitted models. Again we would have preferred $RMSE$
+  values for comparison purposes, which are unfortunately not available.
+
+  [@Kamath15] R2LOO=0.76 and R2LMO(25%)=0.72
+
+  [@Papa16] 84 gold compounds, r2 = 0.91; Q2loo = 0.81; r2ext = 0.79
+  selection of only six serum proteins  Projection Pursuit Regression 
+
+  <!--
+  In addition validation schemes
+  are different (e.g. number of crossvalidation folds, bootstrap instead of
+  crossvalidations), and some authors perform feature selection on the global
+  dataset prior to validation.
+  All authors report single crossvalidation
+  results which includes the risk of overfitting if the same random seed is
+  used for model optimisation and validation and the likelihood of chance
+  results due to a (un)favorable trained/test set split.
+
+  All authors use global models, whereas we use local models 
+  less well suited for small dataset, but scale more easily for larger and heterogenous datasets.
+
+  Unfortunately our results are not directly comparable to results from other
+  studies , because they use different validation schemes (e.g. bootstrap instead
+  of crossvalidation), exclude part of the training data (silver particles,
+  sometimes also some gold particles) and some of them have serious
+  methodological flaws (e.g. global feature selection before validation splits).
+  Unfortunately none of these publications provides sufficient information to
+  repeat their validation experiments with our models.
+
+ Based on our data we cannot support the conclusion of other authors that the addition of biological properties helps to predict nanoparticle toxicities.
+
+calculated descriptors in absence of physical measurements, combination of datasets with differnd physchem characterisations
 
 Liu paper:
 
@@ -408,31 +556,42 @@ liu study overfitted!! (discussion)
 references, figures sometimes incorrect
 VIP comes from lui? => choosing preselected proteins == overfitting
 
-which contains TODO Gold and Silver particles that are characterized by physchem properties and their interaction with proteins in human serum. For this dataset we have found TODO (NTUA abstract?) reference studies [@Walkey14, @Liu15].
-
-TODO: literature search
 
 https://scholar.google.com/scholar?q=protein+corona+nanoparticles+qsar&btnG=&hl=en&as_sdt=0%2C5&as_vis=1
+  -->
 
-TODO: description of parameters
 
-Conclusion
-==========
+# Conclusion
 
-We have performed 60 independent crossvalidation experiments for the Protein Corona dataset obtained from the eNanoMapper database in order to identify the best combination of descriptors for nanoparticle read across predictions. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than models with simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 valus that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, they have significantly lower r^2 values than the best results, but RMSE and prediction intervals are comparable to the best results. 
+  We have performed 60 independent crossvalidation experiments for the Protein
+  Corona dataset obtained from the eNanoMapper database in order to identify the
+  best combination of descriptors for nanoparticle read across predictions. The
+  best RMSE and r^2 results were obtained with protein corona descriptors and the
+  weighted random forest algorithm, but its 95% prediction interval is
+  significantly less accurate than models with simpler descriptor sets (measured
+  and calculated nanoparticle properties). The most accurate prediction intervals
+  were obtained with measured nanoparticle properties with RMSE and r^2 valus
+  that show no statistical significant difference (p < 0.05) to the protein
+  corona descriptors. Calculated descriptors are interesting for cheap and fast
+  high-throughput screening purposes, they have significantly lower r^2 values
+  than the best results, but RMSE and prediction intervals are comparable to the
+  best results of our investigation. 
 
-For practical purposes we suggest to use nanoparticle properties when measurements are available and the newly developed nanoparticle fingerprints for screening purposes without physicochemical measurements. Both models have been implemented with a graphical user interface which is publicly available at <https://nano-lazar.in-silico.ch>.
+  For practical purposes we suggest to use nanoparticle properties when
+  measurements are available and the newly developed nanoparticle fingerprints
+  for screening purposes without physicochemical measurements. Both models have
+  been implemented with a graphical user interface which is publicly available at
+  <https://nano-lazar.in-silico.ch>.
 
-Acknowledgements
-================
+# Acknowledgements
 
-This work was performed as part of the EU FP7 project "Nanomaterials safety assessment: Ontology,
-database(s) for modelling and risk assessment
-Development of an integrated multi-scale modelling
-environment for nanomaterials and systems by design" (Theme NMP.2013.1.3-2 NMP.2013.1.4-1, Grant agreement no: 604134).
+  This work was performed as part of the EU FP7 project "Nanomaterials safety
+  assessment: Ontology, database(s) for modelling and risk assessment
+  Development of an integrated multi-scale modelling environment for
+  nanomaterials and systems by design" (Theme NMP.2013.1.3-2 NMP.2013.1.4-1,
+  Grant agreement no: 604134).
 
-References
-==========
+# References
 
 McDermott et al., 2013; Walkey et al., 2014
 Yang et al., 2012; Balbin et al., 2013
