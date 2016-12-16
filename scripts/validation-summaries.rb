@@ -17,5 +17,4 @@ File.open(File.join(RESULTS_DIR,"protein-corona-validation.ids")).each_line do |
   algorithms << algorithm
 end
 
-puts JSON.pretty_generate(algorithms)
 File.open(File.join(RESULTS_DIR,"validation-summaries.json"),"w+"){|f| f.puts JSON.pretty_generate(algorithms)}

@@ -1,6 +1,9 @@
 # Paper
-nano-lazar.pdf: nano-lazar.md references.bib figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/p-chem-properties.csv
+nano-lazar.pdf: nano-lazar.md references.bib figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/p-chem-properties.csv results/proteomics-descriptor-size.json
 	pandoc nano-lazar.md --bibliography=references.bib --latex-engine=pdflatex -F pandoc-csv2table -F pandoc-crossref -F pandoc-citeproc -o nano-lazar.pdf 
+
+results/proteomics-descriptor-size.json: results/protein-corona-validation.ids
+	scripts/proteomics-descriptor-size.rb
 
 # Tables
 results/cv-summary-table.csv: results/validation-summaries.json
