@@ -123,7 +123,7 @@ best_rmse = best_rmse.sub("PCHEM","P-CHEM").sub("_"," ")
 best_r_squared = best_r_squared.sub("PCHEM","P-CHEM").sub("_"," ")
 best_within_pi = best_within_pi.sub("PCHEM","P-CHEM").sub("_"," ")
 
-table = "Descriptors , Algorithm , RMSE , $r^2$ , \% within prediction interval \n"
+table = "Descriptors , Algorithm , RMSE , $r^2$ , \% measurements within prediction interval \n"
 
 experiments.each do |e|
   within_pi = e[:percent_within_prediction_interval].collect{|v| v.round}.join " "

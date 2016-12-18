@@ -1,275 +1,141 @@
   Tukey multiple comparisons of means
     95% family-wise confidence level
 
-Fit: aov(formula = r_squared ~ experiments)
+Fit: aov(formula = r_squared ~ names)
 
-$experiments
-                                                                                            diff
-fingerprint.rf-fingerprint.pls                                                       0.178944002
-fingerprint.weighted_average-fingerprint.pls                                        -0.052167035
-properties.PCHEM.Proteomics.pls-fingerprint.pls                                      0.276969223
-properties.PCHEM.Proteomics.rf-fingerprint.pls                                       0.314873170
-properties.PCHEM.Proteomics.weighted_average-fingerprint.pls                         0.278440457
-properties.PCHEM.pls-fingerprint.pls                                                 0.037373471
-properties.PCHEM.rf-fingerprint.pls                                                  0.255199640
-properties.PCHEM.weighted_average-fingerprint.pls                                    0.161735164
-properties.Proteomics.pls-fingerprint.pls                                            0.296850008
-properties.Proteomics.rf-fingerprint.pls                                             0.318399970
-properties.Proteomics.weighted_average-fingerprint.pls                               0.295326551
-fingerprint.weighted_average-fingerprint.rf                                         -0.231111037
-properties.PCHEM.Proteomics.pls-fingerprint.rf                                       0.098025221
-properties.PCHEM.Proteomics.rf-fingerprint.rf                                        0.135929168
-properties.PCHEM.Proteomics.weighted_average-fingerprint.rf                          0.099496455
-properties.PCHEM.pls-fingerprint.rf                                                 -0.141570531
-properties.PCHEM.rf-fingerprint.rf                                                   0.076255638
-properties.PCHEM.weighted_average-fingerprint.rf                                    -0.017208837
-properties.Proteomics.pls-fingerprint.rf                                             0.117906006
-properties.Proteomics.rf-fingerprint.rf                                              0.139455968
-properties.Proteomics.weighted_average-fingerprint.rf                                0.116382549
-properties.PCHEM.Proteomics.pls-fingerprint.weighted_average                         0.329136258
-properties.PCHEM.Proteomics.rf-fingerprint.weighted_average                          0.367040204
-properties.PCHEM.Proteomics.weighted_average-fingerprint.weighted_average            0.330607492
-properties.PCHEM.pls-fingerprint.weighted_average                                    0.089540505
-properties.PCHEM.rf-fingerprint.weighted_average                                     0.307366674
-properties.PCHEM.weighted_average-fingerprint.weighted_average                       0.213902199
-properties.Proteomics.pls-fingerprint.weighted_average                               0.349017043
-properties.Proteomics.rf-fingerprint.weighted_average                                0.370567004
-properties.Proteomics.weighted_average-fingerprint.weighted_average                  0.347493586
-properties.PCHEM.Proteomics.rf-properties.PCHEM.Proteomics.pls                       0.037903947
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls         0.001471234
-properties.PCHEM.pls-properties.PCHEM.Proteomics.pls                                -0.239595752
-properties.PCHEM.rf-properties.PCHEM.Proteomics.pls                                 -0.021769583
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.pls                   -0.115234058
-properties.Proteomics.pls-properties.PCHEM.Proteomics.pls                            0.019880785
-properties.Proteomics.rf-properties.PCHEM.Proteomics.pls                             0.041430747
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls               0.018357328
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf         -0.036432712
-properties.PCHEM.pls-properties.PCHEM.Proteomics.rf                                 -0.277499699
-properties.PCHEM.rf-properties.PCHEM.Proteomics.rf                                  -0.059673530
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.rf                    -0.153138005
-properties.Proteomics.pls-properties.PCHEM.Proteomics.rf                            -0.018023161
-properties.Proteomics.rf-properties.PCHEM.Proteomics.rf                              0.003526800
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf               -0.019546619
-properties.PCHEM.pls-properties.PCHEM.Proteomics.weighted_average                   -0.241066987
-properties.PCHEM.rf-properties.PCHEM.Proteomics.weighted_average                    -0.023240818
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.weighted_average      -0.116705293
-properties.Proteomics.pls-properties.PCHEM.Proteomics.weighted_average               0.018409551
-properties.Proteomics.rf-properties.PCHEM.Proteomics.weighted_average                0.039959512
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.weighted_average  0.016886093
-properties.PCHEM.rf-properties.PCHEM.pls                                             0.217826169
-properties.PCHEM.weighted_average-properties.PCHEM.pls                               0.124361694
-properties.Proteomics.pls-properties.PCHEM.pls                                       0.259476537
-properties.Proteomics.rf-properties.PCHEM.pls                                        0.281026499
-properties.Proteomics.weighted_average-properties.PCHEM.pls                          0.257953080
-properties.PCHEM.weighted_average-properties.PCHEM.rf                               -0.093464475
-properties.Proteomics.pls-properties.PCHEM.rf                                        0.041650369
-properties.Proteomics.rf-properties.PCHEM.rf                                         0.063200330
-properties.Proteomics.weighted_average-properties.PCHEM.rf                           0.040126911
-properties.Proteomics.pls-properties.PCHEM.weighted_average                          0.135114844
-properties.Proteomics.rf-properties.PCHEM.weighted_average                           0.156664805
-properties.Proteomics.weighted_average-properties.PCHEM.weighted_average             0.133591386
-properties.Proteomics.rf-properties.Proteomics.pls                                   0.021549962
-properties.Proteomics.weighted_average-properties.Proteomics.pls                    -0.001523457
-properties.Proteomics.weighted_average-properties.Proteomics.rf                     -0.023073419
-                                                                                             lwr
-fingerprint.rf-fingerprint.pls                                                       0.050378664
-fingerprint.weighted_average-fingerprint.pls                                        -0.180732373
-properties.PCHEM.Proteomics.pls-fingerprint.pls                                      0.148403885
-properties.PCHEM.Proteomics.rf-fingerprint.pls                                       0.186307831
-properties.PCHEM.Proteomics.weighted_average-fingerprint.pls                         0.149875119
-properties.PCHEM.pls-fingerprint.pls                                                -0.091191868
-properties.PCHEM.rf-fingerprint.pls                                                  0.126634301
-properties.PCHEM.weighted_average-fingerprint.pls                                    0.033169826
-properties.Proteomics.pls-fingerprint.pls                                            0.168284670
-properties.Proteomics.rf-fingerprint.pls                                             0.189834632
-properties.Proteomics.weighted_average-fingerprint.pls                               0.166761213
-fingerprint.weighted_average-fingerprint.rf                                         -0.359676375
-properties.PCHEM.Proteomics.pls-fingerprint.rf                                      -0.030540117
-properties.PCHEM.Proteomics.rf-fingerprint.rf                                        0.007363829
-properties.PCHEM.Proteomics.weighted_average-fingerprint.rf                         -0.029068883
-properties.PCHEM.pls-fingerprint.rf                                                 -0.270135869
-properties.PCHEM.rf-fingerprint.rf                                                  -0.052309701
-properties.PCHEM.weighted_average-fingerprint.rf                                    -0.145774176
-properties.Proteomics.pls-fingerprint.rf                                            -0.010659332
-properties.Proteomics.rf-fingerprint.rf                                              0.010890630
-properties.Proteomics.weighted_average-fingerprint.rf                               -0.012182789
-properties.PCHEM.Proteomics.pls-fingerprint.weighted_average                         0.200570919
-properties.PCHEM.Proteomics.rf-fingerprint.weighted_average                          0.238474866
-properties.PCHEM.Proteomics.weighted_average-fingerprint.weighted_average            0.202042154
-properties.PCHEM.pls-fingerprint.weighted_average                                   -0.039024833
-properties.PCHEM.rf-fingerprint.weighted_average                                     0.178801336
-properties.PCHEM.weighted_average-fingerprint.weighted_average                       0.085336861
-properties.Proteomics.pls-fingerprint.weighted_average                               0.220451705
-properties.Proteomics.rf-fingerprint.weighted_average                                0.242001666
-properties.Proteomics.weighted_average-fingerprint.weighted_average                  0.218928247
-properties.PCHEM.Proteomics.rf-properties.PCHEM.Proteomics.pls                      -0.090661392
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls        -0.127094104
-properties.PCHEM.pls-properties.PCHEM.Proteomics.pls                                -0.368161090
-properties.PCHEM.rf-properties.PCHEM.Proteomics.pls                                 -0.150334922
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.pls                   -0.243799397
-properties.Proteomics.pls-properties.PCHEM.Proteomics.pls                           -0.108684553
-properties.Proteomics.rf-properties.PCHEM.Proteomics.pls                            -0.087134591
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls              -0.110208010
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf         -0.164998050
-properties.PCHEM.pls-properties.PCHEM.Proteomics.rf                                 -0.406065037
-properties.PCHEM.rf-properties.PCHEM.Proteomics.rf                                  -0.188238868
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.rf                    -0.281703343
-properties.Proteomics.pls-properties.PCHEM.Proteomics.rf                            -0.146588500
-properties.Proteomics.rf-properties.PCHEM.Proteomics.rf                             -0.125038538
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf               -0.148111957
-properties.PCHEM.pls-properties.PCHEM.Proteomics.weighted_average                   -0.369632325
-properties.PCHEM.rf-properties.PCHEM.Proteomics.weighted_average                    -0.151806156
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.weighted_average      -0.245270631
-properties.Proteomics.pls-properties.PCHEM.Proteomics.weighted_average              -0.110155787
-properties.Proteomics.rf-properties.PCHEM.Proteomics.weighted_average               -0.088605826
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.weighted_average -0.111679245
-properties.PCHEM.rf-properties.PCHEM.pls                                             0.089260831
-properties.PCHEM.weighted_average-properties.PCHEM.pls                              -0.004203644
-properties.Proteomics.pls-properties.PCHEM.pls                                       0.130911199
-properties.Proteomics.rf-properties.PCHEM.pls                                        0.152461161
-properties.Proteomics.weighted_average-properties.PCHEM.pls                          0.129387742
-properties.PCHEM.weighted_average-properties.PCHEM.rf                               -0.222029813
-properties.Proteomics.pls-properties.PCHEM.rf                                       -0.086914970
-properties.Proteomics.rf-properties.PCHEM.rf                                        -0.065365008
-properties.Proteomics.weighted_average-properties.PCHEM.rf                          -0.088438427
-properties.Proteomics.pls-properties.PCHEM.weighted_average                          0.006549505
-properties.Proteomics.rf-properties.PCHEM.weighted_average                           0.028099467
-properties.Proteomics.weighted_average-properties.PCHEM.weighted_average             0.005026048
-properties.Proteomics.rf-properties.Proteomics.pls                                  -0.107015377
-properties.Proteomics.weighted_average-properties.Proteomics.pls                    -0.130088795
-properties.Proteomics.weighted_average-properties.Proteomics.rf                     -0.151638757
-                                                                                            upr
-fingerprint.rf-fingerprint.pls                                                       0.30750934
-fingerprint.weighted_average-fingerprint.pls                                         0.07639830
-properties.PCHEM.Proteomics.pls-fingerprint.pls                                      0.40553456
-properties.PCHEM.Proteomics.rf-fingerprint.pls                                       0.44343851
-properties.PCHEM.Proteomics.weighted_average-fingerprint.pls                         0.40700580
-properties.PCHEM.pls-fingerprint.pls                                                 0.16593881
-properties.PCHEM.rf-fingerprint.pls                                                  0.38376498
-properties.PCHEM.weighted_average-fingerprint.pls                                    0.29030050
-properties.Proteomics.pls-fingerprint.pls                                            0.42541535
-properties.Proteomics.rf-fingerprint.pls                                             0.44696531
-properties.Proteomics.weighted_average-fingerprint.pls                               0.42389189
-fingerprint.weighted_average-fingerprint.rf                                         -0.10254570
-properties.PCHEM.Proteomics.pls-fingerprint.rf                                       0.22659056
-properties.PCHEM.Proteomics.rf-fingerprint.rf                                        0.26449451
-properties.PCHEM.Proteomics.weighted_average-fingerprint.rf                          0.22806179
-properties.PCHEM.pls-fingerprint.rf                                                 -0.01300519
-properties.PCHEM.rf-fingerprint.rf                                                   0.20482098
-properties.PCHEM.weighted_average-fingerprint.rf                                     0.11135650
-properties.Proteomics.pls-fingerprint.rf                                             0.24647134
-properties.Proteomics.rf-fingerprint.rf                                              0.26802131
-properties.Proteomics.weighted_average-fingerprint.rf                                0.24494789
-properties.PCHEM.Proteomics.pls-fingerprint.weighted_average                         0.45770160
-properties.PCHEM.Proteomics.rf-fingerprint.weighted_average                          0.49560554
-properties.PCHEM.Proteomics.weighted_average-fingerprint.weighted_average            0.45917283
-properties.PCHEM.pls-fingerprint.weighted_average                                    0.21810584
-properties.PCHEM.rf-fingerprint.weighted_average                                     0.43593201
-properties.PCHEM.weighted_average-fingerprint.weighted_average                       0.34246754
-properties.Proteomics.pls-fingerprint.weighted_average                               0.47758238
-properties.Proteomics.rf-fingerprint.weighted_average                                0.49913234
-properties.Proteomics.weighted_average-fingerprint.weighted_average                  0.47605892
-properties.PCHEM.Proteomics.rf-properties.PCHEM.Proteomics.pls                       0.16646928
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls         0.13003657
-properties.PCHEM.pls-properties.PCHEM.Proteomics.pls                                -0.11103041
-properties.PCHEM.rf-properties.PCHEM.Proteomics.pls                                  0.10679575
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.pls                    0.01333128
-properties.Proteomics.pls-properties.PCHEM.Proteomics.pls                            0.14844612
-properties.Proteomics.rf-properties.PCHEM.Proteomics.pls                             0.16999608
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls               0.14692267
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf          0.09213263
-properties.PCHEM.pls-properties.PCHEM.Proteomics.rf                                 -0.14893436
-properties.PCHEM.rf-properties.PCHEM.Proteomics.rf                                   0.06889181
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.rf                    -0.02457267
-properties.Proteomics.pls-properties.PCHEM.Proteomics.rf                             0.11054218
-properties.Proteomics.rf-properties.PCHEM.Proteomics.rf                              0.13209214
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf                0.10901872
-properties.PCHEM.pls-properties.PCHEM.Proteomics.weighted_average                   -0.11250165
-properties.PCHEM.rf-properties.PCHEM.Proteomics.weighted_average                     0.10532452
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.weighted_average       0.01186005
-properties.Proteomics.pls-properties.PCHEM.Proteomics.weighted_average               0.14697489
-properties.Proteomics.rf-properties.PCHEM.Proteomics.weighted_average                0.16852485
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.weighted_average  0.14545143
-properties.PCHEM.rf-properties.PCHEM.pls                                             0.34639151
-properties.PCHEM.weighted_average-properties.PCHEM.pls                               0.25292703
-properties.Proteomics.pls-properties.PCHEM.pls                                       0.38804188
-properties.Proteomics.rf-properties.PCHEM.pls                                        0.40959184
-properties.Proteomics.weighted_average-properties.PCHEM.pls                          0.38651842
-properties.PCHEM.weighted_average-properties.PCHEM.rf                                0.03510086
-properties.Proteomics.pls-properties.PCHEM.rf                                        0.17021571
-properties.Proteomics.rf-properties.PCHEM.rf                                         0.19176567
-properties.Proteomics.weighted_average-properties.PCHEM.rf                           0.16869225
-properties.Proteomics.pls-properties.PCHEM.weighted_average                          0.26368018
-properties.Proteomics.rf-properties.PCHEM.weighted_average                           0.28523014
-properties.Proteomics.weighted_average-properties.PCHEM.weighted_average             0.26215672
-properties.Proteomics.rf-properties.Proteomics.pls                                   0.15011530
-properties.Proteomics.weighted_average-properties.Proteomics.pls                     0.12704188
-properties.Proteomics.weighted_average-properties.Proteomics.rf                      0.10549192
-                                                                                        p adj
-fingerprint.rf-fingerprint.pls                                                      0.0009426
-fingerprint.weighted_average-fingerprint.pls                                        0.9592956
-properties.PCHEM.Proteomics.pls-fingerprint.pls                                     0.0000001
-properties.PCHEM.Proteomics.rf-fingerprint.pls                                      0.0000000
-properties.PCHEM.Proteomics.weighted_average-fingerprint.pls                        0.0000001
-properties.PCHEM.pls-fingerprint.pls                                                0.9970440
-properties.PCHEM.rf-fingerprint.pls                                                 0.0000009
-properties.PCHEM.weighted_average-fingerprint.pls                                   0.0040322
-properties.Proteomics.pls-fingerprint.pls                                           0.0000000
-properties.Proteomics.rf-fingerprint.pls                                            0.0000000
-properties.Proteomics.weighted_average-fingerprint.pls                              0.0000000
-fingerprint.weighted_average-fingerprint.rf                                         0.0000084
-properties.PCHEM.Proteomics.pls-fingerprint.rf                                      0.2986263
-properties.PCHEM.Proteomics.rf-fingerprint.rf                                       0.0297974
-properties.PCHEM.Proteomics.weighted_average-fingerprint.rf                         0.2784003
-properties.PCHEM.pls-fingerprint.rf                                                 0.0196890
-properties.PCHEM.rf-fingerprint.rf                                                  0.6672312
-properties.PCHEM.weighted_average-fingerprint.rf                                    0.9999985
-properties.Proteomics.pls-fingerprint.rf                                            0.1002771
-properties.Proteomics.rf-fingerprint.rf                                             0.0230365
-properties.Proteomics.weighted_average-fingerprint.rf                               0.1101312
-properties.PCHEM.Proteomics.pls-fingerprint.weighted_average                        0.0000000
-properties.PCHEM.Proteomics.rf-fingerprint.weighted_average                         0.0000000
-properties.PCHEM.Proteomics.weighted_average-fingerprint.weighted_average           0.0000000
-properties.PCHEM.pls-fingerprint.weighted_average                                   0.4310570
-properties.PCHEM.rf-fingerprint.weighted_average                                    0.0000000
-properties.PCHEM.weighted_average-fingerprint.weighted_average                      0.0000412
-properties.Proteomics.pls-fingerprint.weighted_average                              0.0000000
-properties.Proteomics.rf-fingerprint.weighted_average                               0.0000000
-properties.Proteomics.weighted_average-fingerprint.weighted_average                 0.0000000
-properties.PCHEM.Proteomics.rf-properties.PCHEM.Proteomics.pls                      0.9966610
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls        1.0000000
-properties.PCHEM.pls-properties.PCHEM.Proteomics.pls                                0.0000038
-properties.PCHEM.rf-properties.PCHEM.Proteomics.pls                                 0.9999828
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.pls                   0.1180752
-properties.Proteomics.pls-properties.PCHEM.Proteomics.pls                           0.9999932
-properties.Proteomics.rf-properties.PCHEM.Proteomics.pls                            0.9929368
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.pls              0.9999970
-properties.PCHEM.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf         0.9976337
-properties.PCHEM.pls-properties.PCHEM.Proteomics.rf                                 0.0000001
-properties.PCHEM.rf-properties.PCHEM.Proteomics.rf                                  0.9029294
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.rf                    0.0080721
-properties.Proteomics.pls-properties.PCHEM.Proteomics.rf                            0.9999975
-properties.Proteomics.rf-properties.PCHEM.Proteomics.rf                             1.0000000
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.rf               0.9999943
-properties.PCHEM.pls-properties.PCHEM.Proteomics.weighted_average                   0.0000033
-properties.PCHEM.rf-properties.PCHEM.Proteomics.weighted_average                    0.9999667
-properties.PCHEM.weighted_average-properties.PCHEM.Proteomics.weighted_average      0.1079796
-properties.Proteomics.pls-properties.PCHEM.Proteomics.weighted_average              0.9999969
-properties.Proteomics.rf-properties.PCHEM.Proteomics.weighted_average               0.9947683
-properties.Proteomics.weighted_average-properties.PCHEM.Proteomics.weighted_average 0.9999988
-properties.PCHEM.rf-properties.PCHEM.pls                                            0.0000287
-properties.PCHEM.weighted_average-properties.PCHEM.pls                              0.0663195
-properties.Proteomics.pls-properties.PCHEM.pls                                      0.0000006
-properties.Proteomics.rf-properties.PCHEM.pls                                       0.0000001
-properties.Proteomics.weighted_average-properties.PCHEM.pls                         0.0000007
-properties.PCHEM.weighted_average-properties.PCHEM.rf                               0.3667200
-properties.Proteomics.pls-properties.PCHEM.rf                                       0.9926237
-properties.Proteomics.rf-properties.PCHEM.rf                                        0.8647870
-properties.Proteomics.weighted_average-properties.PCHEM.rf                          0.9945819
-properties.Proteomics.pls-properties.PCHEM.weighted_average                         0.0315951
-properties.Proteomics.rf-properties.PCHEM.weighted_average                          0.0060899
-properties.Proteomics.weighted_average-properties.PCHEM.weighted_average            0.0352240
-properties.Proteomics.rf-properties.Proteomics.pls                                  0.9999845
-properties.Proteomics.weighted_average-properties.Proteomics.pls                    1.0000000
-properties.Proteomics.weighted_average-properties.Proteomics.rf                     0.9999691
+$names
+                                                 diff          lwr         upr
+MP2D.rf-MP2D.pls                          0.178944002  0.050378664  0.30750934
+MP2D.wa-MP2D.pls                         -0.052167035 -0.180732373  0.07639830
+PCHEM.pls-MP2D.pls                        0.037373471 -0.091191868  0.16593881
+PCHEM.rf-MP2D.pls                         0.255199640  0.126634301  0.38376498
+PCHEM.wa-MP2D.pls                         0.161735164  0.033169826  0.29030050
+PCHEM_Proteomics.pls-MP2D.pls             0.276969223  0.148403885  0.40553456
+PCHEM_Proteomics.rf-MP2D.pls              0.314873170  0.186307831  0.44343851
+PCHEM_Proteomics.wa-MP2D.pls              0.278440457  0.149875119  0.40700580
+Proteomics.pls-MP2D.pls                   0.296850008  0.168284670  0.42541535
+Proteomics.rf-MP2D.pls                    0.318399970  0.189834632  0.44696531
+Proteomics.wa-MP2D.pls                    0.295326551  0.166761213  0.42389189
+MP2D.wa-MP2D.rf                          -0.231111037 -0.359676375 -0.10254570
+PCHEM.pls-MP2D.rf                        -0.141570531 -0.270135869 -0.01300519
+PCHEM.rf-MP2D.rf                          0.076255638 -0.052309701  0.20482098
+PCHEM.wa-MP2D.rf                         -0.017208837 -0.145774176  0.11135650
+PCHEM_Proteomics.pls-MP2D.rf              0.098025221 -0.030540117  0.22659056
+PCHEM_Proteomics.rf-MP2D.rf               0.135929168  0.007363829  0.26449451
+PCHEM_Proteomics.wa-MP2D.rf               0.099496455 -0.029068883  0.22806179
+Proteomics.pls-MP2D.rf                    0.117906006 -0.010659332  0.24647134
+Proteomics.rf-MP2D.rf                     0.139455968  0.010890630  0.26802131
+Proteomics.wa-MP2D.rf                     0.116382549 -0.012182789  0.24494789
+PCHEM.pls-MP2D.wa                         0.089540505 -0.039024833  0.21810584
+PCHEM.rf-MP2D.wa                          0.307366674  0.178801336  0.43593201
+PCHEM.wa-MP2D.wa                          0.213902199  0.085336861  0.34246754
+PCHEM_Proteomics.pls-MP2D.wa              0.329136258  0.200570919  0.45770160
+PCHEM_Proteomics.rf-MP2D.wa               0.367040204  0.238474866  0.49560554
+PCHEM_Proteomics.wa-MP2D.wa               0.330607492  0.202042154  0.45917283
+Proteomics.pls-MP2D.wa                    0.349017043  0.220451705  0.47758238
+Proteomics.rf-MP2D.wa                     0.370567004  0.242001666  0.49913234
+Proteomics.wa-MP2D.wa                     0.347493586  0.218928247  0.47605892
+PCHEM.rf-PCHEM.pls                        0.217826169  0.089260831  0.34639151
+PCHEM.wa-PCHEM.pls                        0.124361694 -0.004203644  0.25292703
+PCHEM_Proteomics.pls-PCHEM.pls            0.239595752  0.111030414  0.36816109
+PCHEM_Proteomics.rf-PCHEM.pls             0.277499699  0.148934361  0.40606504
+PCHEM_Proteomics.wa-PCHEM.pls             0.241066987  0.112501649  0.36963232
+Proteomics.pls-PCHEM.pls                  0.259476537  0.130911199  0.38804188
+Proteomics.rf-PCHEM.pls                   0.281026499  0.152461161  0.40959184
+Proteomics.wa-PCHEM.pls                   0.257953080  0.129387742  0.38651842
+PCHEM.wa-PCHEM.rf                        -0.093464475 -0.222029813  0.03510086
+PCHEM_Proteomics.pls-PCHEM.rf             0.021769583 -0.106795755  0.15033492
+PCHEM_Proteomics.rf-PCHEM.rf              0.059673530 -0.068891808  0.18823887
+PCHEM_Proteomics.wa-PCHEM.rf              0.023240818 -0.105324520  0.15180616
+Proteomics.pls-PCHEM.rf                   0.041650369 -0.086914970  0.17021571
+Proteomics.rf-PCHEM.rf                    0.063200330 -0.065365008  0.19176567
+Proteomics.wa-PCHEM.rf                    0.040126911 -0.088438427  0.16869225
+PCHEM_Proteomics.pls-PCHEM.wa             0.115234058 -0.013331280  0.24379940
+PCHEM_Proteomics.rf-PCHEM.wa              0.153138005  0.024572667  0.28170334
+PCHEM_Proteomics.wa-PCHEM.wa              0.116705293 -0.011860045  0.24527063
+Proteomics.pls-PCHEM.wa                   0.135114844  0.006549505  0.26368018
+Proteomics.rf-PCHEM.wa                    0.156664805  0.028099467  0.28523014
+Proteomics.wa-PCHEM.wa                    0.133591386  0.005026048  0.26215672
+PCHEM_Proteomics.rf-PCHEM_Proteomics.pls  0.037903947 -0.090661392  0.16646928
+PCHEM_Proteomics.wa-PCHEM_Proteomics.pls  0.001471234 -0.127094104  0.13003657
+Proteomics.pls-PCHEM_Proteomics.pls       0.019880785 -0.108684553  0.14844612
+Proteomics.rf-PCHEM_Proteomics.pls        0.041430747 -0.087134591  0.16999608
+Proteomics.wa-PCHEM_Proteomics.pls        0.018357328 -0.110208010  0.14692267
+PCHEM_Proteomics.wa-PCHEM_Proteomics.rf  -0.036432712 -0.164998050  0.09213263
+Proteomics.pls-PCHEM_Proteomics.rf       -0.018023161 -0.146588500  0.11054218
+Proteomics.rf-PCHEM_Proteomics.rf         0.003526800 -0.125038538  0.13209214
+Proteomics.wa-PCHEM_Proteomics.rf        -0.019546619 -0.148111957  0.10901872
+Proteomics.pls-PCHEM_Proteomics.wa        0.018409551 -0.110155787  0.14697489
+Proteomics.rf-PCHEM_Proteomics.wa         0.039959512 -0.088605826  0.16852485
+Proteomics.wa-PCHEM_Proteomics.wa         0.016886093 -0.111679245  0.14545143
+Proteomics.rf-Proteomics.pls              0.021549962 -0.107015377  0.15011530
+Proteomics.wa-Proteomics.pls             -0.001523457 -0.130088795  0.12704188
+Proteomics.wa-Proteomics.rf              -0.023073419 -0.151638757  0.10549192
+                                             p adj
+MP2D.rf-MP2D.pls                         0.0009426
+MP2D.wa-MP2D.pls                         0.9592956
+PCHEM.pls-MP2D.pls                       0.9970440
+PCHEM.rf-MP2D.pls                        0.0000009
+PCHEM.wa-MP2D.pls                        0.0040322
+PCHEM_Proteomics.pls-MP2D.pls            0.0000001
+PCHEM_Proteomics.rf-MP2D.pls             0.0000000
+PCHEM_Proteomics.wa-MP2D.pls             0.0000001
+Proteomics.pls-MP2D.pls                  0.0000000
+Proteomics.rf-MP2D.pls                   0.0000000
+Proteomics.wa-MP2D.pls                   0.0000000
+MP2D.wa-MP2D.rf                          0.0000084
+PCHEM.pls-MP2D.rf                        0.0196890
+PCHEM.rf-MP2D.rf                         0.6672312
+PCHEM.wa-MP2D.rf                         0.9999985
+PCHEM_Proteomics.pls-MP2D.rf             0.2986263
+PCHEM_Proteomics.rf-MP2D.rf              0.0297974
+PCHEM_Proteomics.wa-MP2D.rf              0.2784003
+Proteomics.pls-MP2D.rf                   0.1002771
+Proteomics.rf-MP2D.rf                    0.0230365
+Proteomics.wa-MP2D.rf                    0.1101312
+PCHEM.pls-MP2D.wa                        0.4310570
+PCHEM.rf-MP2D.wa                         0.0000000
+PCHEM.wa-MP2D.wa                         0.0000412
+PCHEM_Proteomics.pls-MP2D.wa             0.0000000
+PCHEM_Proteomics.rf-MP2D.wa              0.0000000
+PCHEM_Proteomics.wa-MP2D.wa              0.0000000
+Proteomics.pls-MP2D.wa                   0.0000000
+Proteomics.rf-MP2D.wa                    0.0000000
+Proteomics.wa-MP2D.wa                    0.0000000
+PCHEM.rf-PCHEM.pls                       0.0000287
+PCHEM.wa-PCHEM.pls                       0.0663195
+PCHEM_Proteomics.pls-PCHEM.pls           0.0000038
+PCHEM_Proteomics.rf-PCHEM.pls            0.0000001
+PCHEM_Proteomics.wa-PCHEM.pls            0.0000033
+Proteomics.pls-PCHEM.pls                 0.0000006
+Proteomics.rf-PCHEM.pls                  0.0000001
+Proteomics.wa-PCHEM.pls                  0.0000007
+PCHEM.wa-PCHEM.rf                        0.3667200
+PCHEM_Proteomics.pls-PCHEM.rf            0.9999828
+PCHEM_Proteomics.rf-PCHEM.rf             0.9029294
+PCHEM_Proteomics.wa-PCHEM.rf             0.9999667
+Proteomics.pls-PCHEM.rf                  0.9926237
+Proteomics.rf-PCHEM.rf                   0.8647870
+Proteomics.wa-PCHEM.rf                   0.9945819
+PCHEM_Proteomics.pls-PCHEM.wa            0.1180752
+PCHEM_Proteomics.rf-PCHEM.wa             0.0080721
+PCHEM_Proteomics.wa-PCHEM.wa             0.1079796
+Proteomics.pls-PCHEM.wa                  0.0315951
+Proteomics.rf-PCHEM.wa                   0.0060899
+Proteomics.wa-PCHEM.wa                   0.0352240
+PCHEM_Proteomics.rf-PCHEM_Proteomics.pls 0.9966610
+PCHEM_Proteomics.wa-PCHEM_Proteomics.pls 1.0000000
+Proteomics.pls-PCHEM_Proteomics.pls      0.9999932
+Proteomics.rf-PCHEM_Proteomics.pls       0.9929368
+Proteomics.wa-PCHEM_Proteomics.pls       0.9999970
+PCHEM_Proteomics.wa-PCHEM_Proteomics.rf  0.9976337
+Proteomics.pls-PCHEM_Proteomics.rf       0.9999975
+Proteomics.rf-PCHEM_Proteomics.rf        1.0000000
+Proteomics.wa-PCHEM_Proteomics.rf        0.9999943
+Proteomics.pls-PCHEM_Proteomics.wa       0.9999969
+Proteomics.rf-PCHEM_Proteomics.wa        0.9947683
+Proteomics.wa-PCHEM_Proteomics.wa        0.9999988
+Proteomics.rf-Proteomics.pls             0.9999845
+Proteomics.wa-Proteomics.pls             1.0000000
+Proteomics.wa-Proteomics.rf              0.9999691
 

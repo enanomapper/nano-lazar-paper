@@ -1,4 +1,4 @@
-Descriptors , Algorithm , RMSE , $r^2$ , % within prediction interval 
+Descriptors , Algorithm , RMSE , $r^2$ , % measurements within prediction interval 
 MP2D , WA , *2.04 2.0 2.02 2.07 2.07* , *0.24 0.27 0.25 0.22 0.22* , NA
 MP2D , PLS , *2.14 2.11 2.21 1.99 1.9* , *0.27 0.26 0.26 0.32 0.36* , 94 97 91 91 97
 MP2D , RF , 1.84 1.67 1.68 1.69 1.71 , *0.4 0.5 0.49 0.48 0.47* , 94 96 96 94 94
