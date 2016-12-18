@@ -6,7 +6,7 @@ title: |
 include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland
 keywords: QSAR, read-across, nanoparticle
 date: \today
-abstract: "The lazar framework for read across predictions was expanded for the prediction of naoparticle toxicities, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than for models using simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 valus that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, random forest models have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle random forest models." 
+abstract: "The lazar framework for read across predictions was expanded for the prediction of nanoparticle toxicities, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanoparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than for models using simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 values that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, random forest models have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle random forest models." 
 
 #documentclass: achemso
 bibliography: references.bibtex
@@ -267,7 +267,7 @@ weighted average method.
 The applicability domain of `lazar` models is determined by the diversity of
 the training data. If no similar compounds are found in the training data
 (either because there are no similar nanoparticles or because similarities
-cannot be determined du to the lack of mesured properties) no predictions
+cannot be determined due to the lack of measured properties) no predictions
 will be generated. Warnings are also issued, if local QSAR model building or
 model predictions fail and the program has to resort to the weighted average
 algorithm
@@ -357,7 +357,7 @@ correlation with the *Net Cell Association* endpoint.
 
 <!-- Table references are broken in pandoc-csv2table -->
 
-![Results from five independend crossvalidations for various descriptor/algorithm combinations. Best results (mean of 5 crossvalidations) are indicated by bold letters, statistically significant ($p<0.05$) different results by italics. Results in normal fonts do not differ significantly from best results. m](results/cv-summary-table.csv){#tbl:cv_summary}
+![Results from five independent crossvalidations for various descriptor/algorithm combinations. Best results (mean of 5 crossvalidations) are indicated by bold letters, statistically significant ($p<0.05$) different results by italics. Results in normal fonts do not differ significantly from best results. m](results/cv-summary-table.csv){#tbl:cv_summary}
 
 <div id="fig:fingerprint">
 ![](figures/MP2D-rf-0.pdf){#fig:fingerprint0 width=20%}
@@ -544,7 +544,7 @@ weighted random forest algorithm, but the 95% prediction interval is
 significantly less accurate than that of models with simpler descriptor sets
 (measured and calculated nanoparticle properties). The most accurate prediction
 intervals were obtained with measured nanoparticle properties with RMSE and r^2
-valus that show no statistical significant difference (p < 0.05) to the protein
+values that show no statistical significant difference (p < 0.05) to the protein
 corona descriptors. Calculated descriptors are interesting for cheap and fast
 high-throughput screening purposes, they have significantly lower r^2 values
 than the best results, but RMSE and prediction intervals show no significant
