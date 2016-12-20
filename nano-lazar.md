@@ -473,14 +473,15 @@ obsolete with new high throughput techniques).
 *MP2D* fingerprint descriptors are interesting from a practical point of view,
 because they do not require any measurements of nanoparticle properties. They
 need however defined chemical structures for core and coating compounds, which
-makes this approach infeasible for nanoparticle classes like carbon
-nanotubes. The resulting models do not differ significantly from the best
-results in terms of prediction accuracy ($RMSE$, measurements within prediction
-interval), but are significantly lower in terms of explained model variance
-($r^2$). For practical purposes one may argue that the primary objective of
-read across models is to make accurate predictions (low $RMSE$, accurate prediction interval) and not to explain the model
-variance ($r^2$). For this reason we consider $r^2$ performance as secondary compared
-to $RMSE$ and prediction interval accuracies.
+makes this approach infeasible for nanoparticle classes like carbon nanotubes.
+The resulting models do not differ significantly from the best results in terms
+of prediction accuracy ($RMSE$, measurements within prediction interval), but
+are significantly lower in terms of explained model variance ($r^2$). For
+practical purposes one may argue that the primary objective of read across
+models is to make accurate predictions (low $RMSE$, accurate prediction
+interval) and not to explain the model variance ($r^2$). For this reason we
+consider $r^2$ performance as secondary compared to $RMSE$ and prediction
+interval accuracies.
 
 Currently a couple of QSAR studies with global models have been published
 for the same dataset @Walkey14, @Liu15, @Kamath15, @Papa16, @Tsiliki], but
@@ -519,11 +520,17 @@ friendly" dataset or overfitted models. Again we would have preferred $RMSE$
 values for comparison purposes, which are unfortunately not available.
 
 [@Kamath15] TODO get full paper and discuss
+84 compounds
 <!-- R2LOO=0.76 and R2LMO(25%)=0.72 -->
 
-[@Papa16] TODO get full paper and discuss
+[@Papa16] developed global models for 84 Gold compounds with eleven algorithms and reported $r^2$ and $RMSE$ values for training set retrofitting, leave-one-out crossvalidation (*LOO*) and stratified external test set predictions (64 particles training set, 20 particles test set). There was little difference between good performing models (PPR, EARTH, SVM-linear, SVM-radial, MLR, PLS) and the authors conclude that 
+Projection Pursuit Regression (PPR) gives the most robust models (LOO $r^2^$ 0.81, $RMSE$ 1.01, external $r^2$ 0.79, $RMSE$ 1.01). 
+
+TODO feature selection
+The best results have been obtained with 
+TODO get full paper and discuss
 <!-- 84 Gold compounds, r2 = 0.91; Q2loo = 0.81; r2ext = 0.79
-selection of only six serum proteins  Projection Pursuit Regression -->
+selection of only six serum proteins  
 
 [@Tsiliki] TODO get and discuss Georgias paper (latest version)
 
