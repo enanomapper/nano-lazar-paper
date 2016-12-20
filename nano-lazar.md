@@ -73,7 +73,7 @@ with this publication. It is in our experience frequently impossible to
 reproduce computational experiments for a variety of reasons, e.g.
 
 - publications lack important details about algorithms 
-- publications do not provide access to the data that has been user
+- publications do not provide access to the data that has been used
 - authors use proprietary software that does not disclose its algorithms with all necessary details
 - original software, libraries and operating systems are outdated and not available anymore
 
