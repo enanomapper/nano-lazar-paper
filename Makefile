@@ -31,5 +31,8 @@ results/protein-corona-validation.ids: results/training-datasets.json
 results/training-datasets.json: 
 	scripts/import.rb 
 
+clean-validations:
+	rm results/training-datasets.json
+
 clean: 
 	rm results/*; rm figures/*; mongo development --eval "db.dropDatabase()"
