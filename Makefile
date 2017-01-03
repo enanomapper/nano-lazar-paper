@@ -1,6 +1,6 @@
 # Paper
 nano-lazar.pdf: nano-lazar.tex
-	pdflatex nano-lazar.tex; pdflatex nano-lazar.tex
+	pdflatex nano-lazar.tex
 
 nano-lazar.tex: nano-lazar.md references.bib template.tex figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/p-chem-properties.csv 
 	pandoc -s nano-lazar.md --bibliography=references.bib -F pandoc-csv2table -F pandoc-crossref -F pandoc-citeproc -t latex --template=template.tex -o nano-lazar.tex 
