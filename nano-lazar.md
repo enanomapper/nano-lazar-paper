@@ -1,16 +1,17 @@
 ---
-author: |
-  Christoph Helma^1^, Micha Rautenberg^1^, Denis Gebele^1^
+first_author: Helma
+authors: |
+  Christoph Helma^1^*, Micha Rautenberg^1^, Denis Gebele^1^
 title: |
   nano-lazar: Read across predictions for nanoparticle toxicities with calculated and measured properties
-include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland
+address: "^1^ in silico toxicology gmbh,  Basel, Switzerland"
 keywords: QSAR, read-across, nanoparticle
 date: \today
 abstract: "The lazar framework for read across predictions was expanded for the prediction of nanoparticle toxicities, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanoparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than for models using simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 values that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, random forest models have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle random forest models." 
 
-#documentclass: achemso
+#documentclass: frontiersHLTH
 bibliography: references.bibtex
-bibliographystyle: achemso
+bibliographystyle: frontiersinHLTH&FPHY
 figPrefix: Figure
 eqnPrefix: Equation
 tblPrefix: Table
@@ -18,9 +19,8 @@ colorlinks: true
 output:
   pdf_document:
     fig_caption: yes
-header-includes:
-#  - \usepackage{lineno}
-#  - \linenumbers
+usepackage: url,hyperref,lineno,microtype,subcaption
+keywords: nanoparticle, toxicity, QSAR, read-across, predictive toxicology
 ...
 
 # Introduction
@@ -210,7 +210,7 @@ the `R` `caret` package which uses feature selection internally there is no
 requirement for extremely small descriptor sets at this stage.
 
 For crossvalidation experiments feature selection is repeated separately for
-each crossvalidation fold, to avoid overfitted models [@Gütlein2012].
+each crossvalidation fold, to avoid overfitted models [@Gütlein2013].
 
 ### Neighbor identification
 
@@ -357,40 +357,6 @@ correlation with the *Net Cell Association* endpoint.
 
 <!-- Table references are broken in pandoc-csv2table -->
 
-![Results from five independent crossvalidations for various descriptor/algorithm combinations. Best results (mean of 5 crossvalidations) are indicated by bold letters, statistically significant ($p<0.05$) different results by italics. Results in normal fonts do not differ significantly from best results. m](results/cv-summary-table.csv){#tbl:cv_summary}
-
-<div id="fig:fingerprint">
-![](figures/MP2D-rf-0.pdf){#fig:fingerprint0 width=20%}
-![](figures/MP2D-rf-1.pdf){#fig:fingerprint1 width=20%}
-![](figures/MP2D-rf-2.pdf){#fig:fingerprint2 width=20%}
-![](figures/MP2D-rf-3.pdf){#fig:fingerprint3 width=20%}
-![](figures/MP2D-rf-4.pdf){#fig:fingerprint4 width=20%}
-
-Correlation of predicted vs. measured values for five independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
-</div>
-
-<div id="fig:pchem">
-![](figures/PCHEM-rf-0.pdf){#fig:pchem0 width=20%}
-![](figures/PCHEM-rf-1.pdf){#fig:pchem1 width=20%}
-![](figures/PCHEM-rf-2.pdf){#fig:pchem2 width=20%}
-![](figures/PCHEM-rf-3.pdf){#fig:pchem3 width=20%}
-![](figures/PCHEM-rf-4.pdf){#fig:pchem4 width=20%}
-
-Correlation of predicted vs. measured values for five independent crossvalidations with *P-CHEM* descriptors and local *random forest* models
-</div>
-
-<div id="fig:prot">
-![](figures/Proteomics-rf-0.pdf){#fig:prot0 width=20%}
-![](figures/Proteomics-rf-1.pdf){#fig:prot1 width=20%}
-![](figures/Proteomics-rf-2.pdf){#fig:prot2 width=20%}
-![](figures/Proteomics-rf-3.pdf){#fig:prot3 width=20%}
-![](figures/Proteomics-rf-4.pdf){#fig:prot4 width=20%}
-
-Correlation of predicted vs. measured values for five independent crossvalidations with *Proteomics* descriptors and local *random forest* models
-</div>
-
-![*P-CHEM* properties of the *Protein corona* dataset. Features correlating with the *Net cell association* endpoint (*relevant features*) are indicated by bold letters. m](results/p-chem-properties.csv){#tbl:p-chem-properties}
-
 # Discussion
 
 Table 1 summarizes the results from five independent crossvalidations for all
@@ -406,7 +372,7 @@ $RMSE$ and $r^2$ results.
 
 In terms of descriptors the best overall results were obtained with
 *Proteomics* descriptors. This is in agreement with previous findings from
-other groups [@Walkey14, @Liu15, @Papa16, @Tsiliki]. It is however interesting to note
+other groups [@Walkey14, @Liu15, @Papa16]. It is however interesting to note
 that the prediction intervals are significantly more inaccurate than those
 from other descriptors and the percentage of measurements within the
 prediction interval is usually lower than 90\% instead of the expected 95\%.
@@ -484,7 +450,7 @@ consider $r^2$ performance as secondary compared to $RMSE$ and prediction
 interval accuracies.
 
 Currently a couple of QSAR studies with global models have been published
-for the same dataset @Walkey14, @Liu15, @Kamath15, @Papa16, @Tsiliki], but
+for the same dataset @Walkey14, @Liu15, @Papa16], but
 unfortunately their results are not directly comparable, because we report
 results for the complete dataset with 121 Gold and Silver particles, while
 other authors report results for a subset of Gold particles.
@@ -519,12 +485,8 @@ superior performance is due to better algorithms, a smaller more "regression
 friendly" dataset or overfitted models. Again we would have preferred $RMSE$
 values for comparison purposes, which are unfortunately not available.
 
-[@Kamath15] TODO get full paper and discuss
-84 compounds
-<!-- R2LOO=0.76 and R2LMO(25%)=0.72 -->
-
 [@Papa16] developed global models for 84 Gold compounds with eleven algorithms and reported $r^2$ and $RMSE$ values for training set retrofitting, leave-one-out crossvalidation (*LOO*) and stratified external test set predictions (64 particles training set, 20 particles test set). There was little difference between good performing models (PPR, EARTH, SVM-linear, SVM-radial, MLR, PLS) and the authors conclude that 
-Projection Pursuit Regression (PPR) gives the most robust models (LOO $r^2^$ 0.81, $RMSE$ 1.01, external $r^2$ 0.79, $RMSE$ 1.01). 
+Projection Pursuit Regression (PPR) gives the most robust models (LOO $r^2$ 0.81, $RMSE$ 1.01, external $r^2$ 0.79, $RMSE$ 1.01). 
 
 TODO feature selection
 The best results have been obtained with 
@@ -532,7 +494,6 @@ TODO get full paper and discuss
 <!-- 84 Gold compounds, r2 = 0.91; Q2loo = 0.81; r2ext = 0.79
 selection of only six serum proteins  
 
-[@Tsiliki] TODO get and discuss Georgias paper (latest version)
 
 <!--
 All authors use global models, whereas we use local models 
@@ -563,13 +524,63 @@ for screening purposes without physicochemical measurements. Both models have
 been implemented with a graphical user interface which is publicly available at
 <https://nano-lazar.in-silico.ch>.
 
-# Acknowledgements
+# Conflict of Interest Statement
 
-This work was performed as part of the EU FP7 project "Nanomaterials safety
+The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.
+
+# Author Contributions
+
+CH was responsible for the design and implementation of the `nano-lazar` libraries, the validation studies and the text of this manuscript.
+DG and MR participated as scientific programmers in the development of `nano-lazar` libraries and in the validation experiments. They are the authors of the `nano-lazar` GUI and REST interfaces and contributed to the manuscript with critical revisions and proofreading.
+
+# Funding
+
+This work was performed as part of the EU FP7 project eNanoMapper "Nanomaterials safety
 assessment: Ontology, database(s) for modelling and risk assessment
 Development of an integrated multi-scale modelling environment for
 nanomaterials and systems by design" (Theme NMP.2013.1.3-2 NMP.2013.1.4-1,
 Grant agreement no: 604134).
+
+# Tables
+
+![*P-CHEM* properties of the *Protein corona* dataset. Features correlating with the *Net cell association* endpoint (*relevant features*) are indicated by bold letters. m](results/p-chem-properties.csv){#tbl:p-chem-properties}
+
+![Results from five independent crossvalidations for various descriptor/algorithm combinations. Best results (mean of 5 crossvalidations) are indicated by bold letters, statistically significant ($p<0.05$) different results by italics. Results in normal fonts do not differ significantly from best results. m](results/cv-summary-table.csv){#tbl:cv_summary}
+
+<!--
+# moved into template.tex, because frontiersinHLTH.cls cannot handle subfigures
+# Figures
+
+<div id="fig:fingerprint">
+![](figures/MP2D-rf-0.pdf){#fig:fingerprint0 width=20%}
+![](figures/MP2D-rf-1.pdf){#fig:fingerprint1 width=20%}
+![](figures/MP2D-rf-2.pdf){#fig:fingerprint2 width=20%}
+![](figures/MP2D-rf-3.pdf){#fig:fingerprint3 width=20%}
+![](figures/MP2D-rf-4.pdf){#fig:fingerprint4 width=20%}
+
+Correlation of predicted vs. measured values for five independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
+</div>
+
+<div id="fig:pchem">
+![](figures/PCHEM-rf-0.pdf){#fig:pchem0 width=20%}
+![](figures/PCHEM-rf-1.pdf){#fig:pchem1 width=20%}
+![](figures/PCHEM-rf-2.pdf){#fig:pchem2 width=20%}
+![](figures/PCHEM-rf-3.pdf){#fig:pchem3 width=20%}
+![](figures/PCHEM-rf-4.pdf){#fig:pchem4 width=20%}
+
+Correlation of predicted vs. measured values for five independent crossvalidations with *P-CHEM* descriptors and local *random forest* models
+</div>
+
+<div id="fig:prot">
+![](figures/Proteomics-rf-0.pdf){#fig:prot0 width=20%}
+![](figures/Proteomics-rf-1.pdf){#fig:prot1 width=20%}
+![](figures/Proteomics-rf-2.pdf){#fig:prot2 width=20%}
+![](figures/Proteomics-rf-3.pdf){#fig:prot3 width=20%}
+![](figures/Proteomics-rf-4.pdf){#fig:prot4 width=20%}
+
+Correlation of predicted vs. measured values for five independent crossvalidations with *Proteomics* descriptors and local *random forest* models
+</div>
+-->
 
 # References
 
