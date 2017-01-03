@@ -5,13 +5,9 @@ authors: |
 title: |
   nano-lazar: Read across predictions for nanoparticle toxicities with calculated and measured properties
 address: "^1^ in silico toxicology gmbh,  Basel, Switzerland"
-keywords: QSAR, read-across, nanoparticle
 date: \today
 abstract: "The lazar framework for read across predictions was expanded for the prediction of nanoparticle toxicities, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanoparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than for models using simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 values that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, random forest models have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle random forest models." 
 
-#documentclass: frontiersHLTH
-#bibliography: references.bibtex
-#bibliographystyle: frontiersinHLTH&FPHY
 figPrefix: Figure
 eqnPrefix: Equation
 tblPrefix: Table
@@ -19,7 +15,6 @@ colorlinks: true
 output:
   pdf_document:
     fig_caption: yes
-#usepackage: url,hyperref,lineno,microtype,subcaption
 keywords: nanoparticle, toxicity, QSAR, read-across, predictive toxicology, machine learning, k-nearest-neighbors
 ...
 
