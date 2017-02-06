@@ -5,6 +5,19 @@ nano-lazar.pdf: nano-lazar.tex
 nano-lazar.tex: nano-lazar.md references.bib template.tex figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/p-chem-properties.csv 
 	pandoc -s nano-lazar.md --bibliography=references.bib -F pandoc-csv2table -F pandoc-crossref -F pandoc-citeproc -t latex --template=template.tex -o nano-lazar.tex 
 
+# Presentation
+malaga-presentation.html: malaga-presentation.md 
+	pandoc  -F pandoc-csv2table -t slidy --css slidy/style.css -s --self-contained -o malaga-presentation.html malaga-presentation.md 
+
+enm-presentation.html: enm-presentation.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
+	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o enm-presentation.html enm-presentation.md 
+
+athens-workshop.html: athens-workshop.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
+	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o athens-workshop.html athens-workshop.md 
+
+opentox-workshop.html: opentox-workshop.md results/cv-comparison.json figures/random_forests-all-crossvalidations.png
+	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o opentox-workshop.html opentox-workshop.md 
+
 # Tables
 results/cv-summary-table.csv: results/validation-summaries.json
 	scripts/cv-summary-table.rb
