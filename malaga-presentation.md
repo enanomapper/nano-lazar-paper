@@ -56,7 +56,7 @@ Local regression:
 
 Gold *and* silver particles included!
 
-# `nano-lazar` prediction correlation
+# `nano-lazar` prediction/measurement correlation
 
 <div id="fig:prot">
 ![](figures/Proteomics-rf-0.jpeg){#fig:prot0 width=18%}
@@ -70,13 +70,11 @@ Correlation of predicted vs. measured values for five independent crossvalidatio
 
 # `nano-lazar` validation summary
 
-Best results:
-  ~ Protein interaction descriptors and random forest models
-
-- Few significantly worse results
+- Best results: Protein interaction descriptors and random forest models
+- Most results show no statistically significant difference
 - Calculated fingerprints perform surprisingly well (RMSE comparable to best results) and do not require 
 measured nanoparticle properties
-
+- Local random forest models with nanoparticle fingerprints can be useful for screening purposes without physical measurements
 
 # `nano-lazar` GUI
 
@@ -85,6 +83,20 @@ measured nanoparticle properties
 # `nano-lazar` GUI
 
 ![](images/nano-lazar fingerprint result.ch_predict.png){#id .class height=50%}
+
+# Reproducible research
+
+  Manuscript submitted to Frontiers in Pharmacology
+
+  - Open source code for lazar and publication
+  - Manuscript with direct source code links
+  - Docker image with 
+    - `lazar` libraries
+    - Training data
+    - Validation experiments
+    - Software dependencies
+    - Build system to recreate validations
+    - Update facilities for code and data
 
 # Links
 
