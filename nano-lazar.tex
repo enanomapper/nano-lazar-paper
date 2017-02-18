@@ -71,16 +71,70 @@ machine learning, k-nearest-neighbors} %All article types: you may provide up to
 \section{Introduction}\label{introduction}
 
 Read across is a commonly used approach for the risk assessment of
-chemicals. Read across procedures are based on the assumption that
-similar compounds cause similar biological effects. In order to estimate
-the activity of a novel compound a researcher will search for similar
-compounds with known biological activities and deduce the activity of
-the new compound from this data. In order to make the read across
-procedure reproducible, traceable and objective the authors of this
-paper have developed a computer program (\texttt{lazar}, (Maunz et al.
-2013)) that automates the risk assessment process. The objective of the
-current study was to extend \texttt{lazar} for the risk assessment of
-nanomaterials.
+chemicals and has recently gained popularity for nanoparticle risk
+assessment (Arts et al. 2014). Read across procedures are based on the
+assumption that similar substances cause similar biological effects. In
+order to estimate the activity of a novel substance a researcher will
+search for similar substances with known biological activities and
+deduce the activity of the new substance from this data.
+
+Most read across procedures for nanoparticles originate from a
+regulatory setting and aggregate current nanotoxicity knowledge into
+rules for determining groups of similar substances and rules for
+extrapolating the toxicity of the unknown nanoparticle (see e.g. (Arts
+et al. 2014) for a review, (Arts et al. 2015,Schultz et al.
+(2015),Dekkers et al. (2016)) for recent proposals).
+
+Despite their popularity current read across approaches have a couple of
+disadvantages, especially in respect to the reproducibility and
+validation of prediction results:
+
+\begin{itemize}
+\tightlist
+\item
+  They require a lot of time from skilled toxicologists to search for
+  data, interpret it according to guidelines and to aggregate it into a
+  final assessment.
+\item
+  Grouping and extrapolation criteria are rarely formally defined and
+  leaves the risk assessor room for interpretation.
+\item
+  Implicit assumptions about grouping and extrapolation criteria have
+  been rarely validated and may be correct or not
+\item
+  It is hardly possible to validate the proposed schemes with
+  independent test sets of statistically relevant size.
+\end{itemize}
+
+In order to make the read across procedure reproducible, traceable and
+objective the authors of this paper have developed a programming
+framework (\texttt{lazar}, (Maunz et al. 2013)) for small compounds with
+well defined structures. \texttt{lazar} follows the generic read across
+process of identifying similar substances and extrapolating from their
+measured activities, but automates the process with well defined user
+selectable algorithms (see below). This makes predictions less time
+consuming, reproducible and allows independent validation studies. A
+graphical user interface presents the rationales of predictions and
+supporting information for a critical inspection and to reject dubious
+predictions.
+
+The objective of the current study was to extend \texttt{lazar} for the
+risk assessment of nanomaterials and to integrate it with databases and
+ontologies of the eNanoMapper EU FP7 project (Jeliazkova et al. 2015),
+which contains currently all \emph{public} nanoparticle datasets and to
+validate a subset of the implemented algorithms with a nanoparticle
+dataset. The \texttt{nano-lazar} extension implements new methods for
+representing and handling nanomaterials without well defined chemical
+structures. This includes e.g.~nanoparticle characterisations by
+structural, size and shape, physico-chemical and biological properties
+as well as ontology terms. It implements nanoparticle specific methods
+for descriptor calculation, feature selection, similarity calculation
+and a graphical interface optimized for nanoparticle predictions.
+
+Similar to \texttt{lazar} \texttt{nano-lazar} is completely modular in
+terms of algorithms for descriptors (measured and calculated), feature
+selection, similarity calculation and local (Q)SAR models of similar
+substances.
 
 The concept of chemical \emph{similarity} is the key idea behind all
 read across procedures. But similarity is not an intrinsic property of
@@ -97,10 +151,8 @@ biological effects. Compared to structural similarity, which can be
 calculated directly from chemical structures, these similarity
 definitions depend on actual measurements, which makes their estimation
 more expensive and time consuming. For this reason we have developed a
-novel concept of structural similarity for nanomaterials, which is based
-on the chemical fingerprints of core and coating materials. According to
-our knowledge, this is the first time that nanoparticle toxicities have
-been predicted successfully from calculated properties alone.
+new concept of structural similarity for nanomaterials, which is based
+on chemical fingerprints of core and coating materials.
 
 In order to estimate the utility of various similarity concepts for
 nanomaterials, we have performed model building and validation
@@ -109,9 +161,9 @@ experiments for models based on
 \begin{itemize}
 \tightlist
 \item
-  \emph{structural similarity} (using on core and coating fingerprints)
+  \emph{structural similarity} (using core and coating fingerprints)
 \item
-  \emph{property similarity} (using on measured nanoparticle properties)
+  \emph{property similarity} (using measured nanoparticle properties)
 \item
   \emph{biological similarity} (using serum protein interaction data)
 \end{itemize}
@@ -190,12 +242,22 @@ algorithm definitions can refer to the source code links in the text.
 
 Nanoparticle characterisations and toxicities were mirrored from the
 eNanoMapper database (Jeliazkova et al. 2015) via its REST API
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/import.rb\#L9-L118}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/import.rb\#L9-L118}).
 At present only the \emph{Net cell association} endpoint of the
 \emph{Protein corona} dataset, has a sufficient number of examples (121)
-to create and validate read-across models, all other public nanoparticle
-endpoints have less than 20 examples, which makes them unsuitable for
-local QSAR modelling and crossvalidation experiments.
+to create and validate read-across models, all other eNanoMapper
+toxicity endpoints have less than 20 examples, which makes them
+unsuitable for local QSAR modelling and crossvalidation experiments.
+
+Cell association, which includes internalization of the nanoparticles
+and adhesion to the cell membrane, was measured in A549 human lung
+epithelial carcinoma cells by inductively coupled plasma-atomic emission
+spectroscopy (ICP-AES). These cells are widely used as a model to study
+fundamental nanoparticle-cell inter- actions. Cell association has a
+relevance to inflammatory responses, biodistribution, and toxicity in
+vivo (Walkey et al. 2014). In the rest of the text we will frequently
+use the general term \emph{toxicity} to indicate \emph{Net cell
+association}.
 
 \subsection{Algorithms}\label{algorithms}
 
@@ -231,7 +293,7 @@ basic workflow: For a given nanoparticle \texttt{lazar}
 This procedure resembles an automated version of \emph{read across}
 predictions in toxicology, in machine learning terms it would be
 classified as a \emph{k-nearest-neighbor} algorithm
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/model.rb\#L180-L257}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/model.rb\#L180-L257}).
 
 Apart from this basic workflow \texttt{nano-lazar} is completely modular
 and allows the researcher to use arbitrary algorithms for similarity
@@ -247,9 +309,14 @@ study we are using three types of descriptors:
 \begin{description}
 \tightlist
 \item[Structural descriptors]
-Calculated molecular fingerprints for core and coating compounds
-(MOLPRINT 2D fingerprints (Bender et al. 2004), \emph{MP2D},
-\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/nanoparticle.rb\#L17-L21})
+Union of MOLPRINT 2D fingerprints (\emph{MP2D}, (Bender et al. 2004))
+for core and coating compounds
+\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/nanoparticle.rb\#L17-L21}
+MP2D fingerprints use atom environments as molecular representation,
+which resemble basically the chemical concept of functional groups. For
+each atom in a molecule it represents the chemical environment using the
+atom types of connected atoms. MP2D fingerprints were calculated with
+the OpenBabel (OBoyle et al. 2011) library.
 \item[Physico-chemical nanoparticle properties]
 Measured nanoparticle properties from the eNanoMapper database
 (\emph{P-CHEM})
@@ -258,15 +325,15 @@ Protein interaction data from the eNanoMapper database
 (\emph{Proteomics})
 \end{description}
 
-Nanoparticle fingerprints are a novel development for the
+Nanoparticle MP2D fingerprints are a novel development for the
 characterisation of nanoparticles with well defined core and coating
 compounds. In this case it is possible to create molecular fingerprints
 for all of these compounds and use the union of these fingerprints as
 nanoparticle fingerprint. Based on our experience with small molecules
-we have selected MOLPRINT 2D fingerprints (Bender et al. 2004), which
-typically outperform predefined fingerprints (e.g. \(MACCS\), \(FP4\))
-for QSAR purposes. Despite its simplicity the concept works surprisingly
-well (see validation results) and enables toxicity predictions without
+we have selected MP2D fingerprints (Bender et al. 2004), which typically
+outperform predefined fingerprints (e.g. \(MACCS\), \(FP4\)) for QSAR
+purposes. Despite its simplicity the concept works surprisingly well
+(see validation results) and enables toxicity predictions without
 measured properties. This can be useful e.g.~for fast and cheap
 nanoparticle toxicity screening programs.
 
@@ -292,7 +359,7 @@ features that correlate with a particular toxicity endpoint (Pearson
 correlation p-value \textless{} 0.05). This reduced set of
 \emph{relevant features} is used for similarity calculations and local
 QSAR models
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/feature_selection.rb\#L6-L26}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/feature_selection.rb\#L6-L26}).
 Apart from being computationally cheaper, simple filter methods pose
 also a lower risk of overfitting than more aggressive feature selection
 methods (e.g.~forward selection, backwards elimination). As local models
@@ -309,7 +376,7 @@ al. 2013).
 For binary features (MP2D fingerprints) we are using the union of core
 and coating fingerprints to calculate the Tanimoto/Jaccard index and a
 similarity threshold of \(sim > 0.1\)
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/similarity.rb\#L18-L20}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/similarity.rb\#L18-L20}).
 
 For quantitative features (P-CHEM, Proteomics) we use the reduced set of
 relevant features to calculate the \emph{weighted cosine similarity} of
@@ -318,12 +385,12 @@ contribution of each feature is weighted by its Pearson correlation
 coefficient with the toxicity endpoint. A similarity threshold of
 \(sim > 0.5\) was used for the identification of neighbors for local
 QSAR models
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/similarity.rb\#L37-L49}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/similarity.rb\#L37-L49}).
 
 In both cases nanoparticles that are identical to the query particle are
 eliminated from neighbors to obtain unbiased predictions in the presence
 of duplicates.
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/model.rb\#L180-L257}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/model.rb\#L180-L257}).
 
 \subsubsection{Local QSAR models and
 predictions}\label{local-qsar-models-and-predictions}
@@ -338,13 +405,13 @@ algorithms:
 \tightlist
 \item
   weighted local average (\emph{WA},
-  \url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/regression.rb\#L6-L16})
+  \url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/regression.rb\#L6-L16})
 \item
   weighted partial least squares regression (\emph{PLS},
-  \url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb\#L7-L78})
+  \url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb\#L7-L78})
 \item
   weighted random forests (\emph{RF},
-  \url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb\#L7-L78})
+  \url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb\#L7-L78})
 \end{itemize}
 
 In all cases neighbor contributions are weighted by their similarity to
@@ -359,7 +426,7 @@ available for splitting at each RF tree node by bootstrap resampling.
 Finally the local model is applied to predict the activity of the query
 nanoparticle. The RMSE of bootstrapped model predictions is used to
 construct 95\% prediction intervals at 1.96*RMSE
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb\#L55-L77}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb\#L55-L77}).
 Prediction intervals are not available for the weighted average
 algorithm, as it does not use internal validation.
 
@@ -375,7 +442,7 @@ because similarities cannot be determined due to the lack of measured
 properties) no predictions will be generated. Warnings are also issued,
 if local QSAR model building or model predictions fail and the program
 has to resort to the weighted average algorithm
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/model.rb\#L180-L257}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/model.rb\#L180-L257}).
 
 Each prediction is accompanied with a list of neighbors and their
 similarities, which are clearly displayed in the graphical user
@@ -387,7 +454,7 @@ predictions e.g.~when neighbors act via different mechanisms.
 The accuracy of local model predictions is indicated by the 95\%
 prediction interval, which is derived from the internal \texttt{caret}
 validation
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb\#L55-L77}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb\#L55-L77}).
 Query substances close to the applicability domain (many neighbors with
 high similarity) will have a narrower prediction interval than
 substances with a larger distance (few neighbors with low similarity).
@@ -397,7 +464,7 @@ substances with a larger distance (few neighbors with low similarity).
 For validation purposes we use results from 5 repeated 10-fold
 crossvalidations with independent training/test set splits for each
 descriptor/algorithm combination
-(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/crossvalidation.rb\#L85-L93}).
+(\url{https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/crossvalidation.rb\#L85-L93}).
 Feature selection is performed for each validation fold separately to
 avoid overfitting. For the same reason we do not use a fixed random seed
 for training/test set splits. This leads to slightly different results
@@ -407,7 +474,7 @@ variability of validation results due to random training/test splits.
 In order to identify significant differences between validation results,
 outcomes (RMSE, \(r^2\), correct 95\% prediction interval) are compared
 by ANOVA analysis, followed by Tukey multiple comparisons of means
-(\url{https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.submission/scripts/cv-statistics.rb}).
+(\url{https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.revision/scripts/cv-statistics.rb}).
 
 Please note that recreating validations (e.g.~in the Docker image) will
 not lead to exactly the same results, because crossvalidation folds are
@@ -479,11 +546,9 @@ Figure~\ref{fig:prot} show the correlation of predictions with
 measurements for \emph{MP2D}, \emph{P-CHEM} and \emph{Proteomics} random
 forests models. Correlation plots for all descriptors and algorithms are
 available as supplementary material
-(\url{https://github.com/enanomapper/nano-lazar-paper/tree/nano-lazar-paper.submission/figures}).
+(\url{https://github.com/enanomapper/nano-lazar-paper/tree/nano-lazar-paper.revision/figures}).
 Table 2 lists \emph{P-CHEM} properties of the Protein Corona dataset and
 their correlation with the \emph{Net Cell Association} endpoint.
-
-\section{Discussion}\label{discussion}
 
 Table 1 summarizes the results from five independent crossvalidations
 for all descriptor/algorithm combinations. The best results in terms of
@@ -530,13 +595,14 @@ With the exception of \emph{P-CHEM}/\emph{Proteomics} descriptors
 squares} and \emph{weighted average} models with significant differences
 for \emph{MP2D} and \emph{P-CHEM} descriptors (detailed pairwise
 comparisons are available in the supplementary material
-\url{https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.submission/results/}).
+\url{https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.revision/results/}).
 Interestingly the simple \emph{weighted average} algorithm shows no
 significant difference to the best performing model for the
 \emph{Proteomics} and \emph{P-CHEM}/\emph{Proteomics} descriptors.
 
-\subsection{Interpretation and practical
-applicability}\label{interpretation-and-practical-applicability}
+\section{Discussion}\label{discussion}
+
+\subsection{Performance}\label{performance}
 
 Although \emph{random forest} models with \emph{Proteomics} descriptors
 have the best performance in terms of \(RMSE\) and \(r^2\), the accuracy
@@ -584,12 +650,69 @@ prediction interval) and not to explain the model variance (\(r^2\)).
 For this reason we consider \(r^2\) performance as secondary compared to
 \(RMSE\) and prediction interval accuracies.
 
-Currently a couple of QSAR studies with global models have been
-published for the same dataset Walkey et al. (2014), Liu et al. (2015),
-Papa et al. (2016){]}, but unfortunately their results are not directly
-comparable, because we report results for the complete dataset with 121
-Gold and Silver particles, while other authors report results for a
-subset of Gold particles.
+\subsection{Problematic predictions}\label{problematic-predictions}
+
+In order to investigate possible systematic errors with
+\texttt{nano-lazar} models we have investigated all \emph{random forest}
+crossvalidation predictions with measurements outside of the 95\%
+prediction interval.
+
+Table 3 shows, that the number of problematic predictions increase from
+from fingerprints to \emph{P-CHEM} and \emph{Proteomics} descriptors.
+Few substances have consistent incorrect predictions across all five
+crossvalidation runs, and it seems that models with Proteomics
+descriptors are more sensitive towards training/test set splits than
+e.g.~fingerprint models. This observation is also supported by the
+poorer accuracy of their prediction intervals (Table 1).
+
+Fingerprint models seem to provide the most stable predictions, but
+three nanoparticles have consistent problematic predictions across all
+crossvalidations. For illustrative purposes we will investigate
+\texttt{G15.DDT@SDS}, the substance with the largest prediction error.
+
+In all five crossvalidations the closest neighbors
+(\texttt{S40.DDT@DOTAP}, \texttt{G30.DDT@DOTAP}, \texttt{G15.DDT@DOTAP},
+\texttt{G60.DDT@DOTAP}) have a similarity of 0.5 and measured values
+between -2.0 and -0.3. This explains, why local models cannot
+extrapolate to the measured value of -7.7 of the query particle. Based
+on our experience with small molecules, we do not expect reliable
+predictions, unless local models can be built with a similarity
+threshold of 0.5.\footnote{The latest \texttt{lazar} development version
+  issues a warning in this case, this feature will be included into the
+  next release.} Predictions obtained from neighbors with lower
+similarities can still be useful, but require the manual inspection (and
+possible rejection) of a toxicological expert. For this purpose we
+provide the free graphical user interface at
+\url{https:://nano-lazar.in-silico.ch}, which presents prediction
+results, neighbors and supporting information (e.g.~links to additional
+eNanoMapper data, nanoparticle characterisations and ontologies).
+
+\subsection{Comparison with other
+models}\label{comparison-with-other-models}
+
+According to our knowledge no validated read across models have been
+published for the Protein corona datasets. Most other nanoparticle read
+across models have not been formally validated, with the exception of
+Agnieszka Gajewicz et al. (2015) and A. Gajewicz et al. (2017), who
+validated read across models for metal oxides. Results from these
+studies are not comparable with our findings, because they use a
+different, much smaller dataset and different validation methods. It
+seems that in both studies feature selection was performed on the
+complete dataset prior to model validation, which transfers information
+from the test set into the validation model. Single training (\(n=10\))
+and test (\(n=7\)) sets were used, which makes it hard to ensure that
+models are not overfitted for the particular training/test set split.
+Due to the small test set size it is also hard to draw general
+conclusions about the model performance. We are not aware of any
+nanoparticle read across validation that exceeds 100 substances like our
+investigation.
+
+For the Protein corona dataset a couple of QSAR studies with global
+models have been published (Walkey et al. (2014), Liu et al. (2015),
+Papa et al. (2016)), but unfortunately their results are also not
+directly comparable, because we report results for the complete dataset
+with 121 Gold and Silver particles, while other authors report results
+for a subset of Gold particles.
 
 (Walkey et al. 2014) report leave-one-out (\(LOO\)) and 4-fold
 crossvalidation (\(4CV\)) results for 105 Gold particles. They obtained
@@ -706,174 +829,6 @@ environment for nanomaterials and systems by design'' (Theme
 NMP.2013.1.3-2 NMP.2013.1.4-1, Grant agreement no: 604134).
 
 \section{Tables}\label{tables}
-
-\begin{longtable}[]{@{}lll@{}}
-\caption{\emph{P-CHEM} properties of the \emph{Protein corona} dataset.
-Features correlating with the \emph{Net cell association} endpoint
-(\emph{relevant features}) are indicated by bold letters.
-}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.58\columnwidth}\raggedright\strut
-Property\strut
-\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
-Medium\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedright\strut
-Unit\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.58\columnwidth}\raggedright\strut
-Property\strut
-\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
-Medium\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedright\strut
-Unit\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Localized Surface Plasmon Resonance (LSPR) index\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
--\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Localized Surface Plasmon Resonance (LSPR) index}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{Human serum}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-LSPR peak position (nm)\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
--\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Polydispersity index}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{-}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Polydispersity index\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-Human serum\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Core size}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{-}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Autot (ICP-AES)}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{Human serum}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nmol\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Total surface area (SAtot)\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-Human serum\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(cm^2\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Protein density\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-Human serum\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(ug/cm^2\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Total protein (BCA assay)}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{Human serum}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(ug\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{ZETA POTENTIAL}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{-}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(mV\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{ZETA POTENTIAL}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{Human serum}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(mV\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Z-Average Hydrodynamic Diameter\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
--\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Z-Average Hydrodynamic Diameter}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{Human serum}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Volume Mean Hydrodynamic Diameter\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
--\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Volume Mean Hydrodynamic Diameter}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{Human serum}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Number Mean Hydrodynamic Diameter\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
--\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Number Mean Hydrodynamic Diameter\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-Human serum\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-Intensity Mean Hydrodynamic Diameter\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
--\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
-\textbf{Intensity Mean Hydrodynamic Diameter}\strut
-\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
-\textbf{Human serum}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
-\(nm\)\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
 
 \begin{longtable}[]{@{}lllll@{}}
 \caption{Results from five independent crossvalidations for various
@@ -1044,10 +999,854 @@ RF\strut
 \bottomrule
 \end{longtable}
 
+\begin{longtable}[]{@{}lll@{}}
+\caption{\emph{P-CHEM} properties of the \emph{Protein corona} dataset
+measured with and without human serum. Features correlating with the
+\emph{Net cell association} endpoint (\emph{relevant features}) are
+indicated by bold letters. }\tabularnewline
+\toprule
+\begin{minipage}[b]{0.58\columnwidth}\raggedright\strut
+Property\strut
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
+Medium\strut
+\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedright\strut
+Unit\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.58\columnwidth}\raggedright\strut
+Property\strut
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright\strut
+Medium\strut
+\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedright\strut
+Unit\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Localized Surface Plasmon Resonance (LSPR) index\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+-\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Localized Surface Plasmon Resonance (LSPR) index}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{Human serum}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+LSPR peak position (nm)\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+-\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Polydispersity index}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{-}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Polydispersity index\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+Human serum\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Core size}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{-}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Autot (ICP-AES)}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{Human serum}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nmol\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Total surface area (SAtot)\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+Human serum\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(cm^2\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Protein density\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+Human serum\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(ug/cm^2\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Total protein (BCA assay)}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{Human serum}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(ug\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{ZETA POTENTIAL}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{-}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(mV\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{ZETA POTENTIAL}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{Human serum}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(mV\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Z-Average Hydrodynamic Diameter\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+-\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Z-Average Hydrodynamic Diameter}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{Human serum}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Volume Mean Hydrodynamic Diameter\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+-\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Volume Mean Hydrodynamic Diameter}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{Human serum}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Number Mean Hydrodynamic Diameter\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+-\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Number Mean Hydrodynamic Diameter\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+Human serum\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+Intensity Mean Hydrodynamic Diameter\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+-\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.58\columnwidth}\raggedright\strut
+\textbf{Intensity Mean Hydrodynamic Diameter}\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright\strut
+\textbf{Human serum}\strut
+\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedright\strut
+\(nm\)\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lllll@{}}
+\caption{Random forest predictions with measurements outside of the 95\%
+prediction interval (Median log2 transformed values). }\tabularnewline
+\toprule
+\begin{minipage}[b]{0.26\columnwidth}\raggedright\strut
+Descriptors\strut
+\end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\raggedright\strut
+Nanoparticle\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+CVs\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+PI distance\strut
+\end{minipage} & \begin{minipage}[b]{0.08\columnwidth}\raggedright\strut
+Error\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.26\columnwidth}\raggedright\strut
+Descriptors\strut
+\end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\raggedright\strut
+Nanoparticle\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+CVs\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+PI distance\strut
+\end{minipage} & \begin{minipage}[b]{0.08\columnwidth}\raggedright\strut
+Error\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+MP2D fingerprints\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.DDT@SDS\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+2.2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+6.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+MP2D fingerprints\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.NT@DCA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.7\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+MP2D fingerprints\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.MBA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.5\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+MP2D fingerprints\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.DDT@ODA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+5.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+MP2D fingerprints\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.MHDA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.4\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+MP2D fingerprints\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.CIT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+MP2D fingerprints\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.DDT@HDA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+4.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.cPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+2.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+4.5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.nPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+5.4\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.mPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.7\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+4.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.AUT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.7\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.DDT@CTAB\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.9\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+6.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.HDA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+5.6\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.PLL-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.PEI-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.5\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+4.6\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.DDT@SA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.4\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.DTNB\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.MES\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.MAA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.6\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.MBA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.6\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.nPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.9\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.mPEG1K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.8\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.cPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.6\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.9\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.ODA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.8\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+4.5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.NT@PVA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.8\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.MUTA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.AUT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.6\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.CALNN\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.PEI-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.AUT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.6\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.mPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.9\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.9\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.LA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.HDA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+2.4\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.MES\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.8\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.PEG3K(NH2)-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.8\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.9\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.ODA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+4.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.AUT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.4\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.SA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.8\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.CIT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.ODA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+2.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+5.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.mPEG1K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.8\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.CALNN\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.7\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.2\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.nPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.6\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.4\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.MUTA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.5\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.DTNB\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.6\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+S40.AUT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.6\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G60.mPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.4\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.AUT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.8\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.AUT\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.4\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.MUA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G30.cPEG5K-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+2.4\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.PEG3K(NH2)-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+1.2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.8\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.PEI-SH\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.HDA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.2\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+3.9\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.DDT@ODA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+2.0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.SA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.1\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+0.7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+P-CHEM and Proteomics\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\raggedright\strut
+G15.PVA\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+0.0\strut
+\end{minipage} & \begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1.7\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
 \hypertarget{refs}{}
+\hypertarget{ref-Arts15}{}
+Arts, Josje H.E., Mackenzie Hadi, Muhammad-Adeel Irfan, Athena M. Keene,
+Reinhard Kreiling, Delina Lyon, Monika Maier, et al. 2015. ``A
+Decision-Making Framework for the Grouping and Testing of Nanomaterials
+(Df4nanogrouping).'' \emph{Regulatory Toxicology and Pharmacology} 71
+(2, Supplement): S1--S27.
+doi:\href{https://doi.org/http://dx.doi.org/10.1016/j.yrtph.2015.03.007}{http://dx.doi.org/10.1016/j.yrtph.2015.03.007}.
+
+\hypertarget{ref-Arts14}{}
+Arts, Josje H.E., Mackenzie Hadi, Athena M. Keene, Reinhard Kreiling,
+Delina Lyon, Monika Maier, Karin Michel, et al. 2014. ``A Critical
+Appraisal of Existing Concepts for the Grouping of Nanomaterials.''
+\emph{Regulatory Toxicology and Pharmacology} 70 (2): 492--506.
+doi:\href{https://doi.org/http://dx.doi.org/10.1016/j.yrtph.2014.07.025}{http://dx.doi.org/10.1016/j.yrtph.2014.07.025}.
+
 \hypertarget{ref-Bender04}{}
 Bender, Andreas, Hamse Y. Mussa, and Robert C. Glen, and Stephan
 Reiling. 2004. ``Molecular Similarity Searching Using Atom Environments,
@@ -1055,6 +1854,28 @@ Information-Based Feature Selection, and a Naïve Bayesian Classifier.''
 \emph{Journal of Chemical Information and Computer Sciences} 44 (1):
 170--78.
 doi:\href{https://doi.org/10.1021/ci034207y}{10.1021/ci034207y}.
+
+\hypertarget{ref-Dekkers16}{}
+Dekkers, Susan, Agnes G. Oomen, Eric A.J. Bleeker, Rob J. Vandebriel,
+Christian Micheletti, Joan Cabellos, Gemma Janer, et al. 2016. ``Towards
+a Nanospecific Approach for Risk Assessment.'' \emph{Regulatory
+Toxicology and Pharmacology} 80: 46--59.
+doi:\href{https://doi.org/http://dx.doi.org/10.1016/j.yrtph.2016.05.037}{http://dx.doi.org/10.1016/j.yrtph.2016.05.037}.
+
+\hypertarget{ref-Gajewicz17}{}
+Gajewicz, A., K. Jagiello, M. T. D. Cronin, J. Leszczynski, and T.
+Puzyn. 2017. ``Addressing a Bottle Neck for Regulation of Nanomaterials:
+Quantitative Read-Across (Nano-Qra) Algorithm for Cases When Only
+Limited Data Is Available.'' \emph{Environ. Sci.: Nano} 4 (2). The Royal
+Society of Chemistry: 346--58.
+doi:\href{https://doi.org/10.1039/C6EN00399K}{10.1039/C6EN00399K}.
+
+\hypertarget{ref-Gajewicz14}{}
+Gajewicz, Agnieszka, Mark T.D Cronin, Bakhtiyor Rasulev, Jerzy
+Leszczynski, and Tomasz Puzyn. 2015. ``Novel Approach for Efficient
+Predictions Properties of Large Pool of Nanomaterials Based on Limited
+Set of Species: Nano-Read-Across.'' \emph{Nanotechnology} 26 (1):
+015701. \url{http://stacks.iop.org/0957-4484/26/i=1/a=015701}.
 
 \hypertarget{ref-Guxfctlein2013}{}
 Gütlein, Martin, Christoph Helma, Andreas Karwath, and Stefan Kramer.
@@ -1088,12 +1909,27 @@ Toxicology Framework.'' \emph{Frontiers in Pharmacology} 4. Frontiers
 Media SA.
 doi:\href{https://doi.org/10.3389/fphar.2013.00038}{10.3389/fphar.2013.00038}.
 
+\hypertarget{ref-OBoyle2011}{}
+OBoyle, Noel M, Michael Banck, Craig A James, Chris Morley, Tim
+Vandermeersch, and Geoffrey R Hutchison. 2011. ``Open Babel: An Open
+Chemical Toolbox.'' \emph{Journal of Cheminformatics} 3 (1). Springer
+Science; Business Media: 33.
+doi:\href{https://doi.org/10.1186/1758-2946-3-33}{10.1186/1758-2946-3-33}.
+
 \hypertarget{ref-Papa16}{}
 Papa, E., J. P. Doucet, A. Sangion, and A. Doucet-Panaye. 2016.
 ``Investigation of the Influence of Protein Corona Composition on Gold
 Nanoparticle Bioactivity Using Machine Learning Approaches.'' \emph{SAR
 and QSAR in Environmental Research} 27 (7): 521--38.
 doi:\href{https://doi.org/10.1080/1062936X.2016.1197310}{10.1080/1062936X.2016.1197310}.
+
+\hypertarget{ref-Schultz15}{}
+Schultz, T.W., P. Amcoff, E. Berggren, F. Gautier, M. Klaric, D.J.
+Knight, C. Mahony, M. Schwarz, A. White, and M.T.D. Cronin. 2015. ``A
+Strategy for Structuring and Reporting a Read-Across Prediction of
+Toxicity.'' \emph{Regulatory Toxicology and Pharmacology} 72 (3):
+586--601.
+doi:\href{https://doi.org/http://dx.doi.org/10.1016/j.yrtph.2015.05.016}{http://dx.doi.org/10.1016/j.yrtph.2015.05.016}.
 
 \hypertarget{ref-Walkey14}{}
 Walkey, Carl D., Jonathan B. Olsen, Fayi Song, Rong Liu, Hongbo Guo, D.

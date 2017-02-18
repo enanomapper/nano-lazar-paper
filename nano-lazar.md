@@ -20,15 +20,48 @@ keywords: nanoparticle, toxicity, QSAR, read-across, predictive toxicology, mach
 
 # Introduction
 
-Read across is a commonly used approach for the risk assessment of chemicals.
-Read across procedures are based on the assumption that similar compounds cause
-similar biological effects. In order to estimate the activity of a novel
-compound a researcher will search for similar compounds with known biological
-activities and deduce the activity of the new compound from this data. In order
-to make the read across procedure reproducible, traceable and objective the
-authors of this paper have developed a computer program (`lazar`, [@Maunz2013])
-that automates the risk assessment process. The objective of the current study
-was to extend `lazar` for the risk assessment of nanomaterials.
+Read across is a commonly used approach for the risk assessment of chemicals
+and has recently gained popularity for nanoparticle risk assessment [@Arts14].
+Read across procedures are based on the assumption that similar substances
+cause similar biological effects. In order to estimate the activity of a novel
+substance a researcher will search for similar substances with known biological
+activities and deduce the activity of the new substance from this data.
+
+Most read across procedures for nanoparticles originate from a regulatory
+setting and aggregate current nanotoxicity knowledge into rules for determining
+groups of similar substances and rules for extrapolating the toxicity of the
+unknown nanoparticle (see e.g. [@Arts14] for a review, [@Arts15,@Schultz15,@Dekkers16] for 
+recent proposals). 
+
+Despite their popularity current read across approaches have a couple of
+disadvantages, especially in respect to the reproducibility and validation of
+prediction results:
+
+ - They require a lot of time from skilled toxicologists to search for data, interpret it according to guidelines and to aggregate it into a final assessment.
+ - Grouping and extrapolation criteria are rarely formally defined and leaves the risk assessor room for interpretation. 
+ - Implicit assumptions about grouping and extrapolation criteria have been rarely validated and may be correct or not
+ - It is hardly possible to validate the proposed schemes with independent test sets of statistically relevant size.
+
+In order to make the read across procedure reproducible, traceable and
+objective the authors of this paper have developed a programming framework
+(`lazar`, [@Maunz2013]) for small compounds with well defined structures.
+`lazar` follows the generic read across process of identifying similar substances and extrapolating from their measured activities, but automates the process with well defined
+user selectable algorithms (see below). This makes predictions less time consuming, reproducible and allows independent validation studies. A graphical user interface presents the rationales of predictions and supporting information for a critical inspection and to reject dubious predictions.
+
+The objective of the current study was to extend `lazar` for the risk
+assessment of nanomaterials and to integrate it with  databases and ontologies
+of the eNanoMapper EU FP7 project [@Jeliazkova15], which contains currently all
+*public* nanoparticle datasets and to validate a subset of the implemented algorithms with a nanoparticle dataset. The `nano-lazar` extension implements new
+methods for representing and handling nanomaterials without well defined
+chemical structures. This includes e.g. nanoparticle characterisations by
+structural, size and shape, physico-chemical and biological properties as well
+as ontology terms. It implements nanoparticle specific methods for descriptor
+calculation, feature selection, similarity calculation and a graphical
+interface optimized for nanoparticle predictions.
+
+Similar to `lazar` `nano-lazar` is completely modular in terms of algorithms
+for descriptors (measured and calculated), feature selection, similarity
+calculation and local (Q)SAR models of similar substances.
 
 The concept of chemical *similarity* is the key idea behind all read across
 procedures. But similarity is not an intrinsic property of substances, it can
@@ -43,18 +76,16 @@ adapt other concepts, e.g. similarity in terms of chemical properties or in
 terms of biological effects. Compared to structural similarity, which can be
 calculated directly from chemical structures, these similarity definitions
 depend on actual measurements, which makes their estimation more expensive
-and time consuming. For this reason we have developed a novel concept of
-structural similarity for nanomaterials, which is based on the chemical
-fingerprints of core and coating materials. According to our knowledge, this is
-the first time that nanoparticle toxicities have been predicted successfully
-from calculated properties alone.
+and time consuming. For this reason we have developed a new concept of
+structural similarity for nanomaterials, which is based on chemical
+fingerprints of core and coating materials.
 
 In order to estimate the utility of various similarity concepts for
 nanomaterials, we have performed model building and validation experiments for
 models based on
 
-- *structural similarity* (using on core and coating fingerprints)
-- *property similarity* (using on measured nanoparticle properties)
+- *structural similarity* (using core and coating fingerprints)
+- *property similarity* (using measured nanoparticle properties)
 - *biological similarity* (using serum protein interaction data)
 
 and the local regression algorithms
@@ -113,12 +144,21 @@ refer to the source code links in the text.
 
 Nanoparticle characterisations and toxicities were mirrored from the
 eNanoMapper database [@Jeliazkova15] via its REST API
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/import.rb#L9-L118>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/import.rb#L9-L118>).
 At present only the *Net cell association* endpoint of the *Protein corona*
 dataset, has a sufficient number of examples (121) to create and validate
-read-across models, all other public nanoparticle endpoints have less than 20
+read-across models, all other eNanoMapper toxicity endpoints have less than 20
 examples, which makes them unsuitable for local QSAR modelling and
 crossvalidation experiments.
+
+Cell association, which includes internalization of the nanoparticles and
+adhesion to the cell membrane, was measured in A549 human lung epithelial
+carcinoma cells by inductively coupled plasma-atomic emission spectroscopy
+(ICP-AES). These cells are widely used as a model to study fundamental
+nanoparticle-cell inter- actions. Cell association has a  relevance to
+inflammatory responses, biodistribution, and toxicity in vivo [@Walkey14]. In
+the rest of the text we will frequently use the general term *toxicity* to
+indicate *Net cell association*.
 
 ## Algorithms
 
@@ -146,7 +186,7 @@ a given nanoparticle `lazar`
 This procedure resembles an automated version of *read across* predictions in
 toxicology, in machine learning terms it would be classified as a
 *k-nearest-neighbor* algorithm 
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/model.rb#L180-L257>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/model.rb#L180-L257>).
 
 Apart from this basic workflow `nano-lazar` is completely modular and allows the
 researcher to use arbitrary algorithms for similarity searches and local QSAR
@@ -159,7 +199,12 @@ necessary to characterize nanoparticles by descriptors. In this study we are
 using three types of descriptors:
 
 Structural descriptors
-  ~ Calculated molecular fingerprints for core and coating compounds (MOLPRINT 2D fingerprints [@Bender04], *MP2D*, <https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/nanoparticle.rb#L17-L21>) 
+  ~ Union of MOLPRINT 2D fingerprints (*MP2D*, [@Bender04]) for core and coating compounds  <https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/nanoparticle.rb#L17-L21> 
+  MP2D fingerprints use atom environments as molecular representation,
+  which resemble basically the chemical concept of functional groups. For each
+  atom in a molecule it represents the chemical environment using the atom types
+  of connected atoms.
+  MP2D fingerprints were calculated with the OpenBabel [@OBoyle2011] library.
 
 Physico-chemical nanoparticle properties
   ~ Measured nanoparticle properties from the eNanoMapper database (*P-CHEM*)
@@ -167,16 +212,16 @@ Physico-chemical nanoparticle properties
 Biological nanoparticle properties
   ~ Protein interaction data from the eNanoMapper database (*Proteomics*)
 
-Nanoparticle fingerprints are a novel development for the characterisation of
-nanoparticles with well defined core and coating compounds. In this case it is
-possible to create molecular fingerprints for all of these compounds and use
+Nanoparticle MP2D fingerprints are a novel development for the characterisation
+of nanoparticles with well defined core and coating compounds. In this case it
+is possible to create molecular fingerprints for all of these compounds and use
 the union of these fingerprints as nanoparticle fingerprint. Based on our
-experience with small molecules we have selected MOLPRINT 2D fingerprints
-[@Bender04], which typically outperform predefined fingerprints (e.g. $MACCS$,
-$FP4$) for QSAR purposes. Despite its simplicity the concept works
-surprisingly well (see validation results) and enables toxicity predictions
-without measured properties. This can be useful e.g. for fast and cheap
-nanoparticle toxicity screening programs.
+experience with small molecules we have selected MP2D fingerprints [@Bender04],
+which typically outperform predefined fingerprints (e.g. $MACCS$, $FP4$) for
+QSAR purposes. Despite its simplicity the concept works surprisingly well (see
+validation results) and enables toxicity predictions without measured
+properties. This can be useful e.g. for fast and cheap nanoparticle toxicity
+screening programs.
 
 ### Feature selection
 
@@ -197,7 +242,7 @@ For this reason we use the `lazar` concept of *activity specific similarities*
 [@Maunz2013], by selecting only those features that correlate with a particular
 toxicity endpoint (Pearson correlation p-value < 0.05). This reduced set of
 *relevant features* is used for similarity calculations and local QSAR models
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/feature_selection.rb#L6-L26>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/feature_selection.rb#L6-L26>).
 Apart from being computationally cheaper, simple filter methods pose also
 a lower risk of overfitting than more aggressive feature selection methods
 (e.g. forward selection, backwards elimination). As local models are built with
@@ -212,7 +257,7 @@ each crossvalidation fold, to avoid overfitted models [@Gütlein2013].
 For binary features (MP2D fingerprints) we are using the union of core and
 coating fingerprints to calculate the Tanimoto/Jaccard index and a similarity
 threshold of $sim > 0.1$
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/similarity.rb#L18-L20>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/similarity.rb#L18-L20>).
 
 For quantitative features (P-CHEM, Proteomics) we use the reduced set of
 relevant features to calculate the *weighted cosine similarity* of their
@@ -220,12 +265,12 @@ scaled and centered relevant feature vectors, where the contribution of each
 feature is weighted by its Pearson correlation coefficient with the toxicity
 endpoint. A similarity threshold of $sim > 0.5$ was used for the
 identification of neighbors for local QSAR models
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/similarity.rb#L37-L49>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/similarity.rb#L37-L49>).
 
 In both cases nanoparticles that are identical to the query particle are
 eliminated from neighbors to obtain unbiased predictions in the presence of
 duplicates.
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/model.rb#L180-L257>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/model.rb#L180-L257>).
 
 ### Local QSAR models and predictions
 
@@ -234,9 +279,9 @@ build from the set of similar nanoparticles (*neighbors*).
 
 In this investigation we are comparing three local regression algorithms:
 
-- weighted local average (*WA*, <https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/regression.rb#L6-L16>)
-- weighted partial least squares regression (*PLS*, <https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb#L7-L78>)
-- weighted random forests (*RF*, <https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb#L7-L78>)
+- weighted local average (*WA*, <https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/regression.rb#L6-L16>)
+- weighted partial least squares regression (*PLS*, <https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb#L7-L78>)
+- weighted random forests (*RF*, <https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb#L7-L78>)
 
 In all cases neighbor contributions are weighted by their similarity to the
 query particle. The weighted local average algorithm serves as a simple and
@@ -250,7 +295,7 @@ resampling.
 Finally the local model is applied to predict the activity of the query
 nanoparticle. The RMSE of bootstrapped model predictions is used to construct
 95\% prediction intervals at 1.96*RMSE
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb#L55-L77>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb#L55-L77>).
 Prediction intervals are not available for the weighted average algorithm, as
 it does not use internal validation.
 
@@ -266,13 +311,13 @@ cannot be determined due to the lack of measured properties) no predictions
 will be generated. Warnings are also issued, if local QSAR model building or
 model predictions fail and the program has to resort to the weighted average
 algorithm
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/model.rb#L180-L257>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/model.rb#L180-L257>).
 
 Each prediction is accompanied with a list of neighbors and their similarities, which are clearly displayed in the graphical user interface for the inspection by a toxicological expert. Apart from indicating the applicability domain, the neighbor list clearly shows the rationale for the prediction, and allows the expert to reject predictions e.g. when neighbors act via different mechanisms.
 
 The accuracy of local model predictions is indicated by the 95\% prediction
 interval, which is derived from the internal `caret` validation
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/caret.rb#L55-L77>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/caret.rb#L55-L77>).
 Query substances close to the applicability domain (many neighbors with high
 similarity) will have a narrower prediction interval than substances with
 a larger distance (few neighbors with low similarity).
@@ -282,7 +327,7 @@ a larger distance (few neighbors with low similarity).
 For validation purposes we use results from 5 repeated 10-fold crossvalidations
 with independent training/test set splits for each descriptor/algorithm
 combination
-(<https://github.com/opentox/lazar/blob/nano-lazar-paper.submission/lib/crossvalidation.rb#L85-L93>).
+(<https://github.com/opentox/lazar/blob/nano-lazar-paper.revision/lib/crossvalidation.rb#L85-L93>).
 Feature selection is performed for each validation fold separately to avoid
 overfitting. For the same reason we do not use a fixed random seed for
 training/test set splits. This leads to slightly different results for each
@@ -292,7 +337,7 @@ validation results due to random training/test splits.
 In order to identify significant differences between validation results,
 outcomes (RMSE, $r^2$, correct 95\% prediction interval) are compared by
 ANOVA analysis, followed by Tukey multiple comparisons of means
-(<https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.submission/scripts/cv-statistics.rb>).
+(<https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.revision/scripts/cv-statistics.rb>).
 
 Please note that recreating validations (e.g. in the Docker image) will not
 lead to exactly the same results, because crossvalidation folds are created
@@ -346,13 +391,11 @@ Results of these experiments are summarized in Table 1. [@fig:fingerprint],
 measurements for *MP2D*, *P-CHEM* and *Proteomics* random forests models.
 Correlation plots for all descriptors and algorithms are available as
 supplementary material
-(<https://github.com/enanomapper/nano-lazar-paper/tree/nano-lazar-paper.submission/figures>).
+(<https://github.com/enanomapper/nano-lazar-paper/tree/nano-lazar-paper.revision/figures>).
 Table 2 lists *P-CHEM* properties of the Protein Corona dataset and their
 correlation with the *Net Cell Association* endpoint.
 
 <!-- Table references are broken in pandoc-csv2table -->
-
-# Discussion
 
 Table 1 summarizes the results from five independent crossvalidations for all
 descriptor/algorithm combinations. The best results in terms of $RMSE$ and
@@ -395,12 +438,16 @@ With the exception of *P-CHEM*/*Proteomics* descriptors *random forests*
 models perform better than *partial least squares* and *weighted average*
 models with significant differences for *MP2D* and *P-CHEM* descriptors
 (detailed pairwise comparisons are available in the supplementary material
-<https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.submission/results/>).
+<https://github.com/enanomapper/nano-lazar-paper/blob/nano-lazar-paper.revision/results/>).
 Interestingly the simple *weighted average* algorithm shows no significant
 difference to the best performing model for the *Proteomics* and
 *P-CHEM*/*Proteomics* descriptors.
 
-## Interpretation and practical applicability
+# Discussion
+
+<!-- ## Interpretation and practical applicability -->
+
+## Performance
 
 Although *random forest* models with *Proteomics* descriptors have the best
 performance in terms of $RMSE$ and $r^2$, the accuracy of the 95% prediction
@@ -444,11 +491,62 @@ interval) and not to explain the model variance ($r^2$). For this reason we
 consider $r^2$ performance as secondary compared to $RMSE$ and prediction
 interval accuracies.
 
-Currently a couple of QSAR studies with global models have been published
-for the same dataset @Walkey14, @Liu15, @Papa16], but
-unfortunately their results are not directly comparable, because we report
-results for the complete dataset with 121 Gold and Silver particles, while
-other authors report results for a subset of Gold particles.
+## Problematic predictions
+
+In order to investigate possible systematic errors with `nano-lazar` models we
+have investigated all *random forest* crossvalidation predictions with measurements outside of the 95\% prediction interval.
+
+Table 3 shows, that the number of problematic predictions increase from from
+fingerprints to *P-CHEM* and *Proteomics* descriptors. Few substances have
+consistent incorrect predictions across all five crossvalidation runs, and it
+seems that models with Proteomics descriptors are more sensitive towards
+training/test set splits than e.g. fingerprint models. This observation is also
+supported by the poorer accuracy of their prediction intervals (Table 1).
+
+Fingerprint models seem to provide the most stable predictions, but three
+nanoparticles have consistent problematic predictions across all
+crossvalidations. For illustrative purposes we will investigate `G15.DDT@SDS`,
+the substance with the largest prediction error.
+
+In all five crossvalidations the closest neighbors (`S40.DDT@DOTAP`,
+`G30.DDT@DOTAP`, `G15.DDT@DOTAP`, `G60.DDT@DOTAP`) have a similarity of 0.5 and
+measured values between -2.0 and -0.3. This explains, why local models cannot
+extrapolate to the measured value of -7.7 of the query particle. Based on our
+experience with small molecules, we do not expect reliable predictions, unless
+local models can be built with a similarity threshold of 0.5 [^1]. Predictions
+obtained from neighbors with lower similarities can still be useful, but
+require the manual inspection (and possible rejection) of a toxicological
+expert. For this purpose we provide the free graphical user interface at
+<https:://nano-lazar.in-silico.ch>, which presents prediction results,
+neighbors and supporting information (e.g. links to additional eNanoMapper
+data, nanoparticle characterisations and ontologies).
+
+[^1]: The latest `lazar` development version issues a warning in this case, this feature will be included into the next release.
+
+
+
+## Comparison with other models
+
+According to our knowledge no validated read across models have been published
+for the Protein corona datasets. Most other nanoparticle read across models
+have not been formally validated, with the exception of @Gajewicz14 and
+@Gajewicz17, who validated read across models for metal oxides. Results from
+these studies are not comparable with our findings, because they use a
+different, much smaller dataset and different validation methods. It seems that
+in both studies feature selection was performed on the complete dataset prior
+to model validation, which transfers information from the test set into the
+validation model. Single training ($n=10$) and test ($n=7$) sets were used,
+which makes it hard to ensure that models are not overfitted for the particular
+training/test set split. Due to the small test set size it is also hard to draw
+general conclusions about the model performance. We are not aware of any
+nanoparticle read across validation that exceeds 100 substances like our
+investigation.
+
+For the Protein corona  dataset a couple of QSAR studies with global models
+have been published (@Walkey14, @Liu15, @Papa16), but unfortunately their
+results are also not directly comparable, because we report results for the
+complete dataset with 121 Gold and Silver particles, while other authors report
+results for a subset of Gold particles.
 
 [@Walkey14] report leave-one-out ($LOO$) and 4-fold crossvalidation ($4CV$)
 results for 105 Gold particles. They obtained the best results (LOO $r^2$
@@ -508,6 +606,8 @@ models can be successfully built and validated. For this reason we expect that
 `nano-lazar` performance will increase as soon as more nanotoxicity data
 becomes available.
 
+
+
 # Conclusion
 
 We have performed 60 independent crossvalidation experiments for the Protein
@@ -549,9 +649,12 @@ Grant agreement no: 604134).
 
 # Tables
 
-![*P-CHEM* properties of the *Protein corona* dataset. Features correlating with the *Net cell association* endpoint (*relevant features*) are indicated by bold letters. m](results/p-chem-properties.csv){#tbl:p-chem-properties}
-
 ![Results from five independent crossvalidations for various descriptor/algorithm combinations. Best results (mean of 5 crossvalidations) are indicated by bold letters, statistically significant ($p<0.05$) different results by italics. Results in normal fonts do not differ significantly from best results. m](results/cv-summary-table.csv){#tbl:cv_summary}
+
+![*P-CHEM* properties of the *Protein corona* dataset measured with and without human serum. Features correlating with the *Net cell association* endpoint (*relevant features*) are indicated by bold letters. m](results/p-chem-properties.csv){#tbl:p-chem-properties}
+
+![Random forest predictions with measurements outside of the 95\% prediction interval (Median log2 transformed values). m](results/worst-predictions.csv){#tbl:worst-predictions}
+
 
 <!--
 # moved into template.tex, because frontiersinHLTH.cls cannot handle subfigures

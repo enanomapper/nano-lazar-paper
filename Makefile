@@ -2,7 +2,7 @@
 nano-lazar.pdf: nano-lazar.tex
 	pdflatex nano-lazar.tex
 
-nano-lazar.tex: nano-lazar.md references.bib template.tex figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/p-chem-properties.csv 
+nano-lazar.tex: nano-lazar.md references.bib template.tex figures/DONE results/cv-summary-table.csv results/cv-statistics.json results/p-chem-properties.csv results/worst-predictions.csv
 	pandoc -s nano-lazar.md --bibliography=references.bib -F pandoc-csv2table -F pandoc-crossref -F pandoc-citeproc -t latex --template=template.tex -o nano-lazar.tex 
 
 # Presentation
@@ -19,6 +19,9 @@ opentox-workshop.html: opentox-workshop.md results/cv-comparison.json figures/ra
 	pandoc --filter ./inline.rb  -t slidy --css slidy/style.css -s --self-contained -o opentox-workshop.html opentox-workshop.md 
 
 # Tables
+results/worst-predictions.csv: results/protein-corona-validation.ids
+	scripts/worst_predictions.rb
+
 results/cv-summary-table.csv: results/validation-summaries.json
 	scripts/cv-summary-table.rb
 
