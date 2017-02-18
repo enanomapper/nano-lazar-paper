@@ -6,7 +6,9 @@ title: |
   nano-lazar: Read across predictions for nanoparticle toxicities with calculated and measured properties
 address: "^1^ in silico toxicology gmbh,  Basel, Switzerland"
 date: \today
-abstract: "The lazar framework for read across predictions was expanded for the prediction of nanoparticle toxicities, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. In order to compare nanoparticle descriptor sets and local regression algorithms 60 independent crossvalidation experiments were performed for the Protein Corona dataset obtained from the eNanoMapper database. The best RMSE and r^2 results were obtained with protein corona descriptors and the weighted random forest algorithm, but its 95% prediction interval is significantly less accurate than for models using simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties with RMSE and r^2 values that show no statistical significant difference (p < 0.05) to the protein corona descriptors. Calculated descriptors are interesting for cheap and fast high-throughput screening purposes, random forest models have significantly lower r^2 values, but RMSE and prediction intervals are comparable to protein corona and nanoparticle random forest models." 
+abstract: "The lazar framework for read across predictions was expanded for the prediction of nanoparticle toxicities, and a new methodology for calculating nanoparticle descriptors from core and coating structures was implemented. Nano-lazar provides a flexible and reproducible framework for downloading data and ontologies from the open eNanoMapper infrastructure, developing and validating nanoparticle read across models, open-source code and a free graphical interface for nanoparticle read-across predictions.
+In this study we compare different nanoparticle descriptor sets and local regression algorithms. 60 independent crossvalidation experiments were performed for the Net Cell Association endpoint of the Protein Corona dataset. The best RMSE and r^2 results originated from models with protein corona descriptors and the weighted random forest algorithm, but their 95% prediction interval is significantly less accurate than for models with simpler descriptor sets (measured and calculated nanoparticle properties). The most accurate prediction intervals were obtained with measured nanoparticle properties (no statistical significant difference (p < 0.05) of RMSE and r^2 values compared to protein corona descriptors). Calculated descriptors are interesting for cheap and fast high-throughput screening purposes.
+RMSE and prediction intervals of random forest models are comparable to protein corona models, but r^2 values are significantly lower." 
 
 figPrefix: Figure
 eqnPrefix: Equation
@@ -400,10 +402,10 @@ correlation with the *Net Cell Association* endpoint.
 Table 1 summarizes the results from five independent crossvalidations for all
 descriptor/algorithm combinations. The best results in terms of $RMSE$ and
 $R^2$ were obtained with *Proteomics* descriptors and local weighted *random
-forest* models. There are however six models without statistically significant
-differences in terms of $RMSE$ and five models in terms of $r^2$. The most
+forest* models. Six models have no statistically significant
+difference in terms of $RMSE$ and five models in terms of $r^2$. The most
 accurate 95\% prediction intervals were obtained with *P-CHEM* descriptors and
-*random forest* models, this models does not differ significantly from the best
+*partial least squares* models, these models does not differ significantly from the best
 $RMSE$ and $r^2$ results.
 
 ## Descriptors
