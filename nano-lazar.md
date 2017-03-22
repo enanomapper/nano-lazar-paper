@@ -94,7 +94,7 @@ nanomaterials, we have performed model building and validation experiments for
 models based on
 
 - *structural similarity* (using core and coating fingerprints)
-- *property similarity* (using measured nanoparticle properties)
+- *property similarity* (using measured nanoparticle physico-chemical properties)
 - *biological similarity* (using serum protein interaction data)
 
 and the local regression algorithms
@@ -156,14 +156,15 @@ read-across models, all other eNanoMapper toxicity endpoints have less than 20
 examples, which makes them unsuitable for local QSAR modelling and
 crossvalidation experiments.
 
-Cell association, which includes internalization of the nanoparticles and
-adhesion to the cell membrane, was measured in A549 human lung epithelial
-carcinoma cells by inductively coupled plasma-atomic emission spectroscopy
-(ICP-AES). These cells are widely used as a model to study fundamental
-nanoparticle-cell inter- actions. Cell association has a  relevance to
+Net cell association indicates the fraction of nanoparticles associated with A549 human lung epithelial
+carcinoma cells, including internalization of the nanoparticles and
+adhesion to the cell membrane [@Walkey14].
+Net cell association was measured in  by inductively coupled plasma-atomic emission spectroscopy
+(ICP-AES) in A549 cells, which are widely used as a model to study fundamental
+nanoparticle-cell inter- actions. Net cell association has a relevance to
 inflammatory responses, biodistribution, and toxicity in vivo [@Walkey14]. During
 the rest of the text we will frequently use the general term *toxicity* to
-indicate *Net cell association*.
+indicate *Net cell association*, in order to increase readability and to emphasize the general applicability of the nano-lazar approach.
 
 ## Algorithms
 
